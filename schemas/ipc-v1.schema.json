@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SiegfriedIPCV1",
+  "description": "IPC Protocol v1 for Unix Domain Socket communication",
+  "definitions": {
+    "request": {
+      "type": "object",
+      "required": ["v", "cmd", "args", "request_id"],
+      "additionalProperties": false,
+      "properties": {
+        "v": { "type": "integer", "const": 1 },
+        "cmd": {
+          "type": "string",
+          "enum": ["PING", "STATUS", "START_FOCUS", "CANCEL_FOCUS", "POSTPONE", "ACK_BREAK", "MANUAL_SLEEP", "SHUTDOWN"]
+        },
+        "args": { "type": "object" },
+        "request_id": { "type": "string" }
+      }
+    },
+    "response": {
+      "type": "object",
+      "required": ["v", "request_id", "status", "payload"],
+      "additionalProperties": false,
+      "properties": {
+        "v": { "type": "integer", "const": 1 },
+        "request_id": { "type": "string" },
+        "status": { "type": "string", "enum": ["OK", "ERROR", "REJECTED"] },
+        "payload": { "type": "object" },
+        "error_msg": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

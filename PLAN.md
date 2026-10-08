@@ -38,24 +38,35 @@ Validadores de esquemas en Python stdlib capaces de validar payloads sintéticos
 
 ---
 
-## Fase 1: Cimientos del Sistema de Archivos, Esquemas y Persistencia Atómica Concurrente
+## Fase 1: Cimientos del Sistema de Archivos, Esquemas y Persistencia Atómica Concurrente — COMPLETADO (Gate F1.4: PASS)
 
-### 1.1 Objetivo y Alcance Técnico
-Establecer la infraestructura de almacenamiento local en `~/.siegfried/`, garantizando concurrencia segura sin corrupción de datos entre múltiples procesos (demonio y CLI) mediante primitivas del kernel de Linux (`fcntl`), y aislando credenciales con permisos restrictivos.
+### 1.1 Objetivo y Alcance Técnico (Subfase 1.1: COMPLETADO | Subfase 1.2: COMPLETADO | Subfase 1.3: COMPLETADO | Gate F1.4: PASS)
+Establecer la infraestructura de almacenamiento local en `~/.siegfried/`, garantizando inicialización segura, validación no destructiva de configuración, permisos POSIX estrictos (0700/0600), protección contra symlinks y concurrencia libre de corrupción entre múltiples procesos (demonio y CLI) mediante primitivas del kernel de Linux (`fcntl`), aislando credenciales con `siegfried init` y diagnosticando con `siegfried doctor`.
 
 ### 1.2 Tareas de Ingeniería
-1. **Scaffolding de Directorios y Control de Permisos:**
-   * Crear el árbol: `~/.siegfried/{bin,config,data,assets/sounds,systemd,scripts}`.
+1. **Scaffolding de Directorios y Control de Permisos (`initialization.py`, `siegfried init`):**
+   * Crear el árbol: `~/.siegfried/{config,data,assets/sounds,logs}`.
    * Inicializar `secrets.env` con máscara `0o077` antes de la creación (`os.umask(0o077)`) para forzar permisos strictly `600` (`-rw-------`).
-2. **Definición y Validación de Esquemas JSON Base:**
+   * Validar y preservar configuraciones `core_profile.json`, `active_agenda.json` y `siegfried_vault.jsonl` de forma idempotente.
+2. **Validación Estricta de Configuración, Permisos y Seguridad (`validation.py`, `siegfried doctor`):**
+   * Validación centralizada y no destructiva de `core_profile.json`, `active_agenda.json`, `secrets.env` y `siegfried_vault.jsonl`.
+   * Distinción de estados: `READY`, `NOT_INITIALIZED`, `INVALID_CONFIG`, `INSECURE_PERMISSIONS`, `UNSAFE_PATH`, `STORAGE_ERROR`.
+   * Integración en CLI (`siegfried doctor`) y verificación previa al arranque del daemon (`SiegfriedDaemon.start`).
+3. **Persistencia, Durabilidad y Recuperación ante Fallos (`vault.py`, `atomic_json.py`, Gate F1.3):**
+   * Auditoría de Vault no destructiva (`audit_vault()`, `VaultAuditResult`, detección de truncamientos de fin de archivo vs corrupción intermedia).
+   * Protección contra concatenación de líneas truncadas en `Vault.append()`.
+   * `fsync` en directorio padre tras `os.replace` para garantizar durabilidad POSIX en inodos y entradas de directorio.
+   * Detección no destructiva de archivos temporales huérfanos (`.tmp.*`) en `config/` y `data/`.
+   * Pruebas exhaustivas de inyección de fallos (`test_persistence_faults.py`) y recuperación de caídas con `SIGKILL` (`test_crash_recovery.py`).
+4. **Definición y Validación de Esquemas JSON Base:**
    * `core_profile.json`: Estructura para registrar datos biológicos, límite postural (60 min), cursos activos, materias críticas y stack (.NET/C#).
    * `active_agenda.json`: Estructura del embudo con llaves fijas: `critical_task` (objeto o `null`), `secondary_tasks` (array de hasta 2 objetos), y `backlog` (array de tareas diferidas).
    * `siegfried_vault.jsonl`: Archivo inicial sin encabezados no-JSON (JSONL puro desde la primera línea con `Event Schema v1`).
-3. **Módulo `storage.py` (Librería Estándar de Python):**
+5. **Módulo `storage.py` (Librería Estándar de Python):**
    * **Escritura Atómica en JSONL (`append_vault`):** Apertura en modo append (`a`), obtención de bloqueo exclusivo `fcntl.flock(fd, fcntl.LOCK_EX)` sobre el archivo de bitácora, serialización JSON pura (incluyendo `v`, `ts`, `type`, `data`) + salto de línea, vaciado forzado de buffers a disco (`f.flush()`, `os.fsync(fd)`) y liberación del cerrojo (`fcntl.LOCK_UN`).
    * **Reemplazo Atómico con Lockfile Dedicado para JSON (`atomic_write_json`):**
      * Para archivos modificables (`active_agenda.json`), usar un archivo de cerrojo independiente (`active_agenda.lock`).
-     * Flujo estricto: `flock(lock_fd, LOCK_EX) → escribir archivo .tmp → flush() → os.fsync() → os.replace(.tmp, final) → flock(lock_fd, LOCK_UN)`.
+     * Flujo estricto: `flock(lock_fd, LOCK_EX) → escribir archivo .tmp → flush() → os.fsync() → os.replace(.tmp, final) → fsync(parent_dir) → flock(lock_fd, LOCK_UN)`.
      * Esto resuelve definitivamente el problema de pérdida o desincronización de cerrojos `fcntl` provocado por el reemplazo atómico de inodos en POSIX.
    * **Lectura Segura con Bloqueo Compartido (`read_vault_tail` / `read_json`):** Para JSON mutables, sincronizar con el lockfile correspondiente usando `fcntl.flock(lock_fd, fcntl.LOCK_SH)`. Para `siegfried_vault.jsonl`, bloqueo compartido directo sobre el fd.
 
@@ -79,22 +90,38 @@ Establecer la infraestructura de almacenamiento local en `~/.siegfried/`, garant
 
 ## Fase 2: Motor de Inferencia Híbrido, Presupuesto de Recursos y Fallback Local
 
-### 2.1 Objetivo y Alcance Técnico
-Desarrollar el subsistema de inferencia sin dependencias externas (`urllib.request`), implementando la política de tolerancia de red con deadline estricto de 10 segundos, gestor de ciclo de vida perezoso (*lazy loading*) de `llama-server` bajo presupuesto estricto de VRAM (≤3.0 GiB), enrutador regex sub-milisegundo (Fast-Path) y calibrador dinámico de tono.
+### 2.1 Objetivo y Alcance Técnico (Subfase 2.1: COMPLETADO — Gate F2.1: PASS | Subfase 2.2: COMPLETADO — Gate F2.2: PASS | Subfase 2.3: COMPLETADO — Gate F2.3: PASS)
+Desarrollar el subsistema de inferencia sin dependencias externas (`urllib.request`), implementando la política de tolerancia de red con deadline estricto de 10 segundos, gestor de ciclo de vida perezoso (*lazy loading*) de `llama-server` bajo presupuesto estricto de VRAM (≤3.0 GiB), enrutador regex sub-milisegundo (Fast-Path), orquestador híbrido con fallback seguro determinista y observabilidad protegida.
 
 ### 2.2 Tareas de Ingeniería
-1. **Cliente de Inferencia Cloud con Timeouts Granulares (`inference.py`):**
-   * Payload HTTP POST compatible con OpenAI/DeepSeek vía `urllib.request` y `json`.
-   * **Sin timeouts globales:** Eliminar `socket.setdefaulttimeout()`. Cada socket/request configura su timeout específico de conexión/lectura (3.0 s por intento).
-   * **Deadline Absoluto con `time.monotonic()`:** El buffer de gracia de 10 segundos se evalúa contra una marca de tiempo monotónica inmutable (`deadline = time.monotonic() + 10.0`). Los reintentos nunca superan este deadline acumulado antes de declarar el modo offline.
-2. **Supervisor de Proceso Local con Presupuesto de Recursos (`llama_manager.py`):**
-   * Control de `llama-server` vía `subprocess.Popen` asegurando custodia estricta del PID.
-   * **Presupuesto Dinámico de Recursos:** Parámetros configurables (`--n-gpu-layers`, `--ctx-size`, etc.) ajustados dinámicamente para garantizar el SLO de VRAM: **≤3.0 GiB asignados**, sin tratarse de valores rígidos.
-   * **Idle Timeout (15 min):** Hilo en segundo plano que monitorea inactividad offline. A los 900 segundos envía `SIGTERM` y libera la VRAM de la GPU.
-3. **Enrutador Rápido / Fast-Path (`router.py`):**
+1. **Cliente de Inferencia Cloud con Timeouts Granulares (`cloud.py`, Gate F2.1: COMPLETADO):**
+   * Payload HTTP POST compatible con OpenAI/DeepSeek vía `urllib.request`, `ssl` y `json`.
+   * **Contratos formales de inferencia (`inference.py`):** `InferenceMessage`, `InferenceRequest`, `InferenceResponse`, `InferenceUsage`.
+   * **Cero timeouts globales:** Prohibido terminantemente `socket.setdefaulttimeout()`. Cada request y conexión configuran timeouts granulares independientes.
+   * **Deadline Monotónico con `time.monotonic()`:** Presupuesto temporal inmutable evaluado antes del inicio, durante la conexión y entre bloques de lectura.
+   * **Seguridad y Privacidad Estricta:** HTTPS obligatorio para proveedores externos con TLS verification forzada (`CERT_REQUIRED`), bloqueo de `CERT_NONE`, `SafeRedirectHandler` para prevenir degradación de protocolos, lectura acotada por tamaño (`max_response_bytes`) para evitar DoS por memoria, y sanitización total de API keys/Bearer tokens en logs, representaciones (`__repr__`) y excepciones (`InferenceAuthError`, `InferenceConfigError`, `InferenceHTTPError`, `InferenceRateLimitError`, `InferenceTimeoutError`, `InferenceResponseError`).
+   * **Cargador de Secretos (`secrets.py`):** Lectura protegida de `secrets.env` con permisos `0600` e inspección sin symlinks inseguros.
+
+2. **Supervisor de Proceso Local y Presupuesto de Recursos (`llama_manager.py`, `resources.py`, `local.py`, Gate F2.2: COMPLETADO):**
+   * **Control de `llama-server` vía `subprocess.Popen` (`shell=False`):** Custodia estricta del PID en `/run/user/$UID/siegfried_llama.pid`. Terminación quirúrgica propia (`SIGTERM` con escalamiento a `SIGKILL` tras timeout) sin usar `pkill` ni `killall`.
+   * **Máquina de Estados del Servidor Local:** `UNAVAILABLE`, `STOPPED`, `STARTING`, `READY`, `BUSY`, `STOPPING`, `FAILED`.
+   * **Detección de Recursos y Presupuesto:** Inspección no destructiva de RAM y GPU (`/proc/meminfo`, `/sys/class/drm`), soporte CPU-only, techo estricto de VRAM GPU de **≤3.0 GiB** y reserva innegociable de RAM para el sistema operativo (2.0 GiB).
+   * **Health Checks y Loopback Security:** Verificación de salud acotada sobre `http://127.0.0.1:{port}/health` con detección instantánea de terminación prematura. Rechazo de binds públicos (`0.0.0.0`) y colisiones de puerto (`PortInUseError`).
+   * **Idle Eviction (15 min):** Apagado automático del servidor y liberación al 100% de la VRAM tras 900 segundos de inactividad, con protección ininterrumpida de inferencias activas.
+   * **Cliente HTTP Local (`local.py`):** Integración compatible con OpenAI API de `llama-server`, reutilizando contratos de F2.1 con deadlines monotónicos y lectura acotada de respuestas.
+
+3. **Orquestador Híbrido, Routing Determinista y Fallback Seguro (`orchestrator.py`, Gate F2.3: COMPLETADO):**
+   * **Políticas de Selección Explícitas:** `CLOUD_PREFERRED`, `LOCAL_PREFERRED`, `LOCAL_ONLY` y `CLOUD_ONLY`.
+   * **Presupuesto Temporal Monotónico Compartido:** Deadline global absoluto (10.0s) evaluado una única vez al ingresar y compartido entre primary y fallback sin reinicios de reloj. Fallback acotado por margen de seguridad (`min_fallback_margin_seconds=0.5s`) y estimación de arranque local (`estimated_local_startup_seconds=2.0s`).
+   * **Fallback Seguro y Clasificación Estricta:** Máximo 1 intento primario + 1 fallback (cero tormentas o bucles de reintentos). Errores recuperables (timeouts, transporte/red, HTTP 429/5xx, caída de proceso local) vs errores no recuperables (violaciones de seguridad, esquemas inválidos, contratos corruptos, límites de deadline).
+   * **Precedencia Absoluta de Privacidad:** Confinamiento estricto en `LOCAL_ONLY` (cero transmisiones externas bajo cualquier circunstancia; fallos locales devuelven error controlado y nunca degradan a Cloud).
+   * **Observabilidad Segura:** Sanitización total de trazas, excepciones y registros; cero fuga de prompts de usuario, respuestas del modelo, Bearer tokens o claves privadas.
+   * **Microbenchmark Routing:** Decisión del orquestador en memoria verificada en P95 de 0.0050 ms (< 1.0 ms).
+
+4. **Enrutador Rápido / Fast-Path (`router.py`):**
    * Expresiones regulares compiladas (`re.compile`) para intenciones operativas directas (pomodoro, prórroga, descanso manual, silenciado).
-   * Cumplimiento del SLO Fast-Path: respuesta P95 `<10 ms` sin invocar al LLM.
-4. **Frontera Determinista / LLM y Calibrador de Tono:**
+   * Cumplimiento del SLO Fast-Path: respuesta P95 `<10 ms` (0.0013 ms) sin invocar al LLM.
+5. **Frontera Determinista / LLM y Calibrador de Tono:**
    * Aplicación estricta de la regla: **“El LLM interpreta y recomienda; el núcleo determinista valida, calcula y ejecuta.”**
    * Entradas <7 palabras inyectan directiva `[MODO: EJECUTIVO]`.
    * Entradas >25 palabras inyectan `[MODO: MAYORDOMO_COMPLETO]`.
@@ -103,17 +130,21 @@ Desarrollar el subsistema de inferencia sin dependencias externas (`urllib.reque
 * **Proceso Zombie de `llama-server` reteniendo VRAM:** Manejador de salida con `atexit.register()`, captura de `SIGTERM` y guardado de PID en `/run/user/$UID/siegfried_llama.pid`.
 * **Falsos positivos en regex:** Delimitadores estrictos (`^...$`) y longitud máxima de 12 palabras. Si la frase es más larga, derivar a la Vía Cognitiva (LLM).
 * **Interferencia en sockets concurrentes:** Prohibir terminantemente `socket.setdefaulttimeout()` para que las llamadas de inferencia no alteren el comportamiento de sockets de IPC u otros módulos.
+* **Tormentas de reintentos en degradación de red:** Tope estricto de 2 intentos totales por solicitud gobernados por un deadline inmutable.
 
 ### 2.4 Estimación Temporal
 * Cliente HTTP con timeout granular y deadline monotónico: 2.5 h.
 * Gestor lazy load / idle timeout de `llama-server` con monitoreo de presupuesto VRAM: 4.0 h.
 * Regex Fast-Path y calibrador de tono: 2.5 h.
+* Orquestador híbrido, políticas y fallback seguro: 3.5 h.
 * Pruebas de descarga de VRAM con `nvidia-smi` y benchmarking de latencia: 2.0 h.
-* **Subtotal Fase 2: 11.0 horas.**
+* **Subtotal Fase 2: 14.5 horas.**
 
 ### 2.5 Criterio de Verificación
-1. Entrada *"iniciar bloque de 50"* responde cumpliendo SLO Fast-Path P95 `<10 ms`.
+1. Entrada *"iniciar bloque de 50"* responde cumpliendo SLO Fast-Path P95 `<10 ms` (0.0013 ms).
 2. Al desconectar la interfaz de red, el deadline de 10s monotonic expira con precisión, activa `llama-server` manteniéndolo dentro del presupuesto de VRAM (≤3.0 GiB) y el idle timeout de 15 min lo apaga limpiamente.
+3. Fallback seguro desde Cloud a Local ejecuta en menos del tiempo restante y preserva estricta privacidad bajo `LOCAL_ONLY`.
+
 
 ---
 

@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""Siegfried CLI entrypoint wrapper.
+
+Ensures proper PYTHONPATH and dispatches to siegfried.cli.app.
+"""
+
+import os
+import sys
+
+# Fast sys.path setup
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC_DIR = os.path.join(REPO_ROOT, "src")
+if SRC_DIR not in sys.path:
+    sys.path.insert(0, SRC_DIR)
+
+from siegfried.cli.app import run_cli
+
+if __name__ == "__main__":
+    sys.exit(run_cli())

@@ -1,0 +1,32 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment & Virtual environments
+.venv/
+venv/
+env/
+
+# Runtime / ephemeral files
+*.sock
+*.pid
+*.tmp
+*.lock
+
+# User data & testing temp dirs
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Siegfried local runtime (never commit runtime data to repo)
+.siegfried/
+data/*.jsonl
+data/*.log
+logs/*.log
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store

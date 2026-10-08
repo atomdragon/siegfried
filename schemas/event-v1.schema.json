@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SiegfriedEventV1",
+  "description": "Event Schema v1 for lines stored in siegfried_vault.jsonl",
+  "type": "object",
+  "required": ["v", "ts", "type", "data"],
+  "additionalProperties": false,
+  "properties": {
+    "v": {
+      "type": "integer",
+      "const": 1,
+      "description": "Schema version, strictly 1"
+    },
+    "ts": {
+      "type": "number",
+      "description": "Epoch timestamp in seconds with fractional precision"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "pomodoro_started",
+        "pomodoro_completed",
+        "pomodoro_cancelled",
+        "break_started",
+        "break_completed",
+        "break_interrupted",
+        "posture_warning",
+        "posture_limit_reached",
+        "postpone_granted",
+        "postpone_rejected",
+        "sleep_initiated",
+        "wake_detected",
+        "window_focus_sampled"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "description": "Payload specific to the event type"
+    }
+  }
+}

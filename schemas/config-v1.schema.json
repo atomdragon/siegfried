@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SiegfriedConfigV1",
+  "description": "Configuration Schemas for core_profile.json and active_agenda.json",
+  "definitions": {
+    "core_profile": {
+      "type": "object",
+      "required": ["v", "user_title", "posture_limit_min", "pomodoro_deep_work_min", "pomodoro_short_break_min"],
+      "properties": {
+        "v": { "type": "integer", "const": 1 },
+        "user_title": { "type": "string" },
+        "posture_limit_min": { "type": "number", "minimum": 1 },
+        "pomodoro_deep_work_min": { "type": "number", "minimum": 1 },
+        "pomodoro_short_break_min": { "type": "number", "minimum": 1 },
+        "pomodoro_agile_work_min": { "type": "number" },
+        "pomodoro_agile_break_min": { "type": "number" },
+        "active_courses": { "type": "array", "items": { "type": "string" } },
+        "critical_subjects": { "type": "array", "items": { "type": "string" } },
+        "tech_stack": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "active_agenda": {
+      "type": "object",
+      "required": ["v", "critical_task", "secondary_tasks", "backlog"],
+      "properties": {
+        "v": { "type": "integer", "const": 1 },
+        "critical_task": { "type": ["object", "null"] },
+        "secondary_tasks": { "type": "array", "maxItems": 2 },
+        "backlog": { "type": "array" }
+      }
+    }
+  }
+}
