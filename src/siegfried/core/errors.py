@@ -192,3 +192,8 @@ class PrivacyViolationError(InferenceSecurityError, OrchestrationError):
     pass
 
 
+class InferenceBusyError(InferenceError):
+    """Raised when cognitive inference capacity is saturated and backpressure is applied."""
+    pass
+
+

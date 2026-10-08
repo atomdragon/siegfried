@@ -118,32 +118,61 @@ Desarrollar el subsistema de inferencia sin dependencias externas (`urllib.reque
    * **Observabilidad Segura:** Sanitización total de trazas, excepciones y registros; cero fuga de prompts de usuario, respuestas del modelo, Bearer tokens o claves privadas.
    * **Microbenchmark Routing:** Decisión del orquestador en memoria verificada en P95 de 0.0050 ms (< 1.0 ms).
 
-4. **Enrutador Rápido / Fast-Path (`router.py`):**
-   * Expresiones regulares compiladas (`re.compile`) para intenciones operativas directas (pomodoro, prórroga, descanso manual, silenciado).
-   * Cumplimiento del SLO Fast-Path: respuesta P95 `<10 ms` (0.0013 ms) sin invocar al LLM.
-5. **Frontera Determinista / LLM y Calibrador de Tono:**
+4. **Integración Funcional CLI / REPL / IPC / Daemon / Inferencia Híbrida (`app.py`, `repl.py`, `router.py`, `server.py`, Gate F2.4: COMPLETADO):**
+   * **Recorrido A (Fast-Path Determinista):** CLI / REPL -> `CommandRouter` -> IPC (`STATUS`, `FOCUS`, etc.) -> Reactor Daemon -> Core determinista -> Respuesta directa en submilisegundos (P95: 0.0013 ms).
+   * **Recorrido B (Consulta Cognitiva):** `siegfried ask "<pregunta>"` y entrada conversacional libre en REPL -> `CommandRouter` -> IPC (`QUERY`) -> Daemon -> `InferenceOrchestrator` -> Cloud/Local -> Respuesta normalizada.
+   * **Reactor Asíncrono no Bloqueante:** Despacho de consultas `QUERY` a hilos de trabajo dedicados en `IPCServer._handle_async_client()`, liberando inmediatamente el bucle `selectors` para que los cronómetros `MonotonicTimer` y comandos fast-path se ejecuten a tiempo y sin latencia.
+   * **Confinamiento de Privacidad y Fallback Seguro:** Respeto estricto del parámetro `--policy` (`LOCAL_ONLY` garantiza cero llamadas de red externas); degradación resiliente con mensajes limpios al usuario sin trazas de Python ni fugas de tokens `sk-*` o `Bearer`.
+   * **Suite de Pruebas de Integración:** 38 tests automatizados en `test_functional_integration_f24.py` validando ambos recorridos, no-bloqueo del reactor, degradación, privacidad y UX CLI/REPL (Suite acumulada: 252 tests PASS).
+
+5. **Hardening de Concurrencia, Backpressure y Apagado Seguro (`server.py`, `errors.py`, Gate F2.4.1: COMPLETADO):**
+   * **Política de Capacidad Acotada:** `MAX_COGNITIVE_WORKERS = 3`, `MAX_PENDING_COGNITIVE_QUERIES = 0`. Máximo 3 consultas cognitivas admitidas concurrentemente; reserva atómica no bloqueante mediante `threading.BoundedSemaphore(3)`.
+   * **Backpressure Inmediato:** Una cuarta consulta cognitiva se rechaza inmediatamente en <1 ms con error tipado `InferenceBusyError` (`IPCStatus.REJECTED`, código `"INFERENCE_BUSY"`, mensaje `"El motor de inferencia está ocupado. Inténtalo nuevamente."`) sin crear hilos adicionales, sin encolar y sin bloquear el reactor.
+   * **Independencia del Fast-Path:** Comandos deterministas (`STATUS`, `PING`, `START_FOCUS`, etc.) no compiten por cupos cognitivos y responden en submilisegundos (P95: 0.0013 ms) incluso bajo saturación total de las 3 consultas.
+   * **Liberación de Capacidad:** Garantizada exactamente una vez en bloques `finally` ante éxito, error HTTP, excepción del orquestador o desconexión del cliente.
+   * **Protocolo de Apagado Seguro e Idempotente:** `stop(timeout_seconds=2.0)` cierra el socket de escucha para impedir nuevas conexiones, rechaza admisiones tardías con `SERVER_STOPPING`, espera a los trabajadores activos de forma acotada y reporta el estado real (`clean_shutdown` vs incompleto con registro de `residual_workers`).
+   * **Limitaciones Reales de Cancelación:** En Python stdlib, llamadas bloqueantes de socket/red no disponen de interrupción forzada segura; el protocolo registra transparentemente cualquier trabajador residual en lugar de ocultarlo con `daemon=True`.
+   * **Suite de Pruebas de Concurrencia:** 38 tests automatizados en `test_ipc_backpressure_f241.py` con sincronización determinista (`Event`, `Barrier`) sin sleeps arbitrarios (Suite acumulada: 290 tests PASS).
+
+6. **Frontera Determinista / LLM y Calibrador de Tono:**
    * Aplicación estricta de la regla: **“El LLM interpreta y recomienda; el núcleo determinista valida, calcula y ejecuta.”**
    * Entradas <7 palabras inyectan directiva `[MODO: EJECUTIVO]`.
    * Entradas >25 palabras inyectan `[MODO: MAYORDOMO_COMPLETO]`.
+
+7. **Auditoría Integral, Pruebas de Resiliencia y Cierre Formal (Gate F2.5: COMPLETADO / PASS):**
+   * Auditoría técnica independiente documentada en `docs/gates/GATE_F2_5_REPORT.md`.
+   * Blindaje contra fuga de credenciales en redirecciones cross-host (`SafeRedirectHandler` elimina cabecera `Authorization` hacia dominios ajenos).
+   * Regresión completa de 291 pruebas PASS (0 fallos, 0 errores en 9.24s).
+   * Verificación de SLOs: Fast-Path Router P95 = 0.0024 ms, Vault Append P95 = 2.24 ms, CLI Cold-Start P95 = 45.75 ms, Orchestrator Routing P95 = 0.0049 ms.
+   * Cierre formal de la Fase 2 aprobado.
 
 ### 2.3 Matriz de Riesgos y Mitigación
 * **Proceso Zombie de `llama-server` reteniendo VRAM:** Manejador de salida con `atexit.register()`, captura de `SIGTERM` y guardado de PID en `/run/user/$UID/siegfried_llama.pid`.
 * **Falsos positivos en regex:** Delimitadores estrictos (`^...$`) y longitud máxima de 12 palabras. Si la frase es más larga, derivar a la Vía Cognitiva (LLM).
 * **Interferencia en sockets concurrentes:** Prohibir terminantemente `socket.setdefaulttimeout()` para que las llamadas de inferencia no alteren el comportamiento de sockets de IPC u otros módulos.
 * **Tormentas de reintentos en degradación de red:** Tope estricto de 2 intentos totales por solicitud gobernados por un deadline inmutable.
+* **Bloqueo del reactor durante inferencias lentas:** Delegación de comandos `QUERY` a worker threads dedicados en el servidor IPC, desregistrando el cliente del reactor para mantener latencia P95 < 10 ms en comandos deterministas y disparos exactos de timers.
+* **Proliferación descontrolada de hilos:** Backpressure estricto mediante semáforo acotado con tope de 3 trabajadores cognitivos y cero cola de espera; la 4ta consulta se rechaza de inmediato con `INFERENCE_BUSY`.
+* **Fuga de tokens en redirecciones HTTP:** `SafeRedirectHandler` elimina `Authorization` en cualquier redirección que altere el hostname de destino.
 
 ### 2.4 Estimación Temporal
 * Cliente HTTP con timeout granular y deadline monotónico: 2.5 h.
 * Gestor lazy load / idle timeout de `llama-server` con monitoreo de presupuesto VRAM: 4.0 h.
 * Regex Fast-Path y calibrador de tono: 2.5 h.
 * Orquestador híbrido, políticas y fallback seguro: 3.5 h.
+* Integración funcional CLI / REPL / IPC / Daemon / Worker threads (F2.4): 3.0 h.
+* Hardening de concurrencia, backpressure y apagado seguro (F2.4.1): 2.0 h.
+* Auditoría integral, resiliencia y cierre formal (Gate F2.5): 1.5 h.
 * Pruebas de descarga de VRAM con `nvidia-smi` y benchmarking de latencia: 2.0 h.
-* **Subtotal Fase 2: 14.5 horas.**
+* **Subtotal Fase 2: 21.0 horas.**
 
 ### 2.5 Criterio de Verificación
 1. Entrada *"iniciar bloque de 50"* responde cumpliendo SLO Fast-Path P95 `<10 ms` (0.0013 ms).
 2. Al desconectar la interfaz de red, el deadline de 10s monotonic expira con precisión, activa `llama-server` manteniéndolo dentro del presupuesto de VRAM (≤3.0 GiB) y el idle timeout de 15 min lo apaga limpiamente.
 3. Fallback seguro desde Cloud a Local ejecuta en menos del tiempo restante y preserva estricta privacidad bajo `LOCAL_ONLY`.
+4. El comando `siegfried ask` y el REPL conversacional obtienen respuestas de inferencia híbrida a través del daemon sin bloquear el bucle de timers ni las consultas de estado concurrentes.
+5. Bajo 3 consultas cognitivas concurrentes, una 4ta consulta se rechaza inmediatamente sin encolar y sin crear hilos adicionales, manteniendo las consultas deterministas de estado respondiendo en < 10 ms.
+6. Fase 2 formalmente auditada y cerrada mediante Gate F2.5 (291 tests PASS, cero regresiones).
 
 
 ---

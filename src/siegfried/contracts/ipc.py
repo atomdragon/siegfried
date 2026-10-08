@@ -18,6 +18,7 @@ class IPCCommand(str, Enum):
     ACK_BREAK = "ACK_BREAK"
     MANUAL_SLEEP = "MANUAL_SLEEP"
     SHUTDOWN = "SHUTDOWN"
+    QUERY = "QUERY"
 
 
 class IPCStatus(str, Enum):
@@ -105,6 +106,25 @@ class IPCResponse(NamedTuple):
             status=IPCStatus.REJECTED.value,
             payload=dict(payload or {}),
             error_msg=reason
+        )
+
+    @classmethod
+    def busy(
+        cls,
+        request_id: str,
+        reason: str = "El motor de inferencia está ocupado. Inténtalo nuevamente.",
+        payload: Dict[str, Any] | None = None,
+    ) -> "IPCResponse":
+        p = dict(payload or {})
+        p.setdefault("code", "INFERENCE_BUSY")
+        p.setdefault("error_code", "INFERENCE_BUSY")
+        p.setdefault("success", False)
+        return cls(
+            v=IPC_PROTOCOL_VERSION,
+            request_id=request_id,
+            status=IPCStatus.REJECTED.value,
+            payload=p,
+            error_msg=reason,
         )
 
     def to_dict(self) -> Dict[str, Any]:

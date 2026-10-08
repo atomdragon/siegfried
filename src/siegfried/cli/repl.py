@@ -51,5 +51,25 @@ class SiegfriedREPL:
                 if match.direct_response:
                     print(f"Siegfried: {match.direct_response}")
             else:
-                # Placeholder for Deep-Path (LLM)
-                print("Siegfried: Vía cognitiva requerida (Modo Inferencia aún no activo en Fase 0/1).")
+                # Cognitive Path (LLM via Daemon IPC)
+                raw_query = match.args.get("raw_text", line)
+                try:
+                    resp = self.client.call(
+                        IPCCommand.QUERY,
+                        {"prompt": raw_query},
+                        timeout_seconds=15.0,
+                    )
+                    if resp.status == IPCStatus.OK.value:
+                        content = resp.payload.get("response", "")
+                        route = resp.payload.get("route_used", "")
+                        fallback = resp.payload.get("fallback_used", False)
+                        tag = f" [{route}]" if route else ""
+                        if fallback:
+                            tag += " (fallback)"
+                        print(f"Siegfried{tag}: {content}")
+                    elif resp.status == IPCStatus.REJECTED.value:
+                        print(f"Siegfried [Aviso]: Solicitud rechazada — {resp.error_msg}")
+                    else:
+                        print(f"Siegfried [Error]: {resp.error_msg}")
+                except IPCCommunicationError as e:
+                    print(f"Siegfried: No se pudo conectar con el daemon en segundo plano ({e}).")

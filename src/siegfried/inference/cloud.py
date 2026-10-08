@@ -77,18 +77,35 @@ class SafeRedirectHandler(urllib.request.HTTPRedirectHandler):
         headers: Any,
         newurl: str,
     ) -> urllib.request.Request | None:
-        parsed = urllib.parse.urlparse(newurl)
-        if parsed.scheme == "https":
-            return super().redirect_request(req, fp, code, msg, headers, newurl)
+        orig_parsed = urllib.parse.urlparse(req.full_url)
+        new_parsed = urllib.parse.urlparse(newurl)
 
-        if parsed.scheme == "http" and self.allow_http_localhost:
-            hostname = (parsed.hostname or "").lower()
+        if new_parsed.scheme == "https":
+            new_req = super().redirect_request(req, fp, code, msg, headers, newurl)
+        elif new_parsed.scheme == "http" and self.allow_http_localhost:
+            hostname = (new_parsed.hostname or "").lower()
             if hostname in ("127.0.0.1", "localhost", "::1"):
-                return super().redirect_request(req, fp, code, msg, headers, newurl)
+                new_req = super().redirect_request(req, fp, code, msg, headers, newurl)
+            else:
+                raise InferenceConfigError(
+                    f"Insecure redirect to non-HTTPS scheme '{new_parsed.scheme}' rejected"
+                )
+        else:
+            raise InferenceConfigError(
+                f"Insecure redirect to non-HTTPS scheme '{new_parsed.scheme}' rejected"
+            )
 
-        raise InferenceConfigError(
-            f"Insecure redirect to non-HTTPS scheme '{parsed.scheme}' rejected"
-        )
+        # Cross-host credential stripping: never leak Authorization header to a different host
+        if new_req is not None and (orig_parsed.netloc.lower() != new_parsed.netloc.lower()):
+            for header_name in list(new_req.headers.keys()):
+                if header_name.lower() == "authorization":
+                    del new_req.headers[header_name]
+            if hasattr(new_req, "unredirected_hdrs"):
+                for header_name in list(new_req.unredirected_hdrs.keys()):
+                    if header_name.lower() == "authorization":
+                        del new_req.unredirected_hdrs[header_name]
+
+        return new_req
 
 
 def validate_endpoint_url(url: str, allow_http_localhost: bool = True) -> urllib.parse.ParseResult:

@@ -27,11 +27,12 @@ class CommandRouter:
                 re.compile(r"^(?:iniciar\s+)?(?:bloque|pomodoro)(?:\s+de)?\s+(\d+)(?:\s+min)?(?:\s+(?:para|en)\s+(.+))?$", re.IGNORECASE),
                 self._match_start_focus
             ),
-            # "status", "estado", "tiempo"
+            # "status", "estado", "tiempo", "¿cuánto tiempo me queda?"
             (
-                re.compile(r"^(?:status|estado|tiempo|cuanto\s+falta)$", re.IGNORECASE),
+                re.compile(r"^(?:¿)?(?:status|estado|tiempo|cu[aá]nto\s+(?:tiempo\s+)?(?:me\s+)?(?:falta|queda))(?:\?)?$", re.IGNORECASE),
                 lambda m: RouteMatch(True, IPCCommand.STATUS, {})
             ),
+
             # "cancelar", "detener", "abortar"
             (
                 re.compile(r"^(?:cancelar|detener|abortar|parar)(?:\s+(?:bloque|pomodoro))?$", re.IGNORECASE),

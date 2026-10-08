@@ -15,13 +15,14 @@ class IPCClient:
         self.socket_path = Path(socket_path)
         self.timeout_seconds = timeout_seconds
 
-    def send_request(self, request: IPCRequest) -> IPCResponse:
+    def send_request(self, request: IPCRequest, timeout_seconds: float | None = None) -> IPCResponse:
         """Send a typed IPCRequest and return an IPCResponse."""
         if not self.socket_path.exists():
             raise IPCCommunicationError(f"Daemon socket does not exist at {self.socket_path}")
 
+        eff_timeout = float(timeout_seconds) if timeout_seconds is not None else self.timeout_seconds
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        sock.settimeout(self.timeout_seconds)
+        sock.settimeout(eff_timeout)
         try:
             sock.connect(str(self.socket_path))
             # Send serialized request frame
@@ -52,7 +53,12 @@ class IPCClient:
             except OSError:
                 pass
 
-    def call(self, cmd: IPCCommand | str, args: Dict[str, Any] | None = None) -> IPCResponse:
+    def call(
+        self,
+        cmd: IPCCommand | str,
+        args: Dict[str, Any] | None = None,
+        timeout_seconds: float | None = None,
+    ) -> IPCResponse:
         """Helper to invoke a command directly."""
         req = IPCRequest.create(cmd=cmd, args=args)
-        return self.send_request(req)
+        return self.send_request(req, timeout_seconds=timeout_seconds)

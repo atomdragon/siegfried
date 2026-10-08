@@ -11,7 +11,7 @@
         "v": { "type": "integer", "const": 1 },
         "cmd": {
           "type": "string",
-          "enum": ["PING", "STATUS", "START_FOCUS", "CANCEL_FOCUS", "POSTPONE", "ACK_BREAK", "MANUAL_SLEEP", "SHUTDOWN"]
+          "enum": ["PING", "STATUS", "START_FOCUS", "CANCEL_FOCUS", "POSTPONE", "ACK_BREAK", "MANUAL_SLEEP", "SHUTDOWN", "QUERY"]
         },
         "args": { "type": "object" },
         "request_id": { "type": "string" }

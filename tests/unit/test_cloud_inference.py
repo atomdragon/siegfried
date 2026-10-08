@@ -393,6 +393,21 @@ class TestCloudInference(unittest.TestCase):
         with self.assertRaises(InferenceConfigError):
             handler.redirect_request(req, None, 302, "Found", {}, "http://evil.com/redirect")
 
+    # 22. Redirección entre diferentes hosts elimina header Authorization
+    def test_22_cross_host_redirect_strips_authorization(self):
+        handler = SafeRedirectHandler()
+        req = urllib.request.Request(
+            "https://api.deepseek.com/chat/completions",
+            headers={"Authorization": "Bearer sk-test-key-12345"},
+        )
+        new_req = handler.redirect_request(
+            req, None, 302, "Found", {}, "https://other-domain.com/v1/chat"
+        )
+        self.assertIsNotNone(new_req)
+        auth_header = new_req.headers.get("Authorization") or new_req.headers.get("authorization")
+        self.assertIsNone(auth_header)
+
+
 
 if __name__ == "__main__":
     unittest.main()

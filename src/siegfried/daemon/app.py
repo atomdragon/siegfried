@@ -9,13 +9,24 @@ Manages:
 
 import signal
 import sys
+import threading
 import time
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 from siegfried.contracts.states import SystemState
 from siegfried.contracts.events import Event, EventType
 from siegfried.contracts.ipc import IPCRequest, IPCResponse, IPCCommand, IPCStatus
+from siegfried.contracts.inference import InferencePolicy, InferenceMessage, InferenceRequest
 from siegfried.core.state_machine import HealthStateMachine
-from siegfried.core.errors import InvalidStateTransitionError, PostureLimitReachedError, StorageError
+from siegfried.core.errors import (
+    InvalidStateTransitionError,
+    PostureLimitReachedError,
+    StorageError,
+    InferenceError,
+    InferenceBusyError,
+    NoAvailableEngineError,
+    InferenceDeadlineExceededError,
+    PrivacyViolationError,
+)
 from siegfried.storage.paths import SiegfriedPaths, default_paths
 from siegfried.storage.vault import Vault
 from siegfried.ipc.server import IPCServer
@@ -23,16 +34,26 @@ from siegfried.daemon.timers import MonotonicTimer
 from siegfried.integrations.notifications import NotificationSender, DesktopNotificationSender
 from siegfried.integrations.audio import AudioPlayer, PipeWireAudioPlayer
 from siegfried.observability.logging import setup_logger
+import re
+
+
+def _sanitize_error_text(text: str) -> str:
+    """Sanitize error messages to ensure zero leakage of tokens, Bearer headers, or secrets."""
+    cleaned = re.sub(r"sk-[a-zA-Z0-9_\-]+", "[REDACTED_KEY]", str(text))
+    cleaned = re.sub(r"Bearer\s+[^\s,]+", "Bearer [REDACTED_TOKEN]", cleaned)
+    return cleaned
 
 
 class SiegfriedDaemon:
     """Core daemon managing state, timers, IPC and hardware alerts."""
+
 
     def __init__(
         self,
         paths: SiegfriedPaths | None = None,
         notifier: NotificationSender | None = None,
         audio_player: AudioPlayer | None = None,
+        orchestrator: Any | None = None,
     ) -> None:
         self.paths = paths or default_paths
         self.paths.ensure_directories()
@@ -48,6 +69,9 @@ class SiegfriedDaemon:
         self._running = False
         self._stopped = False
         self._active_task_name = ""
+        self._orchestrator = orchestrator
+        self._orchestrator_lock = threading.Lock()
+
 
     def _validate_startup_runtime(self) -> None:
         """Validate that all existing runtime resources are secure, non-corrupted and safe to use."""
@@ -132,16 +156,22 @@ class SiegfriedDaemon:
         finally:
             self.stop()
 
-    def stop(self) -> None:
+    def stop(self, timeout_seconds: float = 2.0) -> bool:
         """Clean shutdown of daemon."""
         if self._stopped:
-            return
+            return True
         self._stopped = True
         self.logger.info("Deteniendo Siegfried Daemon...")
         self._running = False
         self.audio_player.stop_alert()
-        self.ipc_server.stop()
-        self.logger.info("Siegfried Daemon detenido correctamente.")
+        clean = self.ipc_server.stop(timeout_seconds=timeout_seconds)
+        if clean:
+            self.logger.info("Siegfried Daemon detenido correctamente.")
+        else:
+            self.logger.warning(
+                f"Siegfried Daemon detenido con {len(self.ipc_server.residual_workers)} trabajadores residuales."
+            )
+        return clean
 
     def _handle_signal(self, signum: int, frame: Any) -> None:
         self._running = False
@@ -247,5 +277,122 @@ class SiegfriedDaemon:
             self._running = False
             return IPCResponse.ok(req.request_id, {"message": "Daemon apagándose..."})
 
+        elif cmd == IPCCommand.QUERY.value:
+            prompt = req.args.get("prompt") or req.args.get("raw_text")
+            if not prompt or not isinstance(prompt, str) or not prompt.strip():
+                return IPCResponse.rejected(req.request_id, "Prompt vacío o inválido.")
+            if len(prompt) > 32768:
+                return IPCResponse.rejected(req.request_id, "Prompt excede tamaño máximo permitido (32 KB).")
+
+            policy_arg = req.args.get("policy")
+            policy = None
+            if policy_arg:
+                try:
+                    policy = InferencePolicy(policy_arg)
+                except ValueError:
+                    return IPCResponse.error(req.request_id, f"Política de inferencia inválida: {policy_arg}")
+
+            timeout_arg = req.args.get("timeout_seconds")
+            timeout_seconds = float(timeout_arg) if timeout_arg else 10.0
+
+            messages_arg = req.args.get("messages")
+            if messages_arg and isinstance(messages_arg, list):
+                try:
+                    messages = [InferenceMessage.from_dict(m) for m in messages_arg]
+                except Exception as e:
+                    return IPCResponse.error(req.request_id, f"Mensajes inválidos: {e}")
+            else:
+                messages = [InferenceMessage(role="user", content=prompt.strip())]
+
+            inf_req = InferenceRequest(
+                messages=messages,
+                timeout_seconds=timeout_seconds,
+            )
+
+            try:
+                orchestrator = self._get_orchestrator()
+                result = orchestrator.orchestrate(
+                    request=inf_req,
+                    policy=policy,
+                    request_id=req.request_id,
+                )
+                route_used_str = (
+                    result.route_used.value
+                    if hasattr(result.route_used, "value")
+                    else str(result.route_used)
+                )
+                return IPCResponse.ok(req.request_id, {
+                    "response": result.response.content,
+                    "model": result.response.model,
+                    "route_used": route_used_str,
+                    "fallback_used": result.fallback_used,
+                    "fallback_reason": result.fallback_reason,
+                    "elapsed_ms": result.elapsed_ms,
+                    "request_id": result.request_id,
+                })
+            except InferenceBusyError as e:
+                msg = _sanitize_error_text(str(e) or "El motor de inferencia está ocupado. Inténtalo nuevamente.")
+                return IPCResponse.busy(req.request_id, reason=msg)
+            except NoAvailableEngineError as e:
+                msg = _sanitize_error_text(f"Motor de inferencia no disponible ({type(e).__name__}): {e}")
+                return IPCResponse.error(req.request_id, msg, {"error_type": "NoAvailableEngineError"})
+            except InferenceDeadlineExceededError as e:
+                msg = _sanitize_error_text(f"Tiempo límite de inferencia agotado ({type(e).__name__}): {e}")
+                return IPCResponse.error(req.request_id, msg, {"error_type": "InferenceDeadlineExceededError"})
+            except PrivacyViolationError as e:
+                msg = _sanitize_error_text(f"Violación de política de privacidad ({type(e).__name__}): {e}")
+                return IPCResponse.error(req.request_id, msg, {"error_type": "PrivacyViolationError"})
+            except InferenceError as e:
+                msg = _sanitize_error_text(f"Fallo en motor de inferencia ({type(e).__name__}): {e}")
+                return IPCResponse.error(req.request_id, msg, {"error_type": type(e).__name__})
+            except Exception as e:
+                self.logger.error(f"Error inesperado durante inferencia: {e}")
+                msg = _sanitize_error_text(f"Error inesperado en inferencia ({type(e).__name__}): {e}")
+                return IPCResponse.error(req.request_id, msg, {"error_type": "UnexpectedError"})
+
+
         else:
             return IPCResponse.error(req.request_id, f"Comando desconocido: {cmd}")
+
+    def _get_orchestrator(self) -> Any:
+        """Retrieve or lazily initialize InferenceOrchestrator."""
+        with self._orchestrator_lock:
+            if self._orchestrator is None:
+                self._orchestrator = self._init_orchestrator()
+            return self._orchestrator
+
+    def _init_orchestrator(self) -> Any:
+        """Lazily initialize InferenceOrchestrator with safe defaults and zero startup blocking."""
+        from siegfried.storage.secrets import get_secret
+        from siegfried.inference.cloud import CloudInferenceClient
+        from siegfried.inference.local import LocalInferenceClient
+        from siegfried.inference.llama_manager import LlamaLifecycleManager
+        from siegfried.inference.orchestrator import InferenceOrchestrator
+
+        # 1. Cloud Client (lazy check of secrets.env)
+        cloud_client = None
+        try:
+            api_key = get_secret("DEEPSEEK_API_KEY", secrets_file=self.paths.secrets_file)
+            if api_key:
+                cloud_client = CloudInferenceClient(api_key=api_key, paths=self.paths)
+        except Exception as e:
+            self.logger.warning(f"No se pudo inicializar cliente Cloud: {e}")
+
+        # 2. Local Manager & Client (lazy check of local model/binary)
+        local_client = None
+        local_mgr = None
+        try:
+            local_mgr = LlamaLifecycleManager(paths=self.paths)
+            local_client = LocalInferenceClient(manager=local_mgr)
+        except Exception as e:
+            self.logger.warning(f"No se pudo inicializar gestor Local: {e}")
+
+        # Privacy precedence: default to LOCAL_PREFERRED if cloud is configured, otherwise LOCAL_ONLY
+        default_policy = InferencePolicy.LOCAL_PREFERRED if cloud_client else InferencePolicy.LOCAL_ONLY
+
+        return InferenceOrchestrator(
+            cloud_client=cloud_client,
+            local_client=local_client,
+            local_manager=local_mgr,
+            default_policy=default_policy,
+        )

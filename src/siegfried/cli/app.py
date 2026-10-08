@@ -64,7 +64,19 @@ def run_cli(args: list[str] | None = None, paths: Any = None) -> int:
     # ack
     subparsers.add_parser("ack", help="Silenciar alarma y confirmar descanso")
 
+    # ask
+    ask_p = subparsers.add_parser("ask", help="Consultar a Siegfried por la vía cognitiva")
+    ask_p.add_argument("prompt", type=str, nargs="+", help="Texto de la consulta")
+    ask_p.add_argument(
+        "--policy",
+        type=str,
+        choices=["CLOUD_PREFERRED", "LOCAL_PREFERRED", "LOCAL_ONLY", "CLOUD_ONLY"],
+        default=None,
+        help="Política de inferencia",
+    )
+
     parsed = parser.parse_args(args)
+
 
     if parsed.command == "init":
         from siegfried.storage.paths import default_paths
@@ -151,9 +163,31 @@ def run_cli(args: list[str] | None = None, paths: Any = None) -> int:
             res = client.call(IPCCommand.CANCEL_FOCUS)
         elif parsed.command == "ack":
             res = client.call(IPCCommand.ACK_BREAK)
+        elif parsed.command == "ask":
+            full_prompt = " ".join(parsed.prompt)
+            args_payload = {"prompt": full_prompt}
+            if parsed.policy:
+                args_payload["policy"] = parsed.policy
+            res = client.call(IPCCommand.QUERY, args_payload, timeout_seconds=15.0)
+            if res.status == IPCStatus.OK.value:
+                content = res.payload.get("response", "")
+                route = res.payload.get("route_used", "")
+                fallback = res.payload.get("fallback_used", False)
+                tag = f" [{route}]" if route else ""
+                if fallback:
+                    tag += " (fallback)"
+                print(f"Siegfried{tag}: {content}")
+                return 0
+            elif res.status == IPCStatus.REJECTED.value:
+                print(f"[REJECTED] {res.error_msg}", file=sys.stderr)
+                return 1
+            else:
+                print(f"[ERROR] {res.error_msg}", file=sys.stderr)
+                return 1
         else:
             parser.print_help()
             return 1
+
 
         if res.status == IPCStatus.OK.value:
             print(f"[OK] {res.payload}")

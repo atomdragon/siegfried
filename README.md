@@ -104,7 +104,7 @@ python3 tools/benchmark.py
 # Modo interactivo REPL:
 ./bin/siegfried
 
-# Comandos directos:
+# Comandos directos deterministas (Fast-Path):
 ./bin/siegfried init
 ./bin/siegfried doctor
 ./bin/siegfried ping
@@ -112,6 +112,10 @@ python3 tools/benchmark.py
 ./bin/siegfried focus 25 -t "Arquitectura de Software"
 ./bin/siegfried ack
 ./bin/siegfried cancel
+
+# Consulta cognitiva híbrida (Cloud / Local):
+./bin/siegfried ask "¿Cuál es la mejor estrategia para organizar mis tareas críticas?"
+./bin/siegfried ask "¿Qué recomiendas para este bloque?" --policy LOCAL_ONLY
 ```
 
 ### Configuración del Cliente Cloud de Inferencia
@@ -133,17 +137,15 @@ Siegfried incluye supervisión autónoma de `llama-server` para contingencias of
 - **Idle Eviction:** Si transcurren 15 minutos sin solicitudes activas, el supervisor envía `SIGTERM` (y `SIGKILL` como salvaguarda) exclusivamente a su propio proceso, liberando el 100% de la VRAM.
 - **Seguridad de Red:** Enlace estricto a loopback (`127.0.0.1`); rechazo automático de binds públicos y colisiones de puerto.
 
-### Orquestador Híbrido, Routing Determinista y Fallback Seguro (Gate F2.3)
+### Integración Funcional CLI / REPL / Daemon (Gate F2.4) y Hardening de Concurrencia (Gate F2.4.1)
 
-El subsistema de inferencia se coordina mediante `InferenceOrchestrator` (`siegfried.inference.orchestrator`):
-- **Políticas de Selección:**
-  - `CLOUD_PREFERRED`: Intenta Cloud (DeepSeek); ante fallos recuperables y margen de deadline disponible, realiza fallback transparente a Local.
-  - `LOCAL_PREFERRED`: Intenta Local (`llama-server`); ante fallos locales o falta de recursos, realiza fallback seguro a Cloud.
-  - `LOCAL_ONLY`: Confinamiento estricto en la máquina local. Cero tráfico externo bajo cualquier circunstancia; si Local falla, la operación concluye con error controlado sin fuga de datos.
-  - `CLOUD_ONLY`: Ejecución exclusiva en Cloud sin activar el gestor local.
-- **Presupuesto Temporal Global:** Deadline monotónico inmutable (10.0s) evaluado en la entrada y compartido de forma no reiniciable entre el intento primario y el fallback.
-- **Límite de Reintentos:** Máximo estricto de 1 intento primario y 1 fallback; previene tormentas de reintentos en fallas de red.
-- **Aislamiento del Fast-Path:** Comandos deterministas (`iniciar bloque de 50`, `status`, `cancelar`, `ack`) se resuelven en submilisegundos por regex (`CommandRouter`) sin invocar ni bloquear sobre modelos de lenguaje.
+La experiencia de conversación y comando unifica el control determinista y cognitivo:
+- **Recorrido A (Fast-Path):** Comandos de alta frecuencia (`status`, `focus 25`, `cancelar`, `ack`) son interceptados por `CommandRouter` y enviados vía IPC directo al demonio. No intervienen LLMs, respondiendo en submilisegundos (P95: 0.0013 ms).
+- **Recorrido B (Consulta Cognitiva):** `siegfried ask "<pregunta>"` y preguntas libres en el REPL (`[Siegfried] > ...`) se envían vía comando `QUERY` del protocolo IPC v1. El demonio atiende la consulta mediante `InferenceOrchestrator`, seleccionando Cloud o Local según la política (`CLOUD_PREFERRED`, `LOCAL_PREFERRED`, `LOCAL_ONLY`, `CLOUD_ONLY`).
+- **Política de Capacidad y Backpressure (F2.4.1):** Límite estricto de **3 trabajadores cognitivos simultáneos** (`MAX_COGNITIVE_WORKERS = 3`) y **cero cola de espera**. La 4ta consulta se rechaza de inmediato en < 1 ms con código `INFERENCE_BUSY` (*"El motor de inferencia está ocupado. Inténtalo nuevamente."*), evitando saturación de memoria o tormentas de hilos.
+- **Reactor Daemon No Bloqueante:** El bucle `selectors` del demonio delega las consultas `QUERY` admitidas a hilos de trabajo asíncronos (`_handle_async_client`), manteniendo los cronómetros `MonotonicTimer` y las solicitudes concurrentes de estado completamente inmunes a latencias de inferencia.
+- **Apagado Seguro e Idempotente:** Protocolo `stop()` que detiene nuevas conexiones en el socket de escucha, rechaza admisiones tardías, espera a trabajadores activos de forma acotada (timeout 2.0 s) y reporta con transparencia cualquier trabajador residual.
+- **Privacidad y Seguridad:** Sanitización de trazas en respuestas de error al usuario, con reemplazo garantizado de secretos `sk-*` o encabezados `Bearer`.
 
 ---
 
@@ -152,9 +154,9 @@ El subsistema de inferencia se coordina mediante `InferenceOrchestrator` (`siegf
 | Componente | Métrica Objetivo | Medición Real (P50) | Medición Real (P95) | Veredicto |
 |---|---|---|---|---|
 | **Fast-Path Regex Router** | P95 < 10.0 ms | 0.0009 ms | 0.0013 ms | **PASS** |
-| **Orchestrator Routing Microbenchmark** | P95 < 1.0 ms | 0.0045 ms | 0.0050 ms | **PASS** |
-| **Vault Event Append** (`flock` + `fsync`) | P95 < 5.0 ms | 1.0282 ms | 2.2407 ms | **PASS** |
-| **CLI Cold-Start** (`siegfried --help`) | P95 < 50.0 ms | 37.15 ms | 44.91 ms | **PASS** |
+| **Orchestrator Routing Microbenchmark** | P95 < 1.0 ms | 0.0044 ms | 0.0049 ms | **PASS** |
+| **Vault Event Append** (`flock` + `fsync`) | P95 < 5.0 ms | 1.0194 ms | 2.1550 ms | **PASS** |
+| **CLI Cold-Start** (`siegfried --help`) | P95 < 50.0 ms | 35.05 ms | 43.29 ms | **PASS** |
 
 ---
 
@@ -163,4 +165,5 @@ El subsistema de inferencia se coordina mediante `InferenceOrchestrator` (`siegf
 Para consultar los documentos maestros detallados:
 - [SPECIFICATION.md](file:///media/okami/Mio/Siegfried/SPECIFICATION.md): Especificación arquitectónica, SLOs, hardware y diseño del sistema.
 - [PLAN.md](file:///media/okami/Mio/Siegfried/PLAN.md): Plan de fases (Fase 0 a 5), cronograma y criterios de aceptación.
+- [GATE_F2_5_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F2_5_REPORT.md): Informe de auditoría integral y cierre formal de la Fase 2.
 

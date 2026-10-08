@@ -26,6 +26,11 @@ data/*.jsonl
 data/*.log
 logs/*.log
 
+# Secrets & Local models (never commit weights or API keys)
+secrets.env
+*.env
+*.gguf
+
 # IDE & OS
 .vscode/
 .idea/
