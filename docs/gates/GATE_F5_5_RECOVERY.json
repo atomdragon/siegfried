@@ -486,5 +486,5257 @@
       "verified_at_utc": "2026-10-09T18:01:47.936826+00:00",
       "verification": "PASS: stat/getfacl, ownership/inodes retained; no internal file or other permissions modified."
     }
-  ]
+  ],
+  "runtime_initialization_actions": [
+    {
+      "authorization": "User authorized exclusively the exact init and doctor commands, in that order; no deployment or activation.",
+      "status": "READY_VERIFIED",
+      "precheck_at_utc": "2026-10-09T18:09:38.624748+00:00",
+      "runtime_path": "/home/okami/.siegfried",
+      "path_exact_and_no_symlinks": true,
+      "existing_metadata": {
+        "": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1529574,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791521500293563853,
+          "mtime_ns": 1791521500293563853,
+          "ctime_ns": 1791568497851683631,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "data": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1529575,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791521500293563853,
+          "mtime_ns": 1791567786810576582,
+          "ctime_ns": 1791568803278801956,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "data/.history": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1553351,
+          "device": 48,
+          "size": 6056,
+          "atime_ns": 1791567786809446667,
+          "mtime_ns": 1791567786809446667,
+          "ctime_ns": 1791567786810600146,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        }
+      },
+      "existing_files_not_overwritten": true,
+      "source_integrity": "unchanged from reviewed 61-source manifest",
+      "head_before": "0c8a088fcefafaaee8dbd10fd405f4062c347333",
+      "verified_at_utc": "2026-10-09T18:09:38.827020+00:00",
+      "commands": [
+        {
+          "command": "SIEGFRIED_HOME=\"$HOME/.siegfried\" /usr/bin/python3 -B /media/okami/Mio/Siegfried/bin/siegfried init",
+          "exit_code": 0,
+          "ready": true
+        },
+        {
+          "command": "SIEGFRIED_HOME=\"$HOME/.siegfried\" /usr/bin/python3 -B /media/okami/Mio/Siegfried/bin/siegfried doctor",
+          "exit_code": 0,
+          "ready": true
+        }
+      ],
+      "post_metadata": {
+        "": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1529574,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791521500293563853,
+          "mtime_ns": 1791569378689796885,
+          "ctime_ns": 1791569378689796885,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "data": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1529575,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791521500293563853,
+          "mtime_ns": 1791569378712797046,
+          "ctime_ns": 1791569378712797046,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "config": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1567374,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791569378689796885,
+          "mtime_ns": 1791569378707797011,
+          "ctime_ns": 1791569378707797011,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "assets": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1567375,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791569378689796885,
+          "mtime_ns": 1791569378689796885,
+          "ctime_ns": 1791569378689796885,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "logs": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1567377,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791569378689796885,
+          "mtime_ns": 1791569378689796885,
+          "ctime_ns": 1791569378689796885,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        },
+        "data/.history": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1553351,
+          "device": 48,
+          "size": 6056,
+          "atime_ns": 1791567786809446667,
+          "mtime_ns": 1791567786809446667,
+          "ctime_ns": 1791567786810600146,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "data/vault.lock": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567384,
+          "device": 48,
+          "size": 0,
+          "atime_ns": 1791569378707797011,
+          "mtime_ns": 1791569378707797011,
+          "ctime_ns": 1791569378707797011,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "data/siegfried_vault.jsonl": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567385,
+          "device": 48,
+          "size": 0,
+          "atime_ns": 1791569378707797011,
+          "mtime_ns": 1791569378707797011,
+          "ctime_ns": 1791569378712797046,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/secrets.lock": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567378,
+          "device": 48,
+          "size": 0,
+          "atime_ns": 1791569378689796885,
+          "mtime_ns": 1791569378689796885,
+          "ctime_ns": 1791569378689796885,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/secrets.env": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567379,
+          "device": 48,
+          "size": 118,
+          "atime_ns": 1791569378690638581,
+          "mtime_ns": 1791569378690695721,
+          "ctime_ns": 1791569378695796927,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/core_profile.lock": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567380,
+          "device": 48,
+          "size": 0,
+          "atime_ns": 1791569378696796934,
+          "mtime_ns": 1791569378696796934,
+          "ctime_ns": 1791569378696796934,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/core_profile.json": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567381,
+          "device": 48,
+          "size": 320,
+          "atime_ns": 1791569378696796934,
+          "mtime_ns": 1791569378697070704,
+          "ctime_ns": 1791569378701796969,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/active_agenda.lock": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567382,
+          "device": 48,
+          "size": 0,
+          "atime_ns": 1791569378701796969,
+          "mtime_ns": 1791569378701796969,
+          "ctime_ns": 1791569378701796969,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "config/active_agenda.json": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1567383,
+          "device": 48,
+          "size": 80,
+          "atime_ns": 1791569378702925024,
+          "mtime_ns": 1791569378703022370,
+          "ctime_ns": 1791569378707797011,
+          "nlink": 1,
+          "directory": false,
+          "regular": true
+        },
+        "assets/sounds": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1567376,
+          "device": 48,
+          "size": null,
+          "atime_ns": 1791569378689796885,
+          "mtime_ns": 1791569378689796885,
+          "ctime_ns": 1791569378689796885,
+          "nlink": 1,
+          "directory": true,
+          "regular": false
+        }
+      },
+      "created_directories": [
+        "assets",
+        "assets/sounds",
+        "config",
+        "logs"
+      ],
+      "created_files": [
+        "config/active_agenda.json",
+        "config/active_agenda.lock",
+        "config/core_profile.json",
+        "config/core_profile.lock",
+        "config/secrets.env",
+        "config/secrets.lock",
+        "data/siegfried_vault.jsonl",
+        "data/vault.lock"
+      ],
+      "all_existing_regular_files_contents_and_metadata_preserved": true,
+      "history_content_uid_gid_mode_inode_timestamps_preserved": true,
+      "private_fingerprints_persisted": false,
+      "private_content_printed": false,
+      "doctor_ready": true,
+      "no_component_installed": true,
+      "no_daemon_started": true,
+      "no_service_or_autostart_activated": true
+    }
+  ],
+  "snapshot_deployment_actions": [
+    {
+      "authorization": "User authorized exclusively the two private code snapshots; no units, XDG Autostart, daemon, REPL or activation.",
+      "status": "PREPARED_VERIFIED",
+      "precheck_at_utc": "2026-10-09T18:22:02.456132+00:00",
+      "command_exact": "cd /media/okami/Mio/Siegfried\n/usr/bin/python3 -B - <<'PY'\nimport hashlib\nimport json\nfrom pathlib import Path\nfrom tools.install_boot_briefing import _validate_home, package_sources, prepare_package\nroot = Path.cwd()\nhome = _validate_home(Path.home())\nevidence = json.loads((root / 'docs/gates/GATE_F5_5_EVIDENCE.json').read_text())\nplans = [(True, evidence['source_hashes']), (False, evidence['briefing_source_hashes'])]\nfor daemon, reviewed in plans:\n    sources = package_sources(root, daemon=daemon)\n    assert {name: hashlib.sha256(data).hexdigest() for name, data in sources.items()} == reviewed\nfor daemon, reviewed in plans:\n    package = prepare_package(home, root, False, daemon=daemon)\n    assert {name: hashlib.sha256((package / name).read_bytes()).hexdigest() for name in reviewed} == reviewed\n    print('Snapshot privado verificado:', package)\nPY",
+      "command_sha256": "b3718c5de3b5f5589145ce8d85752f78f76e9e2318e8ba33f0162c41f5c2a540",
+      "prior_destinations": {
+        "/home/okami/.local/share/siegfried-daemon": {
+          "exists": false
+        },
+        "/home/okami/.local/share/siegfried-boot": {
+          "exists": false
+        }
+      },
+      "source_hashes_match_reviewed": true,
+      "private_fingerprints_persisted": false,
+      "runtime_was_ready": true,
+      "components_before": {
+        "/home/okami/.config/systemd/user/siegfried.service": false,
+        "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+        "/home/okami/.siegfried/bin": false,
+        "/run/user/1000/siegfried.sock": false,
+        "/run/user/1000/siegfried_llama.pid": false,
+        "/run/user/1000/siegfried_briefing.lock": false
+      },
+      "rollback_if_failed": "Only these newly created marked snapshots after owner/type/allowlist checks; preserve all runtime and prior files.",
+      "verified_at_utc": "2026-10-09T18:22:04.140048+00:00",
+      "command_exit_code": 0,
+      "snapshots": {
+        "/home/okami/.local/share/siegfried-daemon": {
+          "source_count": 61,
+          "files": {
+            ".siegfried-owned": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568581,
+              "sha256": "d3e3f63629b47563a307f7c8028779ddddb497af9641c799a5f70260126a1a6b",
+              "size": 5
+            },
+            "bin/siegfried": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568507,
+              "sha256": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+              "size": 437
+            },
+            "bin/siegfried-daemon": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568508,
+              "sha256": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b",
+              "size": 909
+            },
+            "scripts/boot_hook.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568505,
+              "sha256": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+              "size": 3744
+            },
+            "scripts/kwin_focus_watcher/contents/code/main.js": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568514,
+              "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+              "size": 4140
+            },
+            "scripts/kwin_focus_watcher/metadata.json": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568511,
+              "sha256": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97",
+              "size": 509
+            },
+            "scripts/kwin_focus_watcher.js": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568509,
+              "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+              "size": 4140
+            },
+            "src/siegfried/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568517,
+              "sha256": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+              "size": 164
+            },
+            "src/siegfried/cli/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568519,
+              "sha256": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+              "size": 702
+            },
+            "src/siegfried/cli/app.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568520,
+              "sha256": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+              "size": 9519
+            },
+            "src/siegfried/cli/repl.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568521,
+              "sha256": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+              "size": 12105
+            },
+            "src/siegfried/cli/router.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568522,
+              "sha256": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+              "size": 7412
+            },
+            "src/siegfried/contracts/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568524,
+              "sha256": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+              "size": 1601
+            },
+            "src/siegfried/contracts/alerts.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568525,
+              "sha256": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+              "size": 1694
+            },
+            "src/siegfried/contracts/config.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568526,
+              "sha256": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+              "size": 4118
+            },
+            "src/siegfried/contracts/events.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568527,
+              "sha256": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+              "size": 2827
+            },
+            "src/siegfried/contracts/inference.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568528,
+              "sha256": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+              "size": 6746
+            },
+            "src/siegfried/contracts/ipc.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568529,
+              "sha256": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+              "size": 5025
+            },
+            "src/siegfried/contracts/states.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568530,
+              "sha256": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+              "size": 697
+            },
+            "src/siegfried/core/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568532,
+              "sha256": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+              "size": 614
+            },
+            "src/siegfried/core/briefing.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568533,
+              "sha256": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+              "size": 3025
+            },
+            "src/siegfried/core/clock.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568534,
+              "sha256": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+              "size": 807
+            },
+            "src/siegfried/core/errors.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568535,
+              "sha256": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+              "size": 6012
+            },
+            "src/siegfried/core/rest.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568536,
+              "sha256": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+              "size": 4358
+            },
+            "src/siegfried/core/state_machine.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568537,
+              "sha256": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+              "size": 4051
+            },
+            "src/siegfried/daemon/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568539,
+              "sha256": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+              "size": 466
+            },
+            "src/siegfried/daemon/__main__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568540,
+              "sha256": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+              "size": 702
+            },
+            "src/siegfried/daemon/alerts.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568541,
+              "sha256": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+              "size": 19827
+            },
+            "src/siegfried/daemon/app.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568542,
+              "sha256": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+              "size": 29809
+            },
+            "src/siegfried/daemon/focus.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568543,
+              "sha256": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+              "size": 23955
+            },
+            "src/siegfried/daemon/session.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568544,
+              "sha256": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+              "size": 7250
+            },
+            "src/siegfried/daemon/timers.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568545,
+              "sha256": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+              "size": 2441
+            },
+            "src/siegfried/inference/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568547,
+              "sha256": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+              "size": 1420
+            },
+            "src/siegfried/inference/cloud.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568548,
+              "sha256": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+              "size": 18531
+            },
+            "src/siegfried/inference/llama_manager.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568549,
+              "sha256": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+              "size": 18751
+            },
+            "src/siegfried/inference/local.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568550,
+              "sha256": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+              "size": 11624
+            },
+            "src/siegfried/inference/orchestrator.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568551,
+              "sha256": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+              "size": 18866
+            },
+            "src/siegfried/inference/resources.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568552,
+              "sha256": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+              "size": 7408
+            },
+            "src/siegfried/integrations/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568554,
+              "sha256": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+              "size": 649
+            },
+            "src/siegfried/integrations/audio.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568555,
+              "sha256": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+              "size": 6748
+            },
+            "src/siegfried/integrations/boot_briefing.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568556,
+              "sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+              "size": 5928
+            },
+            "src/siegfried/integrations/briefing_files.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568557,
+              "sha256": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+              "size": 4388
+            },
+            "src/siegfried/integrations/briefing_kde.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568558,
+              "sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+              "size": 11794
+            },
+            "src/siegfried/integrations/kwin.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568559,
+              "sha256": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+              "size": 1574
+            },
+            "src/siegfried/integrations/notifications.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568560,
+              "sha256": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+              "size": 5032
+            },
+            "src/siegfried/integrations/session.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568561,
+              "sha256": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+              "size": 17324
+            },
+            "src/siegfried/integrations/weather.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568562,
+              "sha256": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+              "size": 2871
+            },
+            "src/siegfried/ipc/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568564,
+              "sha256": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+              "size": 369
+            },
+            "src/siegfried/ipc/client.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568565,
+              "sha256": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+              "size": 2437
+            },
+            "src/siegfried/ipc/protocol.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568566,
+              "sha256": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+              "size": 1511
+            },
+            "src/siegfried/ipc/server.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568567,
+              "sha256": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+              "size": 18465
+            },
+            "src/siegfried/observability/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568569,
+              "sha256": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+              "size": 418
+            },
+            "src/siegfried/observability/benchmarks.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568570,
+              "sha256": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+              "size": 1366
+            },
+            "src/siegfried/observability/logging.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568571,
+              "sha256": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+              "size": 3132
+            },
+            "src/siegfried/storage/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568573,
+              "sha256": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+              "size": 1149
+            },
+            "src/siegfried/storage/aggregator.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568574,
+              "sha256": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+              "size": 13427
+            },
+            "src/siegfried/storage/atomic_json.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568575,
+              "sha256": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+              "size": 4937
+            },
+            "src/siegfried/storage/initialization.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568576,
+              "sha256": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+              "size": 13419
+            },
+            "src/siegfried/storage/paths.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568577,
+              "sha256": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+              "size": 3821
+            },
+            "src/siegfried/storage/secrets.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568578,
+              "sha256": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+              "size": 4589
+            },
+            "src/siegfried/storage/validation.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568579,
+              "sha256": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+              "size": 17288
+            },
+            "src/siegfried/storage/vault.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568580,
+              "sha256": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0",
+              "size": 12187
+            }
+          },
+          "directories": {
+            ".": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568503
+            },
+            "bin": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568506
+            },
+            "scripts": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568504
+            },
+            "scripts/kwin_focus_watcher": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568510
+            },
+            "scripts/kwin_focus_watcher/contents": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568512
+            },
+            "scripts/kwin_focus_watcher/contents/code": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568513
+            },
+            "src": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568515
+            },
+            "src/siegfried": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568516
+            },
+            "src/siegfried/cli": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568518
+            },
+            "src/siegfried/contracts": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568523
+            },
+            "src/siegfried/core": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568531
+            },
+            "src/siegfried/daemon": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568538
+            },
+            "src/siegfried/inference": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568546
+            },
+            "src/siegfried/integrations": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568553
+            },
+            "src/siegfried/ipc": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568563
+            },
+            "src/siegfried/observability": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568568
+            },
+            "src/siegfried/storage": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568572
+            }
+          },
+          "sha256_match": true,
+          "mode_owner_acl_check": "PASS"
+        },
+        "/home/okami/.local/share/siegfried-boot": {
+          "source_count": 57,
+          "files": {
+            ".siegfried-owned": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568653,
+              "sha256": "dbd579431b3e8ca3530ab355d8f3cd92423a68f0879e6b936659bd2cb84e7558",
+              "size": 5
+            },
+            "bin/siegfried": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568586,
+              "sha256": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+              "size": 437
+            },
+            "scripts/boot_hook.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568584,
+              "sha256": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+              "size": 3744
+            },
+            "src/siegfried/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568589,
+              "sha256": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+              "size": 164
+            },
+            "src/siegfried/cli/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568591,
+              "sha256": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+              "size": 702
+            },
+            "src/siegfried/cli/app.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568592,
+              "sha256": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+              "size": 9519
+            },
+            "src/siegfried/cli/repl.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568593,
+              "sha256": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+              "size": 12105
+            },
+            "src/siegfried/cli/router.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568594,
+              "sha256": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+              "size": 7412
+            },
+            "src/siegfried/contracts/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568596,
+              "sha256": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+              "size": 1601
+            },
+            "src/siegfried/contracts/alerts.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568597,
+              "sha256": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+              "size": 1694
+            },
+            "src/siegfried/contracts/config.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568598,
+              "sha256": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+              "size": 4118
+            },
+            "src/siegfried/contracts/events.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568599,
+              "sha256": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+              "size": 2827
+            },
+            "src/siegfried/contracts/inference.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568600,
+              "sha256": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+              "size": 6746
+            },
+            "src/siegfried/contracts/ipc.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568601,
+              "sha256": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+              "size": 5025
+            },
+            "src/siegfried/contracts/states.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568602,
+              "sha256": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+              "size": 697
+            },
+            "src/siegfried/core/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568604,
+              "sha256": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+              "size": 614
+            },
+            "src/siegfried/core/briefing.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568605,
+              "sha256": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+              "size": 3025
+            },
+            "src/siegfried/core/clock.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568606,
+              "sha256": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+              "size": 807
+            },
+            "src/siegfried/core/errors.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568607,
+              "sha256": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+              "size": 6012
+            },
+            "src/siegfried/core/rest.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568608,
+              "sha256": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+              "size": 4358
+            },
+            "src/siegfried/core/state_machine.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568609,
+              "sha256": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+              "size": 4051
+            },
+            "src/siegfried/daemon/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568611,
+              "sha256": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+              "size": 466
+            },
+            "src/siegfried/daemon/__main__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568612,
+              "sha256": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+              "size": 702
+            },
+            "src/siegfried/daemon/alerts.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568613,
+              "sha256": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+              "size": 19827
+            },
+            "src/siegfried/daemon/app.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568614,
+              "sha256": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+              "size": 29809
+            },
+            "src/siegfried/daemon/focus.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568615,
+              "sha256": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+              "size": 23955
+            },
+            "src/siegfried/daemon/session.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568616,
+              "sha256": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+              "size": 7250
+            },
+            "src/siegfried/daemon/timers.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568617,
+              "sha256": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+              "size": 2441
+            },
+            "src/siegfried/inference/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568619,
+              "sha256": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+              "size": 1420
+            },
+            "src/siegfried/inference/cloud.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568620,
+              "sha256": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+              "size": 18531
+            },
+            "src/siegfried/inference/llama_manager.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568621,
+              "sha256": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+              "size": 18751
+            },
+            "src/siegfried/inference/local.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568622,
+              "sha256": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+              "size": 11624
+            },
+            "src/siegfried/inference/orchestrator.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568623,
+              "sha256": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+              "size": 18866
+            },
+            "src/siegfried/inference/resources.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568624,
+              "sha256": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+              "size": 7408
+            },
+            "src/siegfried/integrations/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568626,
+              "sha256": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+              "size": 649
+            },
+            "src/siegfried/integrations/audio.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568627,
+              "sha256": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+              "size": 6748
+            },
+            "src/siegfried/integrations/boot_briefing.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568628,
+              "sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+              "size": 5928
+            },
+            "src/siegfried/integrations/briefing_files.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568629,
+              "sha256": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+              "size": 4388
+            },
+            "src/siegfried/integrations/briefing_kde.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568630,
+              "sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+              "size": 11794
+            },
+            "src/siegfried/integrations/kwin.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568631,
+              "sha256": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+              "size": 1574
+            },
+            "src/siegfried/integrations/notifications.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568632,
+              "sha256": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+              "size": 5032
+            },
+            "src/siegfried/integrations/session.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568633,
+              "sha256": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+              "size": 17324
+            },
+            "src/siegfried/integrations/weather.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568634,
+              "sha256": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+              "size": 2871
+            },
+            "src/siegfried/ipc/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568636,
+              "sha256": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+              "size": 369
+            },
+            "src/siegfried/ipc/client.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568637,
+              "sha256": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+              "size": 2437
+            },
+            "src/siegfried/ipc/protocol.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568638,
+              "sha256": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+              "size": 1511
+            },
+            "src/siegfried/ipc/server.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568639,
+              "sha256": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+              "size": 18465
+            },
+            "src/siegfried/observability/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568641,
+              "sha256": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+              "size": 418
+            },
+            "src/siegfried/observability/benchmarks.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568642,
+              "sha256": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+              "size": 1366
+            },
+            "src/siegfried/observability/logging.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568643,
+              "sha256": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+              "size": 3132
+            },
+            "src/siegfried/storage/__init__.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568645,
+              "sha256": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+              "size": 1149
+            },
+            "src/siegfried/storage/aggregator.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568646,
+              "sha256": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+              "size": 13427
+            },
+            "src/siegfried/storage/atomic_json.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568647,
+              "sha256": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+              "size": 4937
+            },
+            "src/siegfried/storage/initialization.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568648,
+              "sha256": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+              "size": 13419
+            },
+            "src/siegfried/storage/paths.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568649,
+              "sha256": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+              "size": 3821
+            },
+            "src/siegfried/storage/secrets.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568650,
+              "sha256": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+              "size": 4589
+            },
+            "src/siegfried/storage/validation.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568651,
+              "sha256": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+              "size": 17288
+            },
+            "src/siegfried/storage/vault.py": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0600",
+              "inode": 1568652,
+              "sha256": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0",
+              "size": 12187
+            }
+          },
+          "directories": {
+            ".": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568582
+            },
+            "bin": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568585
+            },
+            "scripts": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568583
+            },
+            "src": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568587
+            },
+            "src/siegfried": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568588
+            },
+            "src/siegfried/cli": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568590
+            },
+            "src/siegfried/contracts": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568595
+            },
+            "src/siegfried/core": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568603
+            },
+            "src/siegfried/daemon": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568610
+            },
+            "src/siegfried/inference": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568618
+            },
+            "src/siegfried/integrations": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568625
+            },
+            "src/siegfried/ipc": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568635
+            },
+            "src/siegfried/observability": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568640
+            },
+            "src/siegfried/storage": {
+              "uid": 1000,
+              "gid": 1000,
+              "mode": "0700",
+              "inode": 1568644
+            }
+          },
+          "sha256_match": true,
+          "mode_owner_acl_check": "PASS"
+        }
+      },
+      "readonly_diagnostics": {
+        "/home/okami/.local/share/siegfried-daemon": {
+          "doctor": {
+            "exit_code": 0,
+            "runtime_ready": true,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "cli_help": {
+            "exit_code": 0,
+            "runtime_ready": false,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "hook_dry_run": {
+            "exit_code": 0,
+            "runtime_ready": false,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "imports": {
+            "module_count": 41,
+            "all_module_origins_private": true,
+            "daemon_constructed": false,
+            "checkout_exists": false
+          }
+        },
+        "/home/okami/.local/share/siegfried-boot": {
+          "doctor": {
+            "exit_code": 0,
+            "runtime_ready": true,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "cli_help": {
+            "exit_code": 0,
+            "runtime_ready": false,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "hook_dry_run": {
+            "exit_code": 0,
+            "runtime_ready": false,
+            "checkout_masked": true,
+            "home_readonly": true,
+            "network_isolated": true
+          },
+          "imports": {
+            "module_count": 41,
+            "all_module_origins_private": true,
+            "daemon_constructed": false,
+            "checkout_exists": false
+          }
+        }
+      },
+      "systemd_template_verify": "PASS; temporary file only, actual private executable path resolves",
+      "desktop_template_validate": "PASS; temporary file only",
+      "runtime_file_contents_owners_permissions_inodes_timestamps_preserved": true,
+      "real_runtime_ready_in_both_snapshots": true,
+      "private_contents_printed": false,
+      "rollback_applied": false,
+      "units_or_autostart_written": false,
+      "daemon_or_repl_started": false
+    }
+  ],
+  "inactive_service_installation_actions": [
+    {
+      "authorization": "User authorized only inactive unit and two wrappers installation plus daemon-reload; no start, enable, XDG Autostart, REPL, permission changes or commits.",
+      "precheck_at_utc": "2026-10-09T19:33:47.022707+00:00",
+      "status": "STOPPED_UNEXPECTED",
+      "cwd": "/media/okami/Mio/Siegfried",
+      "commands_exact": [
+        [
+          "/usr/bin/python3",
+          "-B",
+          "tools/install_user_service.py",
+          "--dry-run"
+        ],
+        [
+          "/usr/bin/python3",
+          "-B",
+          "tools/install_user_service.py",
+          "--apply"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "daemon-reload"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "show",
+          "siegfried.service",
+          "-p",
+          "LoadState",
+          "-p",
+          "ActiveState",
+          "-p",
+          "MainPID",
+          "-p",
+          "FragmentPath",
+          "-p",
+          "UnitFileState"
+        ]
+      ],
+      "prior_destinations": {
+        "/home/okami/.siegfried/bin": {
+          "exists": false
+        },
+        "/home/okami/.siegfried/bin/siegfried": {
+          "exists": false
+        },
+        "/home/okami/.siegfried/bin/siegfried-daemon": {
+          "exists": false
+        },
+        "/home/okami/.config/systemd/user/siegfried.service": {
+          "exists": false
+        }
+      },
+      "reviewed_sources_and_installers_match": true,
+      "private_snapshots_integrity_modes_owners_acls": "PASS",
+      "unit_before": {
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "FragmentPath": "",
+        "UnitFileState": "",
+        "MainPID": "0"
+      },
+      "components_before": {
+        "presence": {
+          "/home/okami/.siegfried/siegfried.sock": false,
+          "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+          "/run/user/1000/siegfried.sock": false,
+          "/run/user/1000/siegfried_llama.pid": false,
+          "/run/user/1000/siegfried_briefing.lock": false
+        },
+        "identified_process_pids": [],
+        "enable_links": [],
+        "unix_sockets": []
+      },
+      "private_fingerprints_persisted": false,
+      "runtime_file_count_before": 9,
+      "rollback_scope": "Only the three newly created own files after matching their hashes, owners, modes and recorded inodes; rmdir the new bin directory only if empty. Preserve both preexisting snapshots and all runtime data. Reload systemd after removal. Never run full installer uninstall for this operation.",
+      "command_results": [
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "tools/install_user_service.py",
+            "--dry-run"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "tools/install_user_service.py",
+            "--apply"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "systemctl",
+            "--user",
+            "daemon-reload"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "systemctl",
+            "--user",
+            "show",
+            "siegfried.service",
+            "-p",
+            "LoadState",
+            "-p",
+            "ActiveState",
+            "-p",
+            "MainPID",
+            "-p",
+            "FragmentPath",
+            "-p",
+            "UnitFileState"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "failure_type": "AssertionError",
+      "rollback": [
+        {
+          "path": "/home/okami/.config/systemd/user/siegfried.service",
+          "status": "removed_new_owned_file"
+        },
+        {
+          "path": "/home/okami/.siegfried/bin/siegfried-daemon",
+          "status": "removed_new_owned_file"
+        },
+        {
+          "path": "/home/okami/.siegfried/bin/siegfried",
+          "status": "removed_new_owned_file"
+        },
+        {
+          "path": "/home/okami/.siegfried/bin",
+          "status": "removed_empty_new_directory"
+        },
+        {
+          "systemd_definition_reload_exit_code": 0
+        }
+      ],
+      "post_rollback_diagnostic": {
+        "systemd_verify_same_template_exit_code": 0,
+        "external_warning": "/usr/lib/systemd/user/spice-vdagent.service:23: Unknown key 'StandardError' in section [Install], ignoring.",
+        "guard_rejected_external_warning": true,
+        "repository_code_modified": false,
+        "unit_after_rollback": {
+          "LoadState": "not-found",
+          "ActiveState": "inactive",
+          "MainPID": "0",
+          "FragmentPath": "",
+          "UnitFileState": ""
+        },
+        "snapshots_rechecked_before_successful_retry": true
+      }
+    },
+    {
+      "authorization": "User authorized only inactive unit and two wrappers installation plus daemon-reload; no start, enable, XDG Autostart, REPL, permission changes or commits.",
+      "precheck_at_utc": "2026-10-09T19:34:52.215028+00:00",
+      "status": "INSTALLED_INACTIVE_VERIFIED",
+      "cwd": "/media/okami/Mio/Siegfried",
+      "commands_exact": [
+        [
+          "/usr/bin/python3",
+          "-B",
+          "tools/install_user_service.py",
+          "--dry-run"
+        ],
+        [
+          "/usr/bin/python3",
+          "-B",
+          "tools/install_user_service.py",
+          "--apply"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "daemon-reload"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "show",
+          "siegfried.service",
+          "-p",
+          "LoadState",
+          "-p",
+          "ActiveState",
+          "-p",
+          "MainPID",
+          "-p",
+          "FragmentPath",
+          "-p",
+          "UnitFileState"
+        ]
+      ],
+      "prior_destinations": {
+        "/home/okami/.siegfried/bin": {
+          "exists": false
+        },
+        "/home/okami/.siegfried/bin/siegfried": {
+          "exists": false
+        },
+        "/home/okami/.siegfried/bin/siegfried-daemon": {
+          "exists": false
+        },
+        "/home/okami/.config/systemd/user/siegfried.service": {
+          "exists": false
+        }
+      },
+      "reviewed_sources_and_installers_match": true,
+      "private_snapshots_integrity_modes_owners_acls": "PASS",
+      "unit_before": {
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "FragmentPath": "",
+        "UnitFileState": "",
+        "MainPID": "0"
+      },
+      "components_before": {
+        "presence": {
+          "/home/okami/.siegfried/siegfried.sock": false,
+          "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+          "/run/user/1000/siegfried.sock": false,
+          "/run/user/1000/siegfried_llama.pid": false,
+          "/run/user/1000/siegfried_briefing.lock": false
+        },
+        "identified_process_pids": [],
+        "enable_links": [],
+        "unix_sockets": []
+      },
+      "private_fingerprints_persisted": false,
+      "runtime_file_count_before": 9,
+      "rollback_scope": "Only the three newly created own files after matching their hashes, owners, modes and recorded inodes; rmdir the new bin directory only if empty. Preserve both preexisting snapshots and all runtime data. Reload systemd after removal. Never run full installer uninstall for this operation.",
+      "command_results": [
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "tools/install_user_service.py",
+            "--dry-run"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "/usr/bin/python3",
+            "-B",
+            "tools/install_user_service.py",
+            "--apply"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "systemctl",
+            "--user",
+            "daemon-reload"
+          ],
+          "exit_code": 0
+        },
+        {
+          "argv": [
+            "systemctl",
+            "--user",
+            "show",
+            "siegfried.service",
+            "-p",
+            "LoadState",
+            "-p",
+            "ActiveState",
+            "-p",
+            "MainPID",
+            "-p",
+            "FragmentPath",
+            "-p",
+            "UnitFileState"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "systemd_analyze_verify": {
+        "exit_code": 0,
+        "siegfried_errors": false,
+        "external_warnings": [
+          "/usr/lib/systemd/user/spice-vdagent.service:23: Unknown key 'StandardError' in section [Install], ignoring."
+        ],
+        "installed_unit": "/home/okami/.config/systemd/user/siegfried.service"
+      },
+      "verified_at_utc": "2026-10-09T19:34:53.327346+00:00",
+      "created_files": {
+        "/home/okami/.siegfried/bin/siegfried": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1572045,
+          "device": 48,
+          "size": 265,
+          "mtime_ns": 1791574492576036486,
+          "ctime_ns": 1791574492577451432,
+          "sha256": "f1b38ac730d1cb31a8f80ebaed11ddc8f746cfa8c233c5f0d378c0d878cecf16",
+          "owner_tag": "# X-Siegfried-Owner=F5.5"
+        },
+        "/home/okami/.siegfried/bin/siegfried-daemon": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1572046,
+          "device": 48,
+          "size": 272,
+          "mtime_ns": 1791574492580226994,
+          "ctime_ns": 1791574492581451460,
+          "sha256": "9d4a3b2277be63f8ed808ed6afc5174b5cdf11e8aa098a121ffdc4f1d9ad927a",
+          "owner_tag": "# X-Siegfried-Owner=F5.5"
+        },
+        "/home/okami/.config/systemd/user/siegfried.service": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1572047,
+          "device": 48,
+          "size": 713,
+          "mtime_ns": 1791574492584226069,
+          "ctime_ns": 1791574492585451488,
+          "sha256": "8bd2908b95074de28c931af6fe4066623d00870cc6da0ac10a85a7d6e090bab7",
+          "owner_tag": "# X-Siegfried-Owner=F5.5"
+        }
+      },
+      "created_directories": {
+        "/home/okami/.siegfried/bin": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1572044,
+          "device": 48,
+          "size": 50,
+          "mtime_ns": 1791574492581451460,
+          "ctime_ns": 1791574492581451460
+        }
+      },
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "FragmentPath": "/home/okami/.config/systemd/user/siegfried.service",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "readonly_diagnostics": {
+        "doctor_exit_code": 0,
+        "doctor_status": "READY",
+        "cli_help_exit_code": 0,
+        "wrapper_and_import_probe": {
+          "both_wrapper_targets_private": true,
+          "all_module_origins_private": true,
+          "module_count": 41,
+          "checkout_hidden": true,
+          "daemon_constructed": false,
+          "repl_started": false
+        },
+        "home_readonly": true,
+        "network_isolated": true
+      },
+      "runtime_existing_files_content_owners_modes_inodes_all_timestamps_preserved": true,
+      "runtime_existing_subdirectories_preserved": true,
+      "runtime_root_metadata_change": "Only expected mtime/ctime/size changes from creating the authorized bin directory; owner/group/mode/inode preserved.",
+      "both_preexisting_snapshots_preserved": true,
+      "foreign_systemd_files_preserved": true,
+      "xdg_autostart_preserved": true,
+      "components_after": {
+        "presence": {
+          "/home/okami/.siegfried/siegfried.sock": false,
+          "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+          "/run/user/1000/siegfried.sock": false,
+          "/run/user/1000/siegfried_llama.pid": false,
+          "/run/user/1000/siegfried_briefing.lock": false
+        },
+        "identified_process_pids": [],
+        "enable_links": [],
+        "unix_sockets": []
+      },
+      "daemon_started": false,
+      "repl_started": false,
+      "service_enabled": false,
+      "systemd_definition_reloaded": true,
+      "rollback_applied": false,
+      "code_modified": false,
+      "prior_attempt_limited_rollback_documented": true,
+      "rollback_procedure_location": "docs/gates/GATE_F5_5_REPORT.md section 15: inactive unit and wrappers only; no full uninstall."
+    }
+  ],
+  "manual_daemon_pilot_actions": [
+    {
+      "authorization": "Single supervised manual daemon <=90s, PING/STATUS, CPU/RSS, normal operational writes, TERM to exact pilot PID and KILL only after 5s; no REPL, service start/enable, adapters, code changes or commits.",
+      "precheck_at_utc": "2026-10-09T20:26:50.967881+00:00",
+      "status": "PASS_WITH_DEVIATIONS",
+      "command_exact": "(\n  umask 077\n  cd /\n  SIEGFRIED_ENABLE_KWIN=0 SIEGFRIED_ENABLE_SESSION=0 \\\n  SIEGFRIED_HOME=\"$HOME/.siegfried\" XDG_RUNTIME_DIR=\"/run/user/$(id -u)\" \\\n    timeout -s TERM -k 5s 90s /usr/bin/python3 -B \"$HOME/.siegfried/bin/siegfried-daemon\"\n)",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "FragmentPath": "/home/okami/.config/systemd/user/siegfried.service",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "doctor_before": "READY",
+      "snapshot_integrity": "PASS",
+      "wrapper_integrity": "PASS",
+      "runtime_owners_modes_acls": "PASS",
+      "components_before": {
+        "presence": {
+          "/home/okami/.siegfried/siegfried.sock": false,
+          "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+          "/run/user/1000/siegfried.sock": false,
+          "/run/user/1000/siegfried_llama.pid": false,
+          "/run/user/1000/siegfried_briefing.lock": false
+        },
+        "identified_process_pids": [],
+        "enable_links": [],
+        "unix_sockets": []
+      },
+      "private_fingerprints_persisted": false,
+      "log_existed_before": false,
+      "log_prior_bytes": 0,
+      "launcher_pid": 214559,
+      "started_at_utc": "2026-10-09T20:26:50.970436+00:00",
+      "daemon_pid": 214562,
+      "daemon_start_ticks": 6182307,
+      "socket": {
+        "path": "/run/user/1000/siegfried.sock",
+        "mode": "0600",
+        "uid": 1000,
+        "gid": 1000
+      },
+      "ipc_responses": [
+        {
+          "command": "PING",
+          "status": "OK",
+          "at_utc": "2026-10-09T20:26:51.125997+00:00"
+        },
+        {
+          "command": "STATUS",
+          "status": "OK",
+          "at_utc": "2026-10-09T20:26:51.126564+00:00"
+        }
+      ],
+      "ping_after_measurement": "OK",
+      "measurement": {
+        "idle_window_seconds": 60.00048369599972,
+        "sample_count": 13,
+        "target_interval_seconds": 5,
+        "cpu_tick_hz": 100,
+        "cpu_scope": "Daemon utime+stime, one-core percentage, no children; launcher/supervisor excluded.",
+        "cpu_average_percent": 0.18333185538524882,
+        "cpu_max_interval_percent": 0.4000179608867423,
+        "cpu_min_interval_percent": 0.0,
+        "rss_average_bytes": 29564928.0,
+        "rss_max_bytes": 29564928,
+        "rss_min_bytes": 29564928,
+        "thread_counts": [
+          2
+        ],
+        "conditions": "Real initialized HOME, foreground private wrapper, no systemd sandbox, KWin/session=0, no timer/tasks, no QUERY/model/Cloud, no children in every sample; 3s warm-up after initial IPC; other host workload uncontrolled.",
+        "samples": [
+          {
+            "relative_seconds": 0.0,
+            "cpu_ticks": 11,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 5.000520236004377,
+            "cpu_ticks": 12,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 10.0005141119982,
+            "cpu_ticks": 14,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 15.000557788000151,
+            "cpu_ticks": 14,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 20.000398777003284,
+            "cpu_ticks": 15,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 25.000667979002174,
+            "cpu_ticks": 16,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 30.00070869600313,
+            "cpu_ticks": 16,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 35.000680574004946,
+            "cpu_ticks": 17,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 40.00078915100312,
+            "cpu_ticks": 18,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 45.00038851800491,
+            "cpu_ticks": 19,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 50.00079371099855,
+            "cpu_ticks": 20,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 55.000708197003405,
+            "cpu_ticks": 20,
+            "rss_bytes": 29564928,
+            "threads": 2
+          },
+          {
+            "relative_seconds": 60.00048369599972,
+            "cpu_ticks": 22,
+            "rss_bytes": 29564928,
+            "threads": 2
+          }
+        ],
+        "cpu_intervals_percent": [
+          0.19997919272476367,
+          0.4000004899210942,
+          0.0,
+          0.2000063606421571,
+          0.1999892324997709,
+          0.0,
+          0.20000112488625418,
+          0.19999565701438277,
+          0.2000160266040856,
+          0.19998379359359889,
+          0.0,
+          0.4000179608867423
+        ],
+        "cpu_below_0_2_percent": true,
+        "rss_max_below_30_decimal_MB": true
+      },
+      "sigterm": {
+        "pid": 214562,
+        "sent_at_utc": "2026-10-09T20:27:54.133859+00:00",
+        "identity_checked": true,
+        "pidfd_used": true
+      },
+      "shutdown_seconds": 0.16424227500101551,
+      "sigkill_used": false,
+      "launcher_exit_code": 0,
+      "elapsed_run_seconds": 63.32806102599716,
+      "failure_type": "AssertionError",
+      "cleanup": "not started",
+      "failure_script_lines": [
+        176
+      ],
+      "initial_supervisor_status": "STOPPED_UNEXPECTED",
+      "verified_at_utc": "2026-10-09T20:30:01.143426+00:00",
+      "doctor_after": "READY",
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "FragmentPath": "/home/okami/.config/systemd/user/siegfried.service",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "components_after": {
+        "presence": {
+          "/home/okami/.siegfried/siegfried.sock": false,
+          "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop": false,
+          "/run/user/1000/siegfried.sock": false,
+          "/run/user/1000/siegfried_llama.pid": false,
+          "/run/user/1000/siegfried_briefing.lock": false
+        },
+        "identified_process_pids": [],
+        "enable_links": [],
+        "unix_sockets": []
+      },
+      "runtime_existing_file_contents_owners_modes_inodes_size_mtime_ctime_preserved": true,
+      "preservation_evidence": "Same execution reached line 176 after its sequential baseline comparisons, including all original private fingerprints and metadata except atime; private fingerprints were discarded on process exit and are never persisted. No repeat daemon start.",
+      "file_atime_preservation": "Not certified for files read normally by the daemon; not captured in the saved action. Content/owner/mode/inode/size/mtime/ctime checks completed.",
+      "operational_writes": [
+        {
+          "path": "/home/okami/.siegfried/logs/daemon.log",
+          "operation": "create",
+          "mode": "0600",
+          "uid": 1000,
+          "gid": 1000,
+          "size_bytes": 0,
+          "bytes_appended": 0
+        },
+        {
+          "path": "/run/user/1000/siegfried.sock",
+          "operation": "create_then_daemon_unlink",
+          "mode": "0600"
+        }
+      ],
+      "log_check": {
+        "empty_private_log": true,
+        "size_bytes": 0,
+        "private_contents_exposed": false,
+        "info_messages_available": false,
+        "limitation": "No startup/shutdown INFO evidence in file; process exit 0 and IPC/socket/process observations establish pilot liveness and termination."
+      },
+      "deviations": [
+        {
+          "code": "INFO_LOG_FILTERED",
+          "severity": "observability",
+          "diagnosis": "setup_logger accepts level=INFO but never calls logger.setLevel; default effective WARNING filters daemon INFO.",
+          "isolated_private_snapshot_probe": {
+            "requested_level": 20,
+            "effective_level": 30,
+            "info_enabled": false,
+            "warning_enabled": true
+          },
+          "code_change_applied": false
+        },
+        {
+          "code": "SUPERVISOR_EXPECTED_INFO_LINES",
+          "severity": "measurement_guard",
+          "diagnosis": "Initial postcheck required four INFO lines and rejected the empty log after all liveness, stop and private-content checks had passed; completed with read-only diagnosis, no repeated pilot."
+        }
+      ],
+      "snapshots_preserved": true,
+      "installed_unit_and_wrapper_integrity_preserved": true,
+      "xdg_autostart_absent": true,
+      "daemon_children_remaining": false,
+      "own_daemon_remaining": false,
+      "socket_remaining": false,
+      "llm_or_cloud_commands_invoked": false,
+      "adapters_enabled": false,
+      "tasks_or_timers_modified": false,
+      "code_modified": false,
+      "timeout_deadline_reached": false,
+      "no_inference_evidence": "Only PING/STATUS sent; sampled daemon had no child processes or llama PID; source constructs cognitive orchestrator lazily only for QUERY. No packet capture, so no blanket network-egress certification.",
+      "official_client_used": true,
+      "ipc_client_origin": "Audited checkout version imported by the external supervision helper; byte-identical to verified private source. The daemon itself execs exclusively the private snapshot.",
+      "service_or_autostart_activated": false
+    }
+  ],
+  "observability_correction": {
+    "verified_at_utc": "2026-10-09T20:43:16.989762+00:00",
+    "status": "PRIVATE_DAEMON_SNAPSHOT_UPDATED_VERIFIED_NO_START",
+    "product_cause": "setup_logger ignores level argument; effective WARNING filters INFO.",
+    "supervisor_cause": "line 176: len(appended_log_lines)==4; actual private log empty. Assertion ran after successful IPC/resource/TERM and private-content comparisons. No extra real pilot.",
+    "changes": {
+      "src/siegfried/daemon/app.py": {
+        "installed_sha256": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+        "candidate_sha256": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8"
+      },
+      "src/siegfried/observability/logging.py": {
+        "installed_sha256": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+        "candidate_sha256": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327"
+      }
+    },
+    "current_source_hashes": {
+      "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+      "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+      "bin/siegfried-daemon": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b",
+      "scripts/kwin_focus_watcher.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+      "scripts/kwin_focus_watcher/metadata.json": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97",
+      "scripts/kwin_focus_watcher/contents/code/main.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+      "src/siegfried/__init__.py": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+      "src/siegfried/cli/__init__.py": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+      "src/siegfried/cli/app.py": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+      "src/siegfried/cli/repl.py": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+      "src/siegfried/cli/router.py": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+      "src/siegfried/contracts/__init__.py": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+      "src/siegfried/contracts/alerts.py": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+      "src/siegfried/contracts/config.py": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+      "src/siegfried/contracts/events.py": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+      "src/siegfried/contracts/inference.py": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+      "src/siegfried/contracts/ipc.py": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+      "src/siegfried/contracts/states.py": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+      "src/siegfried/core/__init__.py": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+      "src/siegfried/core/briefing.py": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+      "src/siegfried/core/clock.py": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+      "src/siegfried/core/errors.py": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+      "src/siegfried/core/rest.py": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+      "src/siegfried/core/state_machine.py": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+      "src/siegfried/daemon/__init__.py": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+      "src/siegfried/daemon/__main__.py": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+      "src/siegfried/daemon/alerts.py": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+      "src/siegfried/daemon/app.py": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8",
+      "src/siegfried/daemon/focus.py": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+      "src/siegfried/daemon/session.py": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+      "src/siegfried/daemon/timers.py": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+      "src/siegfried/inference/__init__.py": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+      "src/siegfried/inference/cloud.py": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+      "src/siegfried/inference/llama_manager.py": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+      "src/siegfried/inference/local.py": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+      "src/siegfried/inference/orchestrator.py": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+      "src/siegfried/inference/resources.py": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+      "src/siegfried/integrations/__init__.py": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+      "src/siegfried/integrations/audio.py": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+      "src/siegfried/integrations/boot_briefing.py": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+      "src/siegfried/integrations/briefing_files.py": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+      "src/siegfried/integrations/briefing_kde.py": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+      "src/siegfried/integrations/kwin.py": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+      "src/siegfried/integrations/notifications.py": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+      "src/siegfried/integrations/session.py": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+      "src/siegfried/integrations/weather.py": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+      "src/siegfried/ipc/__init__.py": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+      "src/siegfried/ipc/client.py": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+      "src/siegfried/ipc/protocol.py": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+      "src/siegfried/ipc/server.py": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+      "src/siegfried/observability/__init__.py": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+      "src/siegfried/observability/benchmarks.py": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+      "src/siegfried/observability/logging.py": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327",
+      "src/siegfried/storage/__init__.py": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+      "src/siegfried/storage/aggregator.py": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+      "src/siegfried/storage/atomic_json.py": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+      "src/siegfried/storage/initialization.py": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+      "src/siegfried/storage/paths.py": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+      "src/siegfried/storage/secrets.py": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+      "src/siegfried/storage/validation.py": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+      "src/siegfried/storage/vault.py": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+    },
+    "scope": "Two production files: logging level/handler guards/sanitization and daemon operational messages without private task or exception payloads. Two inherited test fixture routes explicitly injected. No contracts changed.",
+    "regression": {
+      "baseline": 655,
+      "new_tests": 21,
+      "total": 676,
+      "unittest_seconds": 38.102,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "specific_tests": 21
+    },
+    "final_validation": {
+      "verified_at_utc": "2026-10-09T20:43:16.989762+00:00",
+      "results": {
+        "specific": {
+          "command": "PYTHONPATH=src python3 -B -m unittest tests.unit.test_logging_f55 tests.integration.test_daemon_logging_f55",
+          "exit_code": 0,
+          "elapsed_seconds": 0.16486675100168213,
+          "log": "/tmp/siegfried-f55-logging-specific.log"
+        },
+        "regression": {
+          "command": "PYTHONPATH=src timeout -s INT -k 5s 180s python3 -X faulthandler -m unittest discover -s tests -p 'test_*.py'",
+          "exit_code": 0,
+          "elapsed_seconds": 38.30833909100329,
+          "log": "/tmp/siegfried-f55-logging-regression.log"
+        },
+        "benchmark": {
+          "command": "PYTHONPATH=src python3 tools/benchmark.py",
+          "exit_code": 0,
+          "elapsed_seconds": 1.9684056420010165,
+          "log": "/tmp/siegfried-f55-logging-benchmark.log"
+        },
+        "boot_benchmark": {
+          "command": "PYTHONPATH=src python3 tools/benchmark_boot_briefing.py",
+          "exit_code": 0,
+          "elapsed_seconds": 2.972051990000182,
+          "log": "/tmp/siegfried-f55-logging-boot_benchmark.log"
+        }
+      },
+      "protected_runtime_and_both_snapshots_preserved": true,
+      "real_private_log_preserved": true,
+      "private_fingerprints_persisted": false,
+      "metadata_changes": [],
+      "default_runtime_is_temporary": true,
+      "real_runtime_and_snapshots_bind_readonly": false,
+      "legacy_repl_fixtures_paths_explicit": true,
+      "systemd_analyze_environment": "Only verify uses real XDG_RUNTIME_DIR via temporary transparent exec wrapper; all product processes use temporary SIEGFRIED_HOME/XDG_RUNTIME_DIR."
+    },
+    "earlier_attempts": {
+      "initial": {
+        "verified_at_utc": "2026-10-09T20:38:19.227511+00:00",
+        "results": {
+          "specific": {
+            "command": "PYTHONPATH=src python3 -B -m unittest tests.unit.test_logging_f55 tests.integration.test_daemon_logging_f55",
+            "exit_code": 0,
+            "elapsed_seconds": 0.1647049179955502,
+            "log": "/tmp/siegfried-f55-logging-specific.log"
+          },
+          "regression": {
+            "command": "PYTHONPATH=src timeout -s INT -k 5s 180s python3 -X faulthandler -m unittest discover -s tests -p 'test_*.py'",
+            "exit_code": 1,
+            "elapsed_seconds": 36.17592691999744,
+            "log": "/tmp/siegfried-f55-logging-regression.log"
+          }
+        },
+        "protected_runtime_and_both_snapshots_preserved": false,
+        "real_private_log_preserved": true,
+        "private_fingerprints_persisted": false,
+        "metadata_changes": [
+          {
+            "path": "/home/okami/.siegfried/data",
+            "fields": [
+              "ctime",
+              "mtime"
+            ]
+          },
+          {
+            "path": "/home/okami/.siegfried/data/.history",
+            "fields": [
+              "ctime",
+              "atime",
+              "inode",
+              "mtime",
+              "fingerprint"
+            ]
+          }
+        ]
+      },
+      "namespace": {
+        "verified_at_utc": "2026-10-09T20:40:24.556672+00:00",
+        "results": {
+          "specific": {
+            "command": "PYTHONPATH=src python3 -B -m unittest tests.unit.test_logging_f55 tests.integration.test_daemon_logging_f55",
+            "exit_code": 0,
+            "elapsed_seconds": 0.16520281999692088,
+            "log": "/tmp/siegfried-f55-logging-specific.log"
+          },
+          "regression": {
+            "command": "PYTHONPATH=src timeout -s INT -k 5s 180s python3 -X faulthandler -m unittest discover -s tests -p 'test_*.py'",
+            "exit_code": 1,
+            "elapsed_seconds": 32.912572786000965,
+            "log": "/tmp/siegfried-f55-logging-regression.log"
+          }
+        },
+        "protected_runtime_and_both_snapshots_preserved": true,
+        "real_private_log_preserved": true,
+        "private_fingerprints_persisted": false,
+        "metadata_changes": [],
+        "default_runtime_is_temporary": true,
+        "real_runtime_and_snapshots_bind_readonly": true
+      },
+      "isolated_xdg": {
+        "verified_at_utc": "2026-10-09T20:41:51.573724+00:00",
+        "results": {
+          "specific": {
+            "command": "PYTHONPATH=src python3 -B -m unittest tests.unit.test_logging_f55 tests.integration.test_daemon_logging_f55",
+            "exit_code": 0,
+            "elapsed_seconds": 0.16469514300115407,
+            "log": "/tmp/siegfried-f55-logging-specific.log"
+          },
+          "regression": {
+            "command": "PYTHONPATH=src timeout -s INT -k 5s 180s python3 -X faulthandler -m unittest discover -s tests -p 'test_*.py'",
+            "exit_code": 1,
+            "elapsed_seconds": 31.758145460997184,
+            "log": "/tmp/siegfried-f55-logging-regression.log"
+          }
+        },
+        "protected_runtime_and_both_snapshots_preserved": true,
+        "real_private_log_preserved": true,
+        "private_fingerprints_persisted": false,
+        "metadata_changes": [],
+        "default_runtime_is_temporary": true,
+        "real_runtime_and_snapshots_bind_readonly": false,
+        "legacy_repl_fixtures_paths_explicit": true
+      },
+      "note": "Temporary log filenames were reused; these saved result summaries retain prior outcomes, not their original full output."
+    },
+    "benchmarks": {
+      "fastpath_p95_ms": 0.0016,
+      "vault_p95_ms": 2.3089,
+      "cli_cold_p95_ms": 29.65,
+      "routing_p95_ms": 0.0049,
+      "historical_heuristic_p95_ms": 2.2912,
+      "historical_exhaustive_p95_ms": 8.2242,
+      "five_slos": "PASS",
+      "boot": {
+        "pure_composition": {
+          "count": 1000,
+          "mean_ms": 0.00031408984068548307,
+          "p50_ms": 0.0002980013960041106,
+          "p95_ms": 0.0003390014171600342,
+          "max_ms": 0.004230998456478119
+        },
+        "hook_cold_start_dry_run": {
+          "count": 25,
+          "mean_ms": 114.70334876095876,
+          "p50_ms": 114.60733899730258,
+          "p95_ms": 115.28338900097879,
+          "max_ms": 115.41790200135438
+        },
+        "notification_visible_ms": null,
+        "note": "Dry-run is not KDE delivery or visual appearance."
+      }
+    },
+    "preservation_incident": {
+      "path": "/home/okami/.siegfried/data/.history",
+      "detected": true,
+      "cause": "Two legacy fixtures instantiated SiegfriedREPL(self.client) without paths, defaulting to real runtime and saving readline history during first full regression.",
+      "changed_fields": [
+        "content",
+        "inode",
+        "atime",
+        "mtime",
+        "ctime"
+      ],
+      "parent_directory_metadata_changed": true,
+      "owner_and_permissions_preserved": true,
+      "original_content_backup_available_in_this_operation": false,
+      "private_content_printed": false,
+      "private_fingerprints_persisted": false,
+      "restoration_attempted": false,
+      "fixtures_corrected": [
+        "tests/integration/test_functional_integration_f24.py",
+        "tests/integration/test_ipc_backpressure_f241.py"
+      ],
+      "final_validation_additional_real_changes": false,
+      "user_notified": true,
+      "resolution": "User decision required; do not automatically rewrite, truncate or repair history."
+    },
+    "real_daemon_started_again": false,
+    "real_log_modified": false,
+    "real_snapshots_updated": false,
+    "services_enabled_or_started": false,
+    "proposal_script": "/tmp/siegfried-f55-update-daemon-observability.py",
+    "proposal_status": "PENDING_AUTHORIZATION",
+    "proposal_script_sha256": "2b4dce5227b531bbd0862eecccf3c1bf9b7bc97af0315b40eb6a1e0af67a2ae8",
+    "proposal_dry_run": "PASS; real destinations inspected only",
+    "proposal_fixture_update_and_guarded_rollback": "PASS; temporary HOME only",
+    "gate_verdict": "BLOCKED; candidate deployment/verification authorization and history incident decision pending"
+  },
+  "history_incident_audit_and_isolation": {
+    "recorded_at_utc": "2026-10-09T21:10:32.787318+00:00",
+    "history_audit": {
+      "audited_at_utc": "2026-10-09T21:08:58.888636+00:00",
+      "result": "UNRESOLVED",
+      "history_path": "/home/okami/.siegfried/data/.history",
+      "recorded_original_metadata": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1553351,
+        "device": 48,
+        "size": 6056,
+        "atime_ns": 1791567786809446667,
+        "mtime_ns": 1791567786809446667,
+        "ctime_ns": 1791567786810600146,
+        "nlink": 1,
+        "directory": false,
+        "regular": true
+      },
+      "current_metadata": {
+        "path": "/home/okami/.siegfried/data/.history",
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1575285,
+        "device": 48,
+        "size": 6056,
+        "nlink": 1,
+        "atime_ns": 1791578291320899670,
+        "mtime_ns": 1791578291320899670,
+        "ctime_ns": 1791578291321719340,
+        "symlink": false,
+        "regular": true
+      },
+      "current_sha256": "e88445ad86f3692be8b6f7545ac828de3d6a0349a5fa1fd4f823f151b4e5ead6",
+      "original_sha256_available": false,
+      "current_entry_count": 1000,
+      "current_nonempty_entry_count": 1000,
+      "current_duplicate_entry_count": 994,
+      "current_utf8_valid": true,
+      "comparison": {
+        "same_size_as_recorded_original": true,
+        "same_inode_as_original": false,
+        "same_owner_group_mode": true,
+        "timestamp_differences": [
+          "atime_ns",
+          "mtime_ns",
+          "ctime_ns"
+        ],
+        "content_change_evidence": "Prior incident harness compared private SHA in RAM and detected change; original digest and bytes were discarded, not retained."
+      },
+      "mechanism": "Replacement of inode plus changed bytes is proven. Same length does not prove same entries, absence of truncation or append-only operation.",
+      "backup_search_roots": [
+        {
+          "root": "/home/okami/.siegfried/data",
+          "exists": true,
+          "searched_directory_count": 1
+        },
+        {
+          "root": "/home/okami/.siegfried/backup",
+          "exists": false
+        },
+        {
+          "root": "/home/okami/.siegfried/backups",
+          "exists": false
+        },
+        {
+          "root": "/home/okami/Backups",
+          "exists": false
+        },
+        {
+          "root": "/home/okami/backups",
+          "exists": false
+        },
+        {
+          "root": "/home/okami/.local/share/Trash/files",
+          "exists": true,
+          "searched_directory_count": 1
+        },
+        {
+          "root": "/home/.snapshots",
+          "exists": false
+        },
+        {
+          "root": "/.snapshots",
+          "exists": false
+        },
+        {
+          "root": "/timeshift/snapshots",
+          "exists": false
+        }
+      ],
+      "backup_candidates": [],
+      "backup_search_limits": [],
+      "original_reconstructable_with_current_evidence": false,
+      "history_all_metadata_preserved_during_audit": true,
+      "history_restored_or_written": false,
+      "private_content_printed": false,
+      "hash_recording_authorization": "User explicitly permitted hashes, counts and comparisons in this audit."
+    },
+    "isolation": {
+      "status": "PASS",
+      "runner": "tools/run_isolated_tests.py",
+      "landlock_abi": 8,
+      "minimum_abi": 3,
+      "home_and_all_xdg_and_tmpdir_temporary": true,
+      "environment_set_before_product_import": true,
+      "root_ownership_preserved": true,
+      "real_home_and_runtime_file_io_denied_inherited_by_children": true,
+      "python_directory_listing_and_metadata_mutations_guarded": true,
+      "captured_module_path_read_append_truncate_list_chmod_utime_unlink_denied": true,
+      "subprocess_without_site_hook_read_denied": true,
+      "temporary_fixture_writes_allowed": true,
+      "desktop_session_and_credentials_not_inherited": true,
+      "systemd_verify_environment": "Temporary HOME/XDG; SYSTEMD_UNIT_PATH=/usr/lib/systemd/user:/lib/systemd/user; no real-runtime wrapper.",
+      "limits": [
+        "Trusted regression harness, not hostile-code sandbox. Landlock does not mediate stat/chmod/utime; Python audit hook supplements listed mutations/listings. Native metadata syscalls and stat are not universally denied.",
+        "Parent administrative audit reads real files using mandatory O_NOATIME; suite child does not read private data."
+      ],
+      "audited_fixture_lines": {
+        "tests/integration/test_functional_integration_f24.py": 135,
+        "tests/integration/test_ipc_backpressure_f241.py": 631
+      },
+      "other_tests_audit": "All REPL constructors inject temporary paths; Path.home references in initialization/m01 are existence/path checks; no further demonstrated default-path writer found. OS protection covers future/default/cached paths.",
+      "new_tests": 2,
+      "specific_tests_passed": 23,
+      "full_tests_passed": 678,
+      "baseline_preserved": 676,
+      "unittest_seconds": 37.392,
+      "validation": {
+        "results": {
+          "regression": {
+            "command": [
+              "timeout",
+              "-s",
+              "INT",
+              "-k",
+              "5s",
+              "180s",
+              "/usr/bin/python3",
+              "-B",
+              "tools/run_isolated_tests.py"
+            ],
+            "exit_code": 0,
+            "seconds": 37.587336259006406,
+            "log": "/tmp/siegfried-f55-isolation-regression.log"
+          },
+          "benchmark": {
+            "command": [
+              "/usr/bin/python3",
+              "-B",
+              "tools/run_isolated_tests.py",
+              "tools/benchmark.py"
+            ],
+            "exit_code": 0,
+            "seconds": 2.1196870189960464,
+            "log": "/tmp/siegfried-f55-isolation-benchmark.log"
+          },
+          "boot_benchmark": {
+            "command": [
+              "/usr/bin/python3",
+              "-B",
+              "tools/run_isolated_tests.py",
+              "tools/benchmark_boot_briefing.py"
+            ],
+            "exit_code": 0,
+            "seconds": 3.021384613995906,
+            "log": "/tmp/siegfried-f55-isolation-boot_benchmark.log"
+          }
+        },
+        "real_runtime_and_both_snapshots_preserved": true,
+        "metadata_changes": [],
+        "private_fingerprints_persisted": false
+      },
+      "first_isolated_attempt": {
+        "results": {
+          "regression": {
+            "command": [
+              "timeout",
+              "-s",
+              "INT",
+              "-k",
+              "5s",
+              "180s",
+              "/usr/bin/python3",
+              "-B",
+              "tools/run_isolated_tests.py"
+            ],
+            "exit_code": 1,
+            "seconds": 15.757011984998826,
+            "log": "/tmp/siegfried-f55-isolation-regression.log"
+          }
+        },
+        "real_runtime_and_both_snapshots_preserved": true,
+        "metadata_changes": [],
+        "private_fingerprints_persisted": false
+      },
+      "first_attempt_explanation": "8 installer verify errors because systemd uses /tmp and the initial rule denied mkdir there; one fixture asserted temporary data outside HOME. Fixed harness TMPDIR placement/policy fixture location; product checks unchanged.",
+      "sources_sha256": {
+        "tools/run_isolated_tests.py": "664d4a937b1b2237137958967e28f1c374bd3317ff6fe690563ec5e346ffc8c1",
+        "tools/test_isolation/sitecustomize.py": "dd3e6fac6371b97892cb8f134bc33e8626877e0e4ebf7e7ab1573c7bb66f56fe",
+        "tests/integration/test_regression_isolation_f55.py": "c871907cab3acc60c17740fdfd8b1bb4f2ccc2b94ae171160843e41d937ae41c"
+      },
+      "logs": {
+        "specific": {
+          "path": "/tmp/siegfried-f55-isolation-specific.log",
+          "sha256": "5ef91fbdceeb6cbd2c66f6f46dcf813e68acd0bfdaacc9202c6d2ea8040eef62"
+        },
+        "regression": {
+          "path": "/tmp/siegfried-f55-isolation-regression.log",
+          "sha256": "a5ba73aa4f698ca5356cc7603671db76cfaea119c669261c4be9ed73db1ad2fb"
+        },
+        "benchmark": {
+          "path": "/tmp/siegfried-f55-isolation-benchmark.log",
+          "sha256": "5d76b36a496210fdeb603560a1c4ccfd800f7416259448203d7abd44a05848ab"
+        },
+        "boot_benchmark": {
+          "path": "/tmp/siegfried-f55-isolation-boot_benchmark.log",
+          "sha256": "7f4f135676e297e9fac12946eed5a7df4f36630fc2d1364b408a8cf840de809f"
+        }
+      }
+    },
+    "limited_deployment_proposal": {
+      "status": "APPLIED_AND_VERIFIED",
+      "sources": [
+        "src/siegfried/observability/logging.py",
+        "src/siegfried/daemon/app.py"
+      ],
+      "helper": "/tmp/siegfried-f55-update-daemon-observability.py",
+      "helper_sha256": "2b4dce5227b531bbd0862eecccf3c1bf9b7bc97af0315b40eb6a1e0af67a2ae8",
+      "real_dry_run": "PASS; writes=false",
+      "temporary_backup_update_and_partial_rollback_self_test": "PASS repeated in this audit",
+      "requires_later_explicit_authorization": true,
+      "history_restoration_authorized": false
+    },
+    "incident_result": "UNRESOLVED",
+    "gate_verdict": "BLOCKED",
+    "commits_or_push": false,
+    "history_decision": {
+      "at_utc": "2026-10-09T21:29:58.186724+00:00",
+      "instruction": "Preserve current history without modifications; keep incident UNRESOLVED; no restoration or reconstruction.",
+      "incident_result": "UNRESOLVED",
+      "restoration_authorized": false
+    }
+  },
+  "limited_observability_deployment_actions": [
+    {
+      "status": "PASS",
+      "authorization": "User authorized only two source updates with reviewed helper, no daemon or service activation; preserve history current as UNRESOLVED.",
+      "started_at_utc": "2026-10-09T21:27:53.567950+00:00",
+      "helper_sha256": "2b4dce5227b531bbd0862eecccf3c1bf9b7bc97af0315b40eb6a1e0af67a2ae8",
+      "runtime_before": "READY",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "dry_run": "PASS; exact two permitted sources; no writes",
+      "history_decision": "PRESERVE_CURRENT_UNRESOLVED",
+      "rollback_applied": false,
+      "deployment": {
+        "target": "/home/okami/.local/share/siegfried-daemon",
+        "backup": "/tmp/siegfried-f55-daemon-code-backup-7f30rzuk",
+        "updated_sources": {
+          "src/siegfried/daemon/app.py": {
+            "old_sha256": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+            "new_sha256": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8",
+            "old_inode": 1568542,
+            "new_inode": 1578159,
+            "mode": "0600",
+            "uid": 1000
+          },
+          "src/siegfried/observability/logging.py": {
+            "old_sha256": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+            "new_sha256": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327",
+            "old_inode": 1568571,
+            "new_inode": 1578160,
+            "mode": "0600",
+            "uid": 1000
+          }
+        }
+      },
+      "verified_at_utc": "2026-10-09T21:27:53.886581+00:00",
+      "runtime_after": "READY",
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "imports": {
+        "module_count": 41,
+        "all_imports_private": true,
+        "checkout_hidden": true,
+        "daemon_constructed": false,
+        "logging_setup_called": false
+      },
+      "exact_two_sources_changed": true,
+      "rest_snapshot_content_inode_owner_mode_preserved": true,
+      "unchanged_source_atime": "Public source reads by reviewed helper may update access time; no private-file atime changes.",
+      "runtime_all_content_and_metadata_preserved": true,
+      "history_all_content_and_metadata_preserved": true,
+      "boot_snapshot_preserved": true,
+      "unit_wrappers_autostart_preserved": true,
+      "no_daemon_or_socket": true,
+      "backup": "/tmp/siegfried-f55-daemon-code-backup-7f30rzuk",
+      "backup_sha_owner_modes": "PASS 0700/0600",
+      "private_fingerprints_persisted": false,
+      "snapshot_current_files": {
+        ".siegfried-owned": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568581,
+          "device": 48,
+          "size": 5,
+          "nlink": 1,
+          "atime_ns": 1791570122775000857,
+          "mtime_ns": 1791570122775000857,
+          "ctime_ns": 1791570122775000857,
+          "directory": false,
+          "regular": true,
+          "sha256": "d3e3f63629b47563a307f7c8028779ddddb497af9641c799a5f70260126a1a6b"
+        },
+        "bin/siegfried": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568507,
+          "device": 48,
+          "size": 437,
+          "nlink": 1,
+          "atime_ns": 1791570122526999123,
+          "mtime_ns": 1791570122526999123,
+          "ctime_ns": 1791570122526999123,
+          "directory": false,
+          "regular": true,
+          "sha256": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc"
+        },
+        "bin/siegfried-daemon": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568508,
+          "device": 48,
+          "size": 909,
+          "nlink": 1,
+          "atime_ns": 1791570122531999158,
+          "mtime_ns": 1791570122531999158,
+          "ctime_ns": 1791570122531999158,
+          "directory": false,
+          "regular": true,
+          "sha256": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b"
+        },
+        "scripts/boot_hook.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568505,
+          "device": 48,
+          "size": 3744,
+          "nlink": 1,
+          "atime_ns": 1791570122519999074,
+          "mtime_ns": 1791570122519999074,
+          "ctime_ns": 1791570122519999074,
+          "directory": false,
+          "regular": true,
+          "sha256": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736"
+        },
+        "scripts/kwin_focus_watcher/contents/code/main.js": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568514,
+          "device": 48,
+          "size": 4140,
+          "nlink": 1,
+          "atime_ns": 1791570122543999242,
+          "mtime_ns": 1791570122543999242,
+          "ctime_ns": 1791570122543999242,
+          "directory": false,
+          "regular": true,
+          "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb"
+        },
+        "scripts/kwin_focus_watcher/metadata.json": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568511,
+          "device": 48,
+          "size": 509,
+          "nlink": 1,
+          "atime_ns": 1791570122539999214,
+          "mtime_ns": 1791570122539999214,
+          "ctime_ns": 1791570122539999214,
+          "directory": false,
+          "regular": true,
+          "sha256": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97"
+        },
+        "scripts/kwin_focus_watcher.js": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568509,
+          "device": 48,
+          "size": 4140,
+          "nlink": 1,
+          "atime_ns": 1791570122535999186,
+          "mtime_ns": 1791570122535999186,
+          "ctime_ns": 1791570122535999186,
+          "directory": false,
+          "regular": true,
+          "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb"
+        },
+        "src/siegfried/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568517,
+          "device": 48,
+          "size": 164,
+          "nlink": 1,
+          "atime_ns": 1791570122548999277,
+          "mtime_ns": 1791570122548999277,
+          "ctime_ns": 1791570122548999277,
+          "directory": false,
+          "regular": true,
+          "sha256": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c"
+        },
+        "src/siegfried/cli/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568519,
+          "device": 48,
+          "size": 702,
+          "nlink": 1,
+          "atime_ns": 1791570122552999305,
+          "mtime_ns": 1791570122552999305,
+          "ctime_ns": 1791570122552999305,
+          "directory": false,
+          "regular": true,
+          "sha256": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12"
+        },
+        "src/siegfried/cli/app.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568520,
+          "device": 48,
+          "size": 9519,
+          "nlink": 1,
+          "atime_ns": 1791570122556999333,
+          "mtime_ns": 1791570122556999333,
+          "ctime_ns": 1791570122556999333,
+          "directory": false,
+          "regular": true,
+          "sha256": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a"
+        },
+        "src/siegfried/cli/repl.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568521,
+          "device": 48,
+          "size": 12105,
+          "nlink": 1,
+          "atime_ns": 1791570122560999361,
+          "mtime_ns": 1791570122560999361,
+          "ctime_ns": 1791570122560999361,
+          "directory": false,
+          "regular": true,
+          "sha256": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b"
+        },
+        "src/siegfried/cli/router.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568522,
+          "device": 48,
+          "size": 7412,
+          "nlink": 1,
+          "atime_ns": 1791570122564999389,
+          "mtime_ns": 1791570122564999389,
+          "ctime_ns": 1791570122564999389,
+          "directory": false,
+          "regular": true,
+          "sha256": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d"
+        },
+        "src/siegfried/contracts/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568524,
+          "device": 48,
+          "size": 1601,
+          "nlink": 1,
+          "atime_ns": 1791570122568999417,
+          "mtime_ns": 1791570122568999417,
+          "ctime_ns": 1791570122568999417,
+          "directory": false,
+          "regular": true,
+          "sha256": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae"
+        },
+        "src/siegfried/contracts/alerts.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568525,
+          "device": 48,
+          "size": 1694,
+          "nlink": 1,
+          "atime_ns": 1791570122573999452,
+          "mtime_ns": 1791570122573999452,
+          "ctime_ns": 1791570122573999452,
+          "directory": false,
+          "regular": true,
+          "sha256": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6"
+        },
+        "src/siegfried/contracts/config.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568526,
+          "device": 48,
+          "size": 4118,
+          "nlink": 1,
+          "atime_ns": 1791570122577999480,
+          "mtime_ns": 1791570122577999480,
+          "ctime_ns": 1791570122577999480,
+          "directory": false,
+          "regular": true,
+          "sha256": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752"
+        },
+        "src/siegfried/contracts/events.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568527,
+          "device": 48,
+          "size": 2827,
+          "nlink": 1,
+          "atime_ns": 1791570122581999508,
+          "mtime_ns": 1791570122581999508,
+          "ctime_ns": 1791570122581999508,
+          "directory": false,
+          "regular": true,
+          "sha256": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa"
+        },
+        "src/siegfried/contracts/inference.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568528,
+          "device": 48,
+          "size": 6746,
+          "nlink": 1,
+          "atime_ns": 1791570122585999535,
+          "mtime_ns": 1791570122585999535,
+          "ctime_ns": 1791570122585999535,
+          "directory": false,
+          "regular": true,
+          "sha256": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249"
+        },
+        "src/siegfried/contracts/ipc.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568529,
+          "device": 48,
+          "size": 5025,
+          "nlink": 1,
+          "atime_ns": 1791570122589999563,
+          "mtime_ns": 1791570122589999563,
+          "ctime_ns": 1791570122589999563,
+          "directory": false,
+          "regular": true,
+          "sha256": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a"
+        },
+        "src/siegfried/contracts/states.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568530,
+          "device": 48,
+          "size": 697,
+          "nlink": 1,
+          "atime_ns": 1791570122594999598,
+          "mtime_ns": 1791570122594999598,
+          "ctime_ns": 1791570122594999598,
+          "directory": false,
+          "regular": true,
+          "sha256": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98"
+        },
+        "src/siegfried/core/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568532,
+          "device": 48,
+          "size": 614,
+          "nlink": 1,
+          "atime_ns": 1791570122598999626,
+          "mtime_ns": 1791570122598999626,
+          "ctime_ns": 1791570122598999626,
+          "directory": false,
+          "regular": true,
+          "sha256": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a"
+        },
+        "src/siegfried/core/briefing.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568533,
+          "device": 48,
+          "size": 3025,
+          "nlink": 1,
+          "atime_ns": 1791570122602999654,
+          "mtime_ns": 1791570122602999654,
+          "ctime_ns": 1791570122602999654,
+          "directory": false,
+          "regular": true,
+          "sha256": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47"
+        },
+        "src/siegfried/core/clock.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568534,
+          "device": 48,
+          "size": 807,
+          "nlink": 1,
+          "atime_ns": 1791570122607999689,
+          "mtime_ns": 1791570122607999689,
+          "ctime_ns": 1791570122607999689,
+          "directory": false,
+          "regular": true,
+          "sha256": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f"
+        },
+        "src/siegfried/core/errors.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568535,
+          "device": 48,
+          "size": 6012,
+          "nlink": 1,
+          "atime_ns": 1791570122609999703,
+          "mtime_ns": 1791570122609999703,
+          "ctime_ns": 1791570122609999703,
+          "directory": false,
+          "regular": true,
+          "sha256": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581"
+        },
+        "src/siegfried/core/rest.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568536,
+          "device": 48,
+          "size": 4358,
+          "nlink": 1,
+          "atime_ns": 1791570122613999731,
+          "mtime_ns": 1791570122613999731,
+          "ctime_ns": 1791570122613999731,
+          "directory": false,
+          "regular": true,
+          "sha256": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6"
+        },
+        "src/siegfried/core/state_machine.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568537,
+          "device": 48,
+          "size": 4051,
+          "nlink": 1,
+          "atime_ns": 1791570122617999759,
+          "mtime_ns": 1791570122617999759,
+          "ctime_ns": 1791570122617999759,
+          "directory": false,
+          "regular": true,
+          "sha256": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a"
+        },
+        "src/siegfried/daemon/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568539,
+          "device": 48,
+          "size": 466,
+          "nlink": 1,
+          "atime_ns": 1791570122621999787,
+          "mtime_ns": 1791570122621999787,
+          "ctime_ns": 1791570122621999787,
+          "directory": false,
+          "regular": true,
+          "sha256": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f"
+        },
+        "src/siegfried/daemon/__main__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568540,
+          "device": 48,
+          "size": 702,
+          "nlink": 1,
+          "atime_ns": 1791570122626999822,
+          "mtime_ns": 1791570122626999822,
+          "ctime_ns": 1791570122626999822,
+          "directory": false,
+          "regular": true,
+          "sha256": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9"
+        },
+        "src/siegfried/daemon/alerts.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568541,
+          "device": 48,
+          "size": 19827,
+          "nlink": 1,
+          "atime_ns": 1791570122629999843,
+          "mtime_ns": 1791570122629999843,
+          "ctime_ns": 1791570122629999843,
+          "directory": false,
+          "regular": true,
+          "sha256": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827"
+        },
+        "src/siegfried/daemon/app.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1578159,
+          "device": 48,
+          "size": 29734,
+          "nlink": 1,
+          "atime_ns": 1791581273637345672,
+          "mtime_ns": 1791581273637523105,
+          "ctime_ns": 1791581273640482582,
+          "directory": false,
+          "regular": true,
+          "sha256": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8"
+        },
+        "src/siegfried/daemon/focus.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568543,
+          "device": 48,
+          "size": 23955,
+          "nlink": 1,
+          "atime_ns": 1791570122638999906,
+          "mtime_ns": 1791570122638999906,
+          "ctime_ns": 1791570122638999906,
+          "directory": false,
+          "regular": true,
+          "sha256": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af"
+        },
+        "src/siegfried/daemon/session.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568544,
+          "device": 48,
+          "size": 7250,
+          "nlink": 1,
+          "atime_ns": 1791570122642999934,
+          "mtime_ns": 1791570122642999934,
+          "ctime_ns": 1791570122642999934,
+          "directory": false,
+          "regular": true,
+          "sha256": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485"
+        },
+        "src/siegfried/daemon/timers.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568545,
+          "device": 48,
+          "size": 2441,
+          "nlink": 1,
+          "atime_ns": 1791570122646999962,
+          "mtime_ns": 1791570122646999962,
+          "ctime_ns": 1791570122646999962,
+          "directory": false,
+          "regular": true,
+          "sha256": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad"
+        },
+        "src/siegfried/inference/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568547,
+          "device": 48,
+          "size": 1420,
+          "nlink": 1,
+          "atime_ns": 1791570122650999990,
+          "mtime_ns": 1791570122650999990,
+          "ctime_ns": 1791570122650999990,
+          "directory": false,
+          "regular": true,
+          "sha256": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07"
+        },
+        "src/siegfried/inference/cloud.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568548,
+          "device": 48,
+          "size": 18531,
+          "nlink": 1,
+          "atime_ns": 1791570122655000018,
+          "mtime_ns": 1791570122655000018,
+          "ctime_ns": 1791570122655000018,
+          "directory": false,
+          "regular": true,
+          "sha256": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e"
+        },
+        "src/siegfried/inference/llama_manager.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568549,
+          "device": 48,
+          "size": 18751,
+          "nlink": 1,
+          "atime_ns": 1791570122659000046,
+          "mtime_ns": 1791570122659000046,
+          "ctime_ns": 1791570122659000046,
+          "directory": false,
+          "regular": true,
+          "sha256": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a"
+        },
+        "src/siegfried/inference/local.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568550,
+          "device": 48,
+          "size": 11624,
+          "nlink": 1,
+          "atime_ns": 1791570122663000074,
+          "mtime_ns": 1791570122663000074,
+          "ctime_ns": 1791570122663000074,
+          "directory": false,
+          "regular": true,
+          "sha256": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183"
+        },
+        "src/siegfried/inference/orchestrator.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568551,
+          "device": 48,
+          "size": 18866,
+          "nlink": 1,
+          "atime_ns": 1791570122667000102,
+          "mtime_ns": 1791570122667000102,
+          "ctime_ns": 1791570122667000102,
+          "directory": false,
+          "regular": true,
+          "sha256": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d"
+        },
+        "src/siegfried/inference/resources.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568552,
+          "device": 48,
+          "size": 7408,
+          "nlink": 1,
+          "atime_ns": 1791570122671000130,
+          "mtime_ns": 1791570122671000130,
+          "ctime_ns": 1791570122671000130,
+          "directory": false,
+          "regular": true,
+          "sha256": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8"
+        },
+        "src/siegfried/integrations/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568554,
+          "device": 48,
+          "size": 649,
+          "nlink": 1,
+          "atime_ns": 1791570122675000158,
+          "mtime_ns": 1791570122675000158,
+          "ctime_ns": 1791570122675000158,
+          "directory": false,
+          "regular": true,
+          "sha256": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d"
+        },
+        "src/siegfried/integrations/audio.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568555,
+          "device": 48,
+          "size": 6748,
+          "nlink": 1,
+          "atime_ns": 1791570122679000186,
+          "mtime_ns": 1791570122679000186,
+          "ctime_ns": 1791570122679000186,
+          "directory": false,
+          "regular": true,
+          "sha256": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a"
+        },
+        "src/siegfried/integrations/boot_briefing.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568556,
+          "device": 48,
+          "size": 5928,
+          "nlink": 1,
+          "atime_ns": 1791570122684000221,
+          "mtime_ns": 1791570122684000221,
+          "ctime_ns": 1791570122684000221,
+          "directory": false,
+          "regular": true,
+          "sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8"
+        },
+        "src/siegfried/integrations/briefing_files.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568557,
+          "device": 48,
+          "size": 4388,
+          "nlink": 1,
+          "atime_ns": 1791570122688000249,
+          "mtime_ns": 1791570122688000249,
+          "ctime_ns": 1791570122688000249,
+          "directory": false,
+          "regular": true,
+          "sha256": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579"
+        },
+        "src/siegfried/integrations/briefing_kde.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568558,
+          "device": 48,
+          "size": 11794,
+          "nlink": 1,
+          "atime_ns": 1791570122692000277,
+          "mtime_ns": 1791570122692000277,
+          "ctime_ns": 1791570122692000277,
+          "directory": false,
+          "regular": true,
+          "sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5"
+        },
+        "src/siegfried/integrations/kwin.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568559,
+          "device": 48,
+          "size": 1574,
+          "nlink": 1,
+          "atime_ns": 1791570122696822095,
+          "mtime_ns": 1791570122696822095,
+          "ctime_ns": 1791570122696822095,
+          "directory": false,
+          "regular": true,
+          "sha256": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08"
+        },
+        "src/siegfried/integrations/notifications.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568560,
+          "device": 48,
+          "size": 5032,
+          "nlink": 1,
+          "atime_ns": 1791570122700000333,
+          "mtime_ns": 1791570122700000333,
+          "ctime_ns": 1791570122700000333,
+          "directory": false,
+          "regular": true,
+          "sha256": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c"
+        },
+        "src/siegfried/integrations/session.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568561,
+          "device": 48,
+          "size": 17324,
+          "nlink": 1,
+          "atime_ns": 1791570122704000361,
+          "mtime_ns": 1791570122704000361,
+          "ctime_ns": 1791570122704000361,
+          "directory": false,
+          "regular": true,
+          "sha256": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62"
+        },
+        "src/siegfried/integrations/weather.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568562,
+          "device": 48,
+          "size": 2871,
+          "nlink": 1,
+          "atime_ns": 1791570122708000389,
+          "mtime_ns": 1791570122708000389,
+          "ctime_ns": 1791570122708000389,
+          "directory": false,
+          "regular": true,
+          "sha256": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d"
+        },
+        "src/siegfried/ipc/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568564,
+          "device": 48,
+          "size": 369,
+          "nlink": 1,
+          "atime_ns": 1791570122712000417,
+          "mtime_ns": 1791570122712000417,
+          "ctime_ns": 1791570122712000417,
+          "directory": false,
+          "regular": true,
+          "sha256": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137"
+        },
+        "src/siegfried/ipc/client.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568565,
+          "device": 48,
+          "size": 2437,
+          "nlink": 1,
+          "atime_ns": 1791570122716000445,
+          "mtime_ns": 1791570122716000445,
+          "ctime_ns": 1791570122716000445,
+          "directory": false,
+          "regular": true,
+          "sha256": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817"
+        },
+        "src/siegfried/ipc/protocol.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568566,
+          "device": 48,
+          "size": 1511,
+          "nlink": 1,
+          "atime_ns": 1791570122720000473,
+          "mtime_ns": 1791570122720000473,
+          "ctime_ns": 1791570122720000473,
+          "directory": false,
+          "regular": true,
+          "sha256": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36"
+        },
+        "src/siegfried/ipc/server.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568567,
+          "device": 48,
+          "size": 18465,
+          "nlink": 1,
+          "atime_ns": 1791570122725000508,
+          "mtime_ns": 1791570122725000508,
+          "ctime_ns": 1791570122725000508,
+          "directory": false,
+          "regular": true,
+          "sha256": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286"
+        },
+        "src/siegfried/observability/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568569,
+          "device": 48,
+          "size": 418,
+          "nlink": 1,
+          "atime_ns": 1791570122729000536,
+          "mtime_ns": 1791570122729000536,
+          "ctime_ns": 1791570122729000536,
+          "directory": false,
+          "regular": true,
+          "sha256": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e"
+        },
+        "src/siegfried/observability/benchmarks.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568570,
+          "device": 48,
+          "size": 1366,
+          "nlink": 1,
+          "atime_ns": 1791570122733000564,
+          "mtime_ns": 1791570122733000564,
+          "ctime_ns": 1791570122733000564,
+          "directory": false,
+          "regular": true,
+          "sha256": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb"
+        },
+        "src/siegfried/observability/logging.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1578160,
+          "device": 48,
+          "size": 5637,
+          "nlink": 1,
+          "atime_ns": 1791581273643482603,
+          "mtime_ns": 1791581273644965702,
+          "ctime_ns": 1791581273646482625,
+          "directory": false,
+          "regular": true,
+          "sha256": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327"
+        },
+        "src/siegfried/storage/__init__.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568573,
+          "device": 48,
+          "size": 1149,
+          "nlink": 1,
+          "atime_ns": 1791570122742000627,
+          "mtime_ns": 1791570122742000627,
+          "ctime_ns": 1791570122742000627,
+          "directory": false,
+          "regular": true,
+          "sha256": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a"
+        },
+        "src/siegfried/storage/aggregator.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568574,
+          "device": 48,
+          "size": 13427,
+          "nlink": 1,
+          "atime_ns": 1791570122746000655,
+          "mtime_ns": 1791570122746000655,
+          "ctime_ns": 1791570122746000655,
+          "directory": false,
+          "regular": true,
+          "sha256": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb"
+        },
+        "src/siegfried/storage/atomic_json.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568575,
+          "device": 48,
+          "size": 4937,
+          "nlink": 1,
+          "atime_ns": 1791570122750000682,
+          "mtime_ns": 1791570122750000682,
+          "ctime_ns": 1791570122750000682,
+          "directory": false,
+          "regular": true,
+          "sha256": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe"
+        },
+        "src/siegfried/storage/initialization.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568576,
+          "device": 48,
+          "size": 13419,
+          "nlink": 1,
+          "atime_ns": 1791570122754000710,
+          "mtime_ns": 1791570122754000710,
+          "ctime_ns": 1791570122754000710,
+          "directory": false,
+          "regular": true,
+          "sha256": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407"
+        },
+        "src/siegfried/storage/paths.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568577,
+          "device": 48,
+          "size": 3821,
+          "nlink": 1,
+          "atime_ns": 1791570122759000745,
+          "mtime_ns": 1791570122759000745,
+          "ctime_ns": 1791570122759000745,
+          "directory": false,
+          "regular": true,
+          "sha256": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1"
+        },
+        "src/siegfried/storage/secrets.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568578,
+          "device": 48,
+          "size": 4589,
+          "nlink": 1,
+          "atime_ns": 1791570122763000773,
+          "mtime_ns": 1791570122763000773,
+          "ctime_ns": 1791570122763000773,
+          "directory": false,
+          "regular": true,
+          "sha256": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9"
+        },
+        "src/siegfried/storage/validation.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568579,
+          "device": 48,
+          "size": 17288,
+          "nlink": 1,
+          "atime_ns": 1791570122767000801,
+          "mtime_ns": 1791570122767000801,
+          "ctime_ns": 1791570122767000801,
+          "directory": false,
+          "regular": true,
+          "sha256": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4"
+        },
+        "src/siegfried/storage/vault.py": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "inode": 1568580,
+          "device": 48,
+          "size": 12187,
+          "nlink": 1,
+          "atime_ns": 1791570122771000830,
+          "mtime_ns": 1791570122771000830,
+          "ctime_ns": 1791570122771000830,
+          "directory": false,
+          "regular": true,
+          "sha256": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+        }
+      },
+      "snapshot_current_directories": {
+        ".": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568503,
+          "device": 48,
+          "size": 58,
+          "nlink": 1,
+          "atime_ns": 1791570122519999074,
+          "mtime_ns": 1791570122775000857,
+          "ctime_ns": 1791570122780000892,
+          "directory": true,
+          "regular": false
+        },
+        "bin": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568506,
+          "device": 48,
+          "size": 50,
+          "nlink": 1,
+          "atime_ns": 1791570122526999123,
+          "mtime_ns": 1791570122531999158,
+          "ctime_ns": 1791570122531999158,
+          "directory": true,
+          "regular": false
+        },
+        "scripts": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568504,
+          "device": 48,
+          "size": 102,
+          "nlink": 1,
+          "atime_ns": 1791570122519999074,
+          "mtime_ns": 1791570122539999214,
+          "ctime_ns": 1791570122539999214,
+          "directory": true,
+          "regular": false
+        },
+        "scripts/kwin_focus_watcher": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568510,
+          "device": 48,
+          "size": 42,
+          "nlink": 1,
+          "atime_ns": 1791570122539999214,
+          "mtime_ns": 1791570122543999242,
+          "ctime_ns": 1791570122543999242,
+          "directory": true,
+          "regular": false
+        },
+        "scripts/kwin_focus_watcher/contents": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568512,
+          "device": 48,
+          "size": 8,
+          "nlink": 1,
+          "atime_ns": 1791570122543999242,
+          "mtime_ns": 1791570122543999242,
+          "ctime_ns": 1791570122543999242,
+          "directory": true,
+          "regular": false
+        },
+        "scripts/kwin_focus_watcher/contents/code": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568513,
+          "device": 48,
+          "size": 14,
+          "nlink": 1,
+          "atime_ns": 1791570122543999242,
+          "mtime_ns": 1791570122543999242,
+          "ctime_ns": 1791570122543999242,
+          "directory": true,
+          "regular": false
+        },
+        "src": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568515,
+          "device": 48,
+          "size": 18,
+          "nlink": 1,
+          "atime_ns": 1791570122548999277,
+          "mtime_ns": 1791570122548999277,
+          "ctime_ns": 1791570122548999277,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568516,
+          "device": 48,
+          "size": 154,
+          "nlink": 1,
+          "atime_ns": 1791570122548999277,
+          "mtime_ns": 1791570122742000627,
+          "ctime_ns": 1791570122742000627,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/cli": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568518,
+          "device": 48,
+          "size": 66,
+          "nlink": 1,
+          "atime_ns": 1791570122552999305,
+          "mtime_ns": 1791570122564999389,
+          "ctime_ns": 1791570122564999389,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/contracts": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568523,
+          "device": 48,
+          "size": 130,
+          "nlink": 1,
+          "atime_ns": 1791570122568999417,
+          "mtime_ns": 1791570122594999598,
+          "ctime_ns": 1791570122594999598,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/core": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568531,
+          "device": 48,
+          "size": 124,
+          "nlink": 1,
+          "atime_ns": 1791570122598999626,
+          "mtime_ns": 1791570122617999759,
+          "ctime_ns": 1791570122617999759,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/daemon": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568538,
+          "device": 48,
+          "size": 128,
+          "nlink": 1,
+          "atime_ns": 1791570122621999787,
+          "mtime_ns": 1791581273640482582,
+          "ctime_ns": 1791581273640482582,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/inference": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568546,
+          "device": 48,
+          "size": 140,
+          "nlink": 1,
+          "atime_ns": 1791570122650999990,
+          "mtime_ns": 1791570122671000130,
+          "ctime_ns": 1791570122671000130,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/integrations": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568553,
+          "device": 48,
+          "size": 220,
+          "nlink": 1,
+          "atime_ns": 1791570122675000158,
+          "mtime_ns": 1791570122708000389,
+          "ctime_ns": 1791570122708000389,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/ipc": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568563,
+          "device": 48,
+          "size": 80,
+          "nlink": 1,
+          "atime_ns": 1791570122712000417,
+          "mtime_ns": 1791570122725000508,
+          "ctime_ns": 1791570122725000508,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/observability": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568568,
+          "device": 48,
+          "size": 68,
+          "nlink": 1,
+          "atime_ns": 1791570122729000536,
+          "mtime_ns": 1791581273646482625,
+          "ctime_ns": 1791581273646482625,
+          "directory": true,
+          "regular": false
+        },
+        "src/siegfried/storage": {
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "inode": 1568572,
+          "device": 48,
+          "size": 188,
+          "nlink": 1,
+          "atime_ns": 1791570122742000627,
+          "mtime_ns": 1791570122771000830,
+          "ctime_ns": 1791570122771000830,
+          "directory": true,
+          "regular": false
+        }
+      },
+      "commands_exact": [
+        "cd /media/okami/Mio/Siegfried",
+        "/usr/bin/python3 -B /tmp/siegfried-f55-update-daemon-observability.py",
+        "/usr/bin/python3 -B /tmp/siegfried-f55-update-daemon-observability.py --apply"
+      ],
+      "acl_check": "PASS: updated sources and backup directory/files only basic POSIX ACLs, no additional ACL",
+      "operational_side_effects": {
+        "daemon_started": false,
+        "systemd_enabled": false,
+        "systemd_reload": false,
+        "autostart_installed": false,
+        "kwin_session_enabled": false,
+        "repl_opened": false,
+        "cloud_or_inference": false
+      },
+      "backup_manifest_sha256": "970b165bbeea9d3be561ab087ddb7e7fa91c664115195f90a78c78762aac046a",
+      "snapshot_parent_directories_note": "Atomic replacement changes parent src/siegfried/daemon and src/siegfried/observability directory mtime/ctime. Other source bytes/inodes/owners/modes unchanged; helper read access time of public source files may change."
+    }
+  ],
+  "current_daemon_snapshot": {
+    "path": "/home/okami/.local/share/siegfried-daemon",
+    "source_hashes": {
+      "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+      "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+      "bin/siegfried-daemon": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b",
+      "scripts/kwin_focus_watcher.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+      "scripts/kwin_focus_watcher/metadata.json": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97",
+      "scripts/kwin_focus_watcher/contents/code/main.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+      "src/siegfried/__init__.py": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+      "src/siegfried/cli/__init__.py": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+      "src/siegfried/cli/app.py": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+      "src/siegfried/cli/repl.py": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+      "src/siegfried/cli/router.py": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+      "src/siegfried/contracts/__init__.py": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+      "src/siegfried/contracts/alerts.py": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+      "src/siegfried/contracts/config.py": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+      "src/siegfried/contracts/events.py": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+      "src/siegfried/contracts/inference.py": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+      "src/siegfried/contracts/ipc.py": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+      "src/siegfried/contracts/states.py": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+      "src/siegfried/core/__init__.py": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+      "src/siegfried/core/briefing.py": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+      "src/siegfried/core/clock.py": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+      "src/siegfried/core/errors.py": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+      "src/siegfried/core/rest.py": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+      "src/siegfried/core/state_machine.py": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+      "src/siegfried/daemon/__init__.py": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+      "src/siegfried/daemon/__main__.py": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+      "src/siegfried/daemon/alerts.py": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+      "src/siegfried/daemon/app.py": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8",
+      "src/siegfried/daemon/focus.py": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+      "src/siegfried/daemon/session.py": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+      "src/siegfried/daemon/timers.py": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+      "src/siegfried/inference/__init__.py": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+      "src/siegfried/inference/cloud.py": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+      "src/siegfried/inference/llama_manager.py": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+      "src/siegfried/inference/local.py": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+      "src/siegfried/inference/orchestrator.py": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+      "src/siegfried/inference/resources.py": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+      "src/siegfried/integrations/__init__.py": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+      "src/siegfried/integrations/audio.py": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+      "src/siegfried/integrations/boot_briefing.py": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+      "src/siegfried/integrations/briefing_files.py": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+      "src/siegfried/integrations/briefing_kde.py": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+      "src/siegfried/integrations/kwin.py": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+      "src/siegfried/integrations/notifications.py": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+      "src/siegfried/integrations/session.py": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+      "src/siegfried/integrations/weather.py": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+      "src/siegfried/ipc/__init__.py": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+      "src/siegfried/ipc/client.py": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+      "src/siegfried/ipc/protocol.py": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+      "src/siegfried/ipc/server.py": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+      "src/siegfried/observability/__init__.py": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+      "src/siegfried/observability/benchmarks.py": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+      "src/siegfried/observability/logging.py": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327",
+      "src/siegfried/storage/__init__.py": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+      "src/siegfried/storage/aggregator.py": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+      "src/siegfried/storage/atomic_json.py": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+      "src/siegfried/storage/initialization.py": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+      "src/siegfried/storage/paths.py": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+      "src/siegfried/storage/secrets.py": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+      "src/siegfried/storage/validation.py": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+      "src/siegfried/storage/vault.py": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+    },
+    "files": {
+      ".siegfried-owned": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568581,
+        "device": 48,
+        "size": 5,
+        "nlink": 1,
+        "atime_ns": 1791570122775000857,
+        "mtime_ns": 1791570122775000857,
+        "ctime_ns": 1791570122775000857,
+        "directory": false,
+        "regular": true,
+        "sha256": "d3e3f63629b47563a307f7c8028779ddddb497af9641c799a5f70260126a1a6b"
+      },
+      "bin/siegfried": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568507,
+        "device": 48,
+        "size": 437,
+        "nlink": 1,
+        "atime_ns": 1791570122526999123,
+        "mtime_ns": 1791570122526999123,
+        "ctime_ns": 1791570122526999123,
+        "directory": false,
+        "regular": true,
+        "sha256": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc"
+      },
+      "bin/siegfried-daemon": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568508,
+        "device": 48,
+        "size": 909,
+        "nlink": 1,
+        "atime_ns": 1791570122531999158,
+        "mtime_ns": 1791570122531999158,
+        "ctime_ns": 1791570122531999158,
+        "directory": false,
+        "regular": true,
+        "sha256": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b"
+      },
+      "scripts/boot_hook.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568505,
+        "device": 48,
+        "size": 3744,
+        "nlink": 1,
+        "atime_ns": 1791570122519999074,
+        "mtime_ns": 1791570122519999074,
+        "ctime_ns": 1791570122519999074,
+        "directory": false,
+        "regular": true,
+        "sha256": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736"
+      },
+      "scripts/kwin_focus_watcher/contents/code/main.js": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568514,
+        "device": 48,
+        "size": 4140,
+        "nlink": 1,
+        "atime_ns": 1791570122543999242,
+        "mtime_ns": 1791570122543999242,
+        "ctime_ns": 1791570122543999242,
+        "directory": false,
+        "regular": true,
+        "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb"
+      },
+      "scripts/kwin_focus_watcher/metadata.json": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568511,
+        "device": 48,
+        "size": 509,
+        "nlink": 1,
+        "atime_ns": 1791570122539999214,
+        "mtime_ns": 1791570122539999214,
+        "ctime_ns": 1791570122539999214,
+        "directory": false,
+        "regular": true,
+        "sha256": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97"
+      },
+      "scripts/kwin_focus_watcher.js": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568509,
+        "device": 48,
+        "size": 4140,
+        "nlink": 1,
+        "atime_ns": 1791570122535999186,
+        "mtime_ns": 1791570122535999186,
+        "ctime_ns": 1791570122535999186,
+        "directory": false,
+        "regular": true,
+        "sha256": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb"
+      },
+      "src/siegfried/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568517,
+        "device": 48,
+        "size": 164,
+        "nlink": 1,
+        "atime_ns": 1791570122548999277,
+        "mtime_ns": 1791570122548999277,
+        "ctime_ns": 1791570122548999277,
+        "directory": false,
+        "regular": true,
+        "sha256": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c"
+      },
+      "src/siegfried/cli/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568519,
+        "device": 48,
+        "size": 702,
+        "nlink": 1,
+        "atime_ns": 1791570122552999305,
+        "mtime_ns": 1791570122552999305,
+        "ctime_ns": 1791570122552999305,
+        "directory": false,
+        "regular": true,
+        "sha256": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12"
+      },
+      "src/siegfried/cli/app.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568520,
+        "device": 48,
+        "size": 9519,
+        "nlink": 1,
+        "atime_ns": 1791570122556999333,
+        "mtime_ns": 1791570122556999333,
+        "ctime_ns": 1791570122556999333,
+        "directory": false,
+        "regular": true,
+        "sha256": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a"
+      },
+      "src/siegfried/cli/repl.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568521,
+        "device": 48,
+        "size": 12105,
+        "nlink": 1,
+        "atime_ns": 1791570122560999361,
+        "mtime_ns": 1791570122560999361,
+        "ctime_ns": 1791570122560999361,
+        "directory": false,
+        "regular": true,
+        "sha256": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b"
+      },
+      "src/siegfried/cli/router.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568522,
+        "device": 48,
+        "size": 7412,
+        "nlink": 1,
+        "atime_ns": 1791570122564999389,
+        "mtime_ns": 1791570122564999389,
+        "ctime_ns": 1791570122564999389,
+        "directory": false,
+        "regular": true,
+        "sha256": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d"
+      },
+      "src/siegfried/contracts/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568524,
+        "device": 48,
+        "size": 1601,
+        "nlink": 1,
+        "atime_ns": 1791570122568999417,
+        "mtime_ns": 1791570122568999417,
+        "ctime_ns": 1791570122568999417,
+        "directory": false,
+        "regular": true,
+        "sha256": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae"
+      },
+      "src/siegfried/contracts/alerts.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568525,
+        "device": 48,
+        "size": 1694,
+        "nlink": 1,
+        "atime_ns": 1791570122573999452,
+        "mtime_ns": 1791570122573999452,
+        "ctime_ns": 1791570122573999452,
+        "directory": false,
+        "regular": true,
+        "sha256": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6"
+      },
+      "src/siegfried/contracts/config.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568526,
+        "device": 48,
+        "size": 4118,
+        "nlink": 1,
+        "atime_ns": 1791570122577999480,
+        "mtime_ns": 1791570122577999480,
+        "ctime_ns": 1791570122577999480,
+        "directory": false,
+        "regular": true,
+        "sha256": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752"
+      },
+      "src/siegfried/contracts/events.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568527,
+        "device": 48,
+        "size": 2827,
+        "nlink": 1,
+        "atime_ns": 1791570122581999508,
+        "mtime_ns": 1791570122581999508,
+        "ctime_ns": 1791570122581999508,
+        "directory": false,
+        "regular": true,
+        "sha256": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa"
+      },
+      "src/siegfried/contracts/inference.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568528,
+        "device": 48,
+        "size": 6746,
+        "nlink": 1,
+        "atime_ns": 1791570122585999535,
+        "mtime_ns": 1791570122585999535,
+        "ctime_ns": 1791570122585999535,
+        "directory": false,
+        "regular": true,
+        "sha256": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249"
+      },
+      "src/siegfried/contracts/ipc.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568529,
+        "device": 48,
+        "size": 5025,
+        "nlink": 1,
+        "atime_ns": 1791570122589999563,
+        "mtime_ns": 1791570122589999563,
+        "ctime_ns": 1791570122589999563,
+        "directory": false,
+        "regular": true,
+        "sha256": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a"
+      },
+      "src/siegfried/contracts/states.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568530,
+        "device": 48,
+        "size": 697,
+        "nlink": 1,
+        "atime_ns": 1791570122594999598,
+        "mtime_ns": 1791570122594999598,
+        "ctime_ns": 1791570122594999598,
+        "directory": false,
+        "regular": true,
+        "sha256": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98"
+      },
+      "src/siegfried/core/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568532,
+        "device": 48,
+        "size": 614,
+        "nlink": 1,
+        "atime_ns": 1791570122598999626,
+        "mtime_ns": 1791570122598999626,
+        "ctime_ns": 1791570122598999626,
+        "directory": false,
+        "regular": true,
+        "sha256": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a"
+      },
+      "src/siegfried/core/briefing.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568533,
+        "device": 48,
+        "size": 3025,
+        "nlink": 1,
+        "atime_ns": 1791570122602999654,
+        "mtime_ns": 1791570122602999654,
+        "ctime_ns": 1791570122602999654,
+        "directory": false,
+        "regular": true,
+        "sha256": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47"
+      },
+      "src/siegfried/core/clock.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568534,
+        "device": 48,
+        "size": 807,
+        "nlink": 1,
+        "atime_ns": 1791570122607999689,
+        "mtime_ns": 1791570122607999689,
+        "ctime_ns": 1791570122607999689,
+        "directory": false,
+        "regular": true,
+        "sha256": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f"
+      },
+      "src/siegfried/core/errors.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568535,
+        "device": 48,
+        "size": 6012,
+        "nlink": 1,
+        "atime_ns": 1791570122609999703,
+        "mtime_ns": 1791570122609999703,
+        "ctime_ns": 1791570122609999703,
+        "directory": false,
+        "regular": true,
+        "sha256": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581"
+      },
+      "src/siegfried/core/rest.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568536,
+        "device": 48,
+        "size": 4358,
+        "nlink": 1,
+        "atime_ns": 1791570122613999731,
+        "mtime_ns": 1791570122613999731,
+        "ctime_ns": 1791570122613999731,
+        "directory": false,
+        "regular": true,
+        "sha256": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6"
+      },
+      "src/siegfried/core/state_machine.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568537,
+        "device": 48,
+        "size": 4051,
+        "nlink": 1,
+        "atime_ns": 1791570122617999759,
+        "mtime_ns": 1791570122617999759,
+        "ctime_ns": 1791570122617999759,
+        "directory": false,
+        "regular": true,
+        "sha256": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a"
+      },
+      "src/siegfried/daemon/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568539,
+        "device": 48,
+        "size": 466,
+        "nlink": 1,
+        "atime_ns": 1791570122621999787,
+        "mtime_ns": 1791570122621999787,
+        "ctime_ns": 1791570122621999787,
+        "directory": false,
+        "regular": true,
+        "sha256": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f"
+      },
+      "src/siegfried/daemon/__main__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568540,
+        "device": 48,
+        "size": 702,
+        "nlink": 1,
+        "atime_ns": 1791570122626999822,
+        "mtime_ns": 1791570122626999822,
+        "ctime_ns": 1791570122626999822,
+        "directory": false,
+        "regular": true,
+        "sha256": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9"
+      },
+      "src/siegfried/daemon/alerts.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568541,
+        "device": 48,
+        "size": 19827,
+        "nlink": 1,
+        "atime_ns": 1791570122629999843,
+        "mtime_ns": 1791570122629999843,
+        "ctime_ns": 1791570122629999843,
+        "directory": false,
+        "regular": true,
+        "sha256": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827"
+      },
+      "src/siegfried/daemon/app.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1578159,
+        "device": 48,
+        "size": 29734,
+        "nlink": 1,
+        "atime_ns": 1791581273637345672,
+        "mtime_ns": 1791581273637523105,
+        "ctime_ns": 1791581273640482582,
+        "directory": false,
+        "regular": true,
+        "sha256": "2fb50a1fe6e11b95d69054c77507c83cd579b3705bf8b0b21b23f29f987344c8"
+      },
+      "src/siegfried/daemon/focus.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568543,
+        "device": 48,
+        "size": 23955,
+        "nlink": 1,
+        "atime_ns": 1791570122638999906,
+        "mtime_ns": 1791570122638999906,
+        "ctime_ns": 1791570122638999906,
+        "directory": false,
+        "regular": true,
+        "sha256": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af"
+      },
+      "src/siegfried/daemon/session.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568544,
+        "device": 48,
+        "size": 7250,
+        "nlink": 1,
+        "atime_ns": 1791570122642999934,
+        "mtime_ns": 1791570122642999934,
+        "ctime_ns": 1791570122642999934,
+        "directory": false,
+        "regular": true,
+        "sha256": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485"
+      },
+      "src/siegfried/daemon/timers.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568545,
+        "device": 48,
+        "size": 2441,
+        "nlink": 1,
+        "atime_ns": 1791570122646999962,
+        "mtime_ns": 1791570122646999962,
+        "ctime_ns": 1791570122646999962,
+        "directory": false,
+        "regular": true,
+        "sha256": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad"
+      },
+      "src/siegfried/inference/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568547,
+        "device": 48,
+        "size": 1420,
+        "nlink": 1,
+        "atime_ns": 1791570122650999990,
+        "mtime_ns": 1791570122650999990,
+        "ctime_ns": 1791570122650999990,
+        "directory": false,
+        "regular": true,
+        "sha256": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07"
+      },
+      "src/siegfried/inference/cloud.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568548,
+        "device": 48,
+        "size": 18531,
+        "nlink": 1,
+        "atime_ns": 1791570122655000018,
+        "mtime_ns": 1791570122655000018,
+        "ctime_ns": 1791570122655000018,
+        "directory": false,
+        "regular": true,
+        "sha256": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e"
+      },
+      "src/siegfried/inference/llama_manager.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568549,
+        "device": 48,
+        "size": 18751,
+        "nlink": 1,
+        "atime_ns": 1791570122659000046,
+        "mtime_ns": 1791570122659000046,
+        "ctime_ns": 1791570122659000046,
+        "directory": false,
+        "regular": true,
+        "sha256": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a"
+      },
+      "src/siegfried/inference/local.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568550,
+        "device": 48,
+        "size": 11624,
+        "nlink": 1,
+        "atime_ns": 1791570122663000074,
+        "mtime_ns": 1791570122663000074,
+        "ctime_ns": 1791570122663000074,
+        "directory": false,
+        "regular": true,
+        "sha256": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183"
+      },
+      "src/siegfried/inference/orchestrator.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568551,
+        "device": 48,
+        "size": 18866,
+        "nlink": 1,
+        "atime_ns": 1791570122667000102,
+        "mtime_ns": 1791570122667000102,
+        "ctime_ns": 1791570122667000102,
+        "directory": false,
+        "regular": true,
+        "sha256": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d"
+      },
+      "src/siegfried/inference/resources.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568552,
+        "device": 48,
+        "size": 7408,
+        "nlink": 1,
+        "atime_ns": 1791570122671000130,
+        "mtime_ns": 1791570122671000130,
+        "ctime_ns": 1791570122671000130,
+        "directory": false,
+        "regular": true,
+        "sha256": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8"
+      },
+      "src/siegfried/integrations/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568554,
+        "device": 48,
+        "size": 649,
+        "nlink": 1,
+        "atime_ns": 1791570122675000158,
+        "mtime_ns": 1791570122675000158,
+        "ctime_ns": 1791570122675000158,
+        "directory": false,
+        "regular": true,
+        "sha256": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d"
+      },
+      "src/siegfried/integrations/audio.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568555,
+        "device": 48,
+        "size": 6748,
+        "nlink": 1,
+        "atime_ns": 1791570122679000186,
+        "mtime_ns": 1791570122679000186,
+        "ctime_ns": 1791570122679000186,
+        "directory": false,
+        "regular": true,
+        "sha256": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a"
+      },
+      "src/siegfried/integrations/boot_briefing.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568556,
+        "device": 48,
+        "size": 5928,
+        "nlink": 1,
+        "atime_ns": 1791570122684000221,
+        "mtime_ns": 1791570122684000221,
+        "ctime_ns": 1791570122684000221,
+        "directory": false,
+        "regular": true,
+        "sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8"
+      },
+      "src/siegfried/integrations/briefing_files.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568557,
+        "device": 48,
+        "size": 4388,
+        "nlink": 1,
+        "atime_ns": 1791570122688000249,
+        "mtime_ns": 1791570122688000249,
+        "ctime_ns": 1791570122688000249,
+        "directory": false,
+        "regular": true,
+        "sha256": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579"
+      },
+      "src/siegfried/integrations/briefing_kde.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568558,
+        "device": 48,
+        "size": 11794,
+        "nlink": 1,
+        "atime_ns": 1791570122692000277,
+        "mtime_ns": 1791570122692000277,
+        "ctime_ns": 1791570122692000277,
+        "directory": false,
+        "regular": true,
+        "sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5"
+      },
+      "src/siegfried/integrations/kwin.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568559,
+        "device": 48,
+        "size": 1574,
+        "nlink": 1,
+        "atime_ns": 1791570122696822095,
+        "mtime_ns": 1791570122696822095,
+        "ctime_ns": 1791570122696822095,
+        "directory": false,
+        "regular": true,
+        "sha256": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08"
+      },
+      "src/siegfried/integrations/notifications.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568560,
+        "device": 48,
+        "size": 5032,
+        "nlink": 1,
+        "atime_ns": 1791570122700000333,
+        "mtime_ns": 1791570122700000333,
+        "ctime_ns": 1791570122700000333,
+        "directory": false,
+        "regular": true,
+        "sha256": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c"
+      },
+      "src/siegfried/integrations/session.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568561,
+        "device": 48,
+        "size": 17324,
+        "nlink": 1,
+        "atime_ns": 1791570122704000361,
+        "mtime_ns": 1791570122704000361,
+        "ctime_ns": 1791570122704000361,
+        "directory": false,
+        "regular": true,
+        "sha256": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62"
+      },
+      "src/siegfried/integrations/weather.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568562,
+        "device": 48,
+        "size": 2871,
+        "nlink": 1,
+        "atime_ns": 1791570122708000389,
+        "mtime_ns": 1791570122708000389,
+        "ctime_ns": 1791570122708000389,
+        "directory": false,
+        "regular": true,
+        "sha256": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d"
+      },
+      "src/siegfried/ipc/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568564,
+        "device": 48,
+        "size": 369,
+        "nlink": 1,
+        "atime_ns": 1791570122712000417,
+        "mtime_ns": 1791570122712000417,
+        "ctime_ns": 1791570122712000417,
+        "directory": false,
+        "regular": true,
+        "sha256": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137"
+      },
+      "src/siegfried/ipc/client.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568565,
+        "device": 48,
+        "size": 2437,
+        "nlink": 1,
+        "atime_ns": 1791570122716000445,
+        "mtime_ns": 1791570122716000445,
+        "ctime_ns": 1791570122716000445,
+        "directory": false,
+        "regular": true,
+        "sha256": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817"
+      },
+      "src/siegfried/ipc/protocol.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568566,
+        "device": 48,
+        "size": 1511,
+        "nlink": 1,
+        "atime_ns": 1791570122720000473,
+        "mtime_ns": 1791570122720000473,
+        "ctime_ns": 1791570122720000473,
+        "directory": false,
+        "regular": true,
+        "sha256": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36"
+      },
+      "src/siegfried/ipc/server.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568567,
+        "device": 48,
+        "size": 18465,
+        "nlink": 1,
+        "atime_ns": 1791570122725000508,
+        "mtime_ns": 1791570122725000508,
+        "ctime_ns": 1791570122725000508,
+        "directory": false,
+        "regular": true,
+        "sha256": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286"
+      },
+      "src/siegfried/observability/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568569,
+        "device": 48,
+        "size": 418,
+        "nlink": 1,
+        "atime_ns": 1791570122729000536,
+        "mtime_ns": 1791570122729000536,
+        "ctime_ns": 1791570122729000536,
+        "directory": false,
+        "regular": true,
+        "sha256": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e"
+      },
+      "src/siegfried/observability/benchmarks.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568570,
+        "device": 48,
+        "size": 1366,
+        "nlink": 1,
+        "atime_ns": 1791570122733000564,
+        "mtime_ns": 1791570122733000564,
+        "ctime_ns": 1791570122733000564,
+        "directory": false,
+        "regular": true,
+        "sha256": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb"
+      },
+      "src/siegfried/observability/logging.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1578160,
+        "device": 48,
+        "size": 5637,
+        "nlink": 1,
+        "atime_ns": 1791581273643482603,
+        "mtime_ns": 1791581273644965702,
+        "ctime_ns": 1791581273646482625,
+        "directory": false,
+        "regular": true,
+        "sha256": "1c981412c4eccf85aad4f7979655269e8d0fa8e596a858d089b1cda053b26327"
+      },
+      "src/siegfried/storage/__init__.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568573,
+        "device": 48,
+        "size": 1149,
+        "nlink": 1,
+        "atime_ns": 1791570122742000627,
+        "mtime_ns": 1791570122742000627,
+        "ctime_ns": 1791570122742000627,
+        "directory": false,
+        "regular": true,
+        "sha256": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a"
+      },
+      "src/siegfried/storage/aggregator.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568574,
+        "device": 48,
+        "size": 13427,
+        "nlink": 1,
+        "atime_ns": 1791570122746000655,
+        "mtime_ns": 1791570122746000655,
+        "ctime_ns": 1791570122746000655,
+        "directory": false,
+        "regular": true,
+        "sha256": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb"
+      },
+      "src/siegfried/storage/atomic_json.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568575,
+        "device": 48,
+        "size": 4937,
+        "nlink": 1,
+        "atime_ns": 1791570122750000682,
+        "mtime_ns": 1791570122750000682,
+        "ctime_ns": 1791570122750000682,
+        "directory": false,
+        "regular": true,
+        "sha256": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe"
+      },
+      "src/siegfried/storage/initialization.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568576,
+        "device": 48,
+        "size": 13419,
+        "nlink": 1,
+        "atime_ns": 1791570122754000710,
+        "mtime_ns": 1791570122754000710,
+        "ctime_ns": 1791570122754000710,
+        "directory": false,
+        "regular": true,
+        "sha256": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407"
+      },
+      "src/siegfried/storage/paths.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568577,
+        "device": 48,
+        "size": 3821,
+        "nlink": 1,
+        "atime_ns": 1791570122759000745,
+        "mtime_ns": 1791570122759000745,
+        "ctime_ns": 1791570122759000745,
+        "directory": false,
+        "regular": true,
+        "sha256": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1"
+      },
+      "src/siegfried/storage/secrets.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568578,
+        "device": 48,
+        "size": 4589,
+        "nlink": 1,
+        "atime_ns": 1791570122763000773,
+        "mtime_ns": 1791570122763000773,
+        "ctime_ns": 1791570122763000773,
+        "directory": false,
+        "regular": true,
+        "sha256": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9"
+      },
+      "src/siegfried/storage/validation.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568579,
+        "device": 48,
+        "size": 17288,
+        "nlink": 1,
+        "atime_ns": 1791570122767000801,
+        "mtime_ns": 1791570122767000801,
+        "ctime_ns": 1791570122767000801,
+        "directory": false,
+        "regular": true,
+        "sha256": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4"
+      },
+      "src/siegfried/storage/vault.py": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1568580,
+        "device": 48,
+        "size": 12187,
+        "nlink": 1,
+        "atime_ns": 1791570122771000830,
+        "mtime_ns": 1791570122771000830,
+        "ctime_ns": 1791570122771000830,
+        "directory": false,
+        "regular": true,
+        "sha256": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+      }
+    },
+    "directories": {
+      ".": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568503,
+        "device": 48,
+        "size": 58,
+        "nlink": 1,
+        "atime_ns": 1791570122519999074,
+        "mtime_ns": 1791570122775000857,
+        "ctime_ns": 1791570122780000892,
+        "directory": true,
+        "regular": false
+      },
+      "bin": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568506,
+        "device": 48,
+        "size": 50,
+        "nlink": 1,
+        "atime_ns": 1791570122526999123,
+        "mtime_ns": 1791570122531999158,
+        "ctime_ns": 1791570122531999158,
+        "directory": true,
+        "regular": false
+      },
+      "scripts": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568504,
+        "device": 48,
+        "size": 102,
+        "nlink": 1,
+        "atime_ns": 1791570122519999074,
+        "mtime_ns": 1791570122539999214,
+        "ctime_ns": 1791570122539999214,
+        "directory": true,
+        "regular": false
+      },
+      "scripts/kwin_focus_watcher": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568510,
+        "device": 48,
+        "size": 42,
+        "nlink": 1,
+        "atime_ns": 1791570122539999214,
+        "mtime_ns": 1791570122543999242,
+        "ctime_ns": 1791570122543999242,
+        "directory": true,
+        "regular": false
+      },
+      "scripts/kwin_focus_watcher/contents": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568512,
+        "device": 48,
+        "size": 8,
+        "nlink": 1,
+        "atime_ns": 1791570122543999242,
+        "mtime_ns": 1791570122543999242,
+        "ctime_ns": 1791570122543999242,
+        "directory": true,
+        "regular": false
+      },
+      "scripts/kwin_focus_watcher/contents/code": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568513,
+        "device": 48,
+        "size": 14,
+        "nlink": 1,
+        "atime_ns": 1791570122543999242,
+        "mtime_ns": 1791570122543999242,
+        "ctime_ns": 1791570122543999242,
+        "directory": true,
+        "regular": false
+      },
+      "src": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568515,
+        "device": 48,
+        "size": 18,
+        "nlink": 1,
+        "atime_ns": 1791570122548999277,
+        "mtime_ns": 1791570122548999277,
+        "ctime_ns": 1791570122548999277,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568516,
+        "device": 48,
+        "size": 154,
+        "nlink": 1,
+        "atime_ns": 1791570122548999277,
+        "mtime_ns": 1791570122742000627,
+        "ctime_ns": 1791570122742000627,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/cli": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568518,
+        "device": 48,
+        "size": 66,
+        "nlink": 1,
+        "atime_ns": 1791570122552999305,
+        "mtime_ns": 1791570122564999389,
+        "ctime_ns": 1791570122564999389,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/contracts": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568523,
+        "device": 48,
+        "size": 130,
+        "nlink": 1,
+        "atime_ns": 1791570122568999417,
+        "mtime_ns": 1791570122594999598,
+        "ctime_ns": 1791570122594999598,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/core": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568531,
+        "device": 48,
+        "size": 124,
+        "nlink": 1,
+        "atime_ns": 1791570122598999626,
+        "mtime_ns": 1791570122617999759,
+        "ctime_ns": 1791570122617999759,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/daemon": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568538,
+        "device": 48,
+        "size": 128,
+        "nlink": 1,
+        "atime_ns": 1791570122621999787,
+        "mtime_ns": 1791581273640482582,
+        "ctime_ns": 1791581273640482582,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/inference": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568546,
+        "device": 48,
+        "size": 140,
+        "nlink": 1,
+        "atime_ns": 1791570122650999990,
+        "mtime_ns": 1791570122671000130,
+        "ctime_ns": 1791570122671000130,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/integrations": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568553,
+        "device": 48,
+        "size": 220,
+        "nlink": 1,
+        "atime_ns": 1791570122675000158,
+        "mtime_ns": 1791570122708000389,
+        "ctime_ns": 1791570122708000389,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/ipc": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568563,
+        "device": 48,
+        "size": 80,
+        "nlink": 1,
+        "atime_ns": 1791570122712000417,
+        "mtime_ns": 1791570122725000508,
+        "ctime_ns": 1791570122725000508,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/observability": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568568,
+        "device": 48,
+        "size": 68,
+        "nlink": 1,
+        "atime_ns": 1791570122729000536,
+        "mtime_ns": 1791581273646482625,
+        "ctime_ns": 1791581273646482625,
+        "directory": true,
+        "regular": false
+      },
+      "src/siegfried/storage": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0700",
+        "inode": 1568572,
+        "device": 48,
+        "size": 188,
+        "nlink": 1,
+        "atime_ns": 1791570122742000627,
+        "mtime_ns": 1791570122771000830,
+        "ctime_ns": 1791570122771000830,
+        "directory": true,
+        "regular": false
+      }
+    },
+    "verified_at_utc": "2026-10-09T21:27:53.886581+00:00"
+  }
 }

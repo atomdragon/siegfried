@@ -628,7 +628,7 @@ class TestIPCBackpressureF241(unittest.TestCase):
             t.start()
             self.assertTrue(evts[i].wait(timeout=2.0))
 
-        repl = SiegfriedREPL(self.client)
+        repl = SiegfriedREPL(self.client, paths=self.paths)
         inputs = ["¿Puedes ayudarme?", "exit"]
         out_buf = io.StringIO()
 

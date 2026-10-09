@@ -194,7 +194,7 @@ class SiegfriedDaemon:
                 if isinstance(crit, dict) and "title" in crit and isinstance(crit["title"], str):
                     self._active_task_name = crit["title"]
             except Exception as e:
-                self.logger.warning(f"No se pudo cargar tarea activa de agenda: {e}")
+                self.logger.warning("No se pudo cargar tarea activa de agenda.")
 
     def start(self) -> None:
         """Start daemon loop, alert coordinator and register signal handlers."""
@@ -203,7 +203,7 @@ class SiegfriedDaemon:
             self._validate_startup_runtime()
             self._recover_deterministic_state()
         except StorageError as e:
-            self.logger.error(f"Fallo de seguridad o validación en runtime: {e}")
+            self.logger.error("Fallo de seguridad o validación en runtime.")
             raise
         if self.focus_tracker.vault is None:
             self.focus_tracker.vault = self.vault
@@ -320,7 +320,7 @@ class SiegfriedDaemon:
     def _on_focus_expired(self) -> None:
         """Callback invoked when focus timer reaches deadline."""
         task = self.focus_timer.snapshot().task_name or self._active_task_name
-        self.logger.info(f"Bloque de enfoque completado para: '{task}'")
+        self.logger.info("Bloque de enfoque completado.")
         
         # 1. Record event in Vault
         event_data = {
@@ -336,7 +336,7 @@ class SiegfriedDaemon:
             try:
                 self.state_machine.transition_to(SystemState.BREAK_RUNNING, reason="Timer focus expired")
             except InvalidStateTransitionError as e:
-                self.logger.error(f"Error en transición de estado tras timer: {e}")
+                self.logger.error("Error en transición de estado tras timer.")
 
         # 3. Fire notification & audio alert through AlertCoordinator
         self.alert_coordinator.trigger_pomodoro_completed(
@@ -387,7 +387,7 @@ class SiegfriedDaemon:
                 "task": self._active_task_name
             })
             self.vault.append(event)
-            self.logger.info(f"Iniciado bloque de enfoque ({duration_min} min): {self._active_task_name}")
+            self.logger.info(f"Iniciado bloque de enfoque ({duration_min} min).")
 
             return IPCResponse.ok(req.request_id, {
                 "message": f"Bloque de enfoque iniciado ({duration_min} min).",
@@ -526,7 +526,7 @@ class SiegfriedDaemon:
                     else:
                         metrics = aggregator.aggregate_today(allow_early_exit=False)
                 except Exception as e:
-                    self.logger.warning(f"Error al agregar telemetría histórica: {e}")
+                    self.logger.warning("Error al agregar telemetría histórica.")
                     metrics = AggregatedMetrics()
 
                 prompt_block = HistoricalAggregator.format_prompt_block(metrics)
@@ -577,7 +577,7 @@ class SiegfriedDaemon:
                 msg = _sanitize_error_text(f"Fallo en motor de inferencia ({type(e).__name__}): {e}")
                 return IPCResponse.error(req.request_id, msg, {"error_type": type(e).__name__})
             except Exception as e:
-                self.logger.error(f"Error inesperado durante inferencia: {e}")
+                self.logger.error("Error inesperado durante inferencia.")
                 msg = _sanitize_error_text(f"Error inesperado en inferencia ({type(e).__name__}): {e}")
                 return IPCResponse.error(req.request_id, msg, {"error_type": "UnexpectedError"})
 
@@ -607,7 +607,7 @@ class SiegfriedDaemon:
             if api_key:
                 cloud_client = CloudInferenceClient(api_key=api_key, paths=self.paths)
         except Exception as e:
-            self.logger.warning(f"No se pudo inicializar cliente Cloud: {e}")
+            self.logger.warning("No se pudo inicializar cliente Cloud.")
 
         # 2. Local Manager & Client (lazy check of local model/binary)
         local_client = None
@@ -616,7 +616,7 @@ class SiegfriedDaemon:
             local_mgr = LlamaLifecycleManager(paths=self.paths)
             local_client = LocalInferenceClient(manager=local_mgr)
         except Exception as e:
-            self.logger.warning(f"No se pudo inicializar gestor Local: {e}")
+            self.logger.warning("No se pudo inicializar gestor Local.")
 
         # Privacy precedence: default to LOCAL_PREFERRED if cloud is configured, otherwise LOCAL_ONLY
         default_policy = InferencePolicy.LOCAL_PREFERRED if cloud_client else InferencePolicy.LOCAL_ONLY

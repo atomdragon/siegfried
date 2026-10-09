@@ -132,7 +132,7 @@ class TestFunctionalIntegrationF24(unittest.TestCase):
 
     def test_02_repl_cognitive_query_interaction(self) -> None:
         """2. REPL interacts with cognitive query when Fast-Path does not match."""
-        repl = SiegfriedREPL(self.client)
+        repl = SiegfriedREPL(self.client, paths=self.paths)
         inputs = ["¿Cómo organizo mis tareas para hoy?", "exit"]
         out_buf = io.StringIO()
 

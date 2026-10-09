@@ -73,13 +73,20 @@ Los recursos efímeros se ubican en `/run/user/$UID/`:
 ### Ejecutar Pruebas Automatizadas
 
 ```bash
-PYTHONPATH=src python3 -m unittest discover -s tests -p "test_*.py" -v
+timeout -s INT -k 5s 180s python3 -B tools/run_isolated_tests.py -m unittest discover -s tests -p "test_*.py" -v
 ```
+
+El lanzador crea HOME y rutas XDG temporales antes de importar el producto.
+En Linux exige Landlock ABI ≥ 3 para bloquear lectura/escritura del HOME y
+runtime reales, incluso con rutas absolutas capturadas y en subprocesos.
+Un hook de Python rechaza también mutaciones de metadatos y listados privados;
+`stat` sigue disponible. Si la protección no está disponible, se detiene.
+No sustituir este comando por una regresión directa en el HOME del usuario.
 
 ### Ejecutar Benchmark Harness de SLOs
 
 ```bash
-python3 tools/benchmark.py
+python3 -B tools/run_isolated_tests.py tools/benchmark.py
 ```
 
 ### Iniciar el Daemon en Desarrollo
@@ -269,7 +276,7 @@ No se añadieron eventos ni campos a contratos congelados. Las estimaciones de s
 Pruebas específicas (sin suspensión ni bloqueo reales):
 
 ```bash
-PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler -m unittest tests.integration.test_session_rest_f52 -v
+timeout -s INT -k 5s 60s python3 -B tools/run_isolated_tests.py -m unittest tests.integration.test_session_rest_f52 -v
 ```
 
 Verificación operativa explícita: `PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler tools/verify_session_f52.py`. Lee el estado y suscribe/cancela señales del host; después genera señales sintéticas en un bus D-Bus aislado y un Vault temporal. No bloquea ni suspende el host.
@@ -306,7 +313,7 @@ Las opciones `--weather` y `--show-task` del instalador son optativas y quedan e
 Pruebas y verificación explícitas:
 
 ```bash
-PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler -m unittest tests.integration.test_boot_briefing_f53 -v
+timeout -s INT -k 5s 60s python3 -B tools/run_isolated_tests.py -m unittest tests.integration.test_boot_briefing_f53 -v
 PYTHONPATH=src python3 tools/benchmark_boot_briefing.py
 PYTHONPATH=src timeout -s INT -k 5s 20s python3 -X faulthandler tools/verify_boot_briefing_f53.py
 ```
