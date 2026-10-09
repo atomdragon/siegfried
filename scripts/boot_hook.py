@@ -62,7 +62,7 @@ def main() -> int:
         return 0
     if args.probe_worker:
         from siegfried.ipc.client import IPCClient
-        from siegfried.contracts.ipc import IPCCommand
+        from siegfried.contracts.ipc import IPCCommand, IPCStatus
         import os
         import stat
         try:
@@ -70,7 +70,7 @@ def main() -> int:
             if not stat.S_ISSOCK(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077:
                 return 0
             response = IPCClient(args.socket_path, timeout_seconds=.1).call(IPCCommand.PING)
-            if response.status == 'ok' and response.payload.get('pong') is True:
+            if response.status == IPCStatus.OK.value and response.payload.get('pong') is True:
                 print('READY')
         except Exception:
             pass  # Never print exception text, paths or daemon payloads.

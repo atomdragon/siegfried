@@ -492,6 +492,15 @@ Implementación incremental del compositor, contexto opcional, clima HTTPS de Li
 
 ## Cronograma Total Consolidado y Previsión Operativa
 
+### Gate F5.4 — piloto preparado, cierre operativo condicionado
+
+- **PASS_WITH_DEVIATIONS:** 10 pruebas de piloto adicionales; baseline 634 conservado, regresión 644 PASS; cinco SLO del harness PASS.
+- Correcciones mínimas comprobadas: probe del briefing usa IPCStatus.OK; dry-run valida también .local/share; uninstall retira un snapshot propio aunque haya fallado la publicación del .desktop.
+- Daemon real desde snapshot privado temporal: socket 0600, PING, detección por el hook, parada y reinicio PASS. Notificación/acción KDE con ejecutable inocuo PASS; modo manual acotado preparado.
+- Sin cambios de contratos, inferencia, privacidad, permisos del HOME, Autostart real ni servicios persistentes. Fuente compartida requiere revisión antes de desplegar; no se debilita la política de ejecutables.
+- PENDING_VISUAL, clic con REPL real y login → visible <2 s: requieren observación/autorización humana. No se declara cierre total de Fase 5 ni se avanza a funcionalidades nuevas.
+- Evidencia, benchmarks y comandos de piloto/rollback: [GATE_F5_4_REPORT.md](docs/gates/GATE_F5_4_REPORT.md).
+
 * **Fase 0 (Contratos, Esquemas, IPC y Observabilidad):** 6.0 h
 * **Fase 1 (Almacenamiento Concurrente y Lockfiles):** 7.0 h
 * **Fase 2 (Inferencia Híbrida y Presupuesto de Recursos):** 11.0 h

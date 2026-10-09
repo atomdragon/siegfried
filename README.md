@@ -308,3 +308,17 @@ PYTHONPATH=src timeout -s INT -k 5s 20s python3 -X faulthandler tools/verify_boo
 El último comando emite una notificación de prueba y activa su acción por la API de KDE hacia Konsole con un ejecutable inocuo temporal; no inicia Siegfried. La aparición visual y el plazo desde login permanecen pendientes: no se alteró la inhibición de notificaciones del usuario. Informe: [GATE_F5_3_REPORT.md](docs/gates/GATE_F5_3_REPORT.md).
 
 **F5.3: PASS_WITH_DEVIATIONS.** 90 pruebas específicas y **634 pruebas totales PASS**, cinco SLO del harness PASS y `git diff --check` PASS. P95 finales: Fast-Path 0.0016 ms, Vault 1.7600 ms, CLI 34.10 ms, routing 0.0074 ms, histórico heurístico 2.0248 ms; exhaustivo observacional 8.3791 ms. Benchmark separado: composición P95 0.000527 ms y cold-start dry-run 115.144380 ms. El envío KDE real tomó 37.289 ms en un ensayo parcial; no demuestra popup visible <2 s desde login. [Inventario y propuesta de recuperación Git](docs/gates/GATE_F5_3_INVENTORY.md), sin staging ni commits.
+
+### Piloto operativo F5.4
+
+**PASS_WITH_DEVIATIONS:** 10 pruebas nuevas, 644 de regresión PASS. El snapshot privado ejecutó el daemon real con IPC 0600, parada/reinicio y briefing con disponibilidad confirmada. Se corrigieron la comparación de estado IPC del hook, el rechazo anticipado de padres inseguros del snapshot y la retirada de snapshots propios tras una instalación parcial. Los contratos v1 y la privacidad se conservan.
+
+Para observar el popup y pulsar voluntariamente la acción inocua, el verificador existente admite ahora:
+
+```bash
+PYTHONPATH=src timeout -s INT -k 5s 30s python3 tools/verify_boot_briefing_f53.py --manual
+```
+
+Espera hasta 21 s y nunca invoca automáticamente la acción en ese modo. No inicia el REPL real. El modo original conserva el ensayo automatizado con ejecutable inocuo.
+
+No se activó Autostart ni se cambiaron permisos reales. La aparición visual, el clic con REPL real y login → visible <2 s siguen pendientes; KDE actualmente informa Inhibited=false. El piloto está preparado para ejecución supervisada, pero la certificación operativa total de Fase 5 queda condicionada. [Reporte F5.4, permisos propuestos y secuencia de autorización/rollback](docs/gates/GATE_F5_4_REPORT.md).

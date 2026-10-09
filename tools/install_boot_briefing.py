@@ -140,7 +140,8 @@ def _validate_home(home):
     finally:
         os.close(fd)
     # Validate existing descendants without creating anything in dry-run.
-    for path in (home / '.config', home / '.config/autostart'):
+    for path in (home / '.config', home / '.config/autostart',
+                 home / '.local', home / '.local/share'):
         if path.exists() or path.is_symlink():
             fd = directory_fd(path)
             try:
@@ -185,7 +186,11 @@ def manage_autostart(home, *, operation='install', dry_run=True, repository=REPO
         return {'dry_run':True, 'destination':str(destination), 'operation':operation, 'content':content}
     if not destination.exists() and not destination.is_symlink():
         if operation == 'uninstall':
-            return {'removed':False}
+            # Publication can fail after the private snapshot was prepared.
+            # Reuse the ownership/content checks even when no entry exists.
+            package_exists = package.exists() or package.is_symlink()
+            remove_package(home, repository)
+            return {'removed':False, 'package_removed':package_exists}
         if operation in ('enable', 'disable'):
             raise ValueError('autostart_not_installed')
     root = directory_fd(home)

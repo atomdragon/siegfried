@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Explicit nonpersistent KDE notification/action test; no real Siegfried session."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -13,7 +14,7 @@ sys.path.insert(0, str(REPO/'src'))
 from siegfried.integrations.briefing_kde import KDEBriefingPresenter, REPLLauncher
 
 
-def verify():
+def verify(*, manual=False):
     with tempfile.TemporaryDirectory(prefix='siegfried-f53-') as folder:
         root=Path(folder);(root/'bin').mkdir(mode=0o700)
         marker=root/'opened'
@@ -37,7 +38,8 @@ def verify():
             connection=presenter.bus
             assert presenter.actions, 'actions unavailable'
             assert presenter.send('Buenos días, Señor. Prueba F5.3 sin información privada.',
-                                  'Buenos días, Señor. Prueba F5.3 sin información privada.',expiry_ms=3000)
+                                  'Buenos días, Señor. Prueba F5.3 sin información privada.',
+                                  expiry_ms=20000 if manual else 3000)
             notification_id=presenter.notification_id
             sent_ms=(time.monotonic()-start)*1000
             assert not marker.exists() and not invoked, 'automatic launch detected'
@@ -45,11 +47,18 @@ def verify():
                 presenter._call(presenter.owner,'/org/freedesktop/Notifications',
                                 'org.kde.NotificationManager','InvokeAction','us',(notification_id,'open'))
                 return False
-            presenter.sources.append(presenter.GLib.timeout_add(100,invoke))
-            presenter.wait(3)
-            assert invoked==[0] and marker.read_text()=='opened', 'test action did not run once'
-            return {'native_notify':'PASS','native_action':'PASS','konsole_test_executable':'PASS',
+            if manual:
+                print(json.dumps({'phase':'awaiting_human_observation', 'notification_id':notification_id,
+                                  'actions':True, 'inhibited':presenter.inhibited}), flush=True)
+            else:
+                presenter.sources.append(presenter.GLib.timeout_add(100,invoke))
+            presenter.wait(21 if manual else 3)
+            if invoked or not manual:
+                assert invoked==[0] and marker.read_text()=='opened', 'test action did not run once'
+            outcome = 'PASS' if invoked else 'PENDING_HUMAN_ACTION'
+            return {'native_notify':'PASS','native_action':outcome,'konsole_test_executable':outcome,
                     'automatic_launch':False,'action_count':len(invoked),'sent_ms':round(sent_ms,3),
+                    'notification_id':notification_id,'manual':manual,
                     'visible_ms':None,'inhibited':presenter.inhibited,
                     'visual_validation':'PENDING; API acceptance is not visual appearance',
                     'real_siegfried_started':False,'autostart_modified':False}
@@ -60,4 +69,7 @@ def verify():
 
 
 if __name__=='__main__':
-    print(json.dumps(verify(),indent=2))
+    parser = argparse.ArgumentParser(description='Prueba KDE inocua, sin REPL real ni Autostart')
+    parser.add_argument('--manual', action='store_true',
+                        help='Esperar hasta 21 s el clic humano; no invocar la acción automáticamente')
+    print(json.dumps(verify(manual=parser.parse_args().manual),indent=2))
