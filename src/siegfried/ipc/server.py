@@ -1,11 +1,13 @@
 import os
 import selectors
 import socket
+import stat
 import threading
 import time
 from pathlib import Path
 from typing import Callable, Dict, Any, List, Set, Optional
 from siegfried.contracts.ipc import IPCRequest, IPCResponse, IPCCommand, IPCStatus
+from siegfried.core.errors import InsecurePermissionsError, UnsafePathError
 from siegfried.ipc.protocol import serialize_frame, deserialize_frame
 
 
@@ -75,17 +77,70 @@ class IPCServer:
             return list(self._residual_workers)
 
     def start(self) -> None:
-        """Bind socket and prepare listening selector."""
+        """Bind socket and prepare listening selector with strict ownership and permission enforcement."""
         with self._shutdown_lock:
             self._stopping = False
             self._stopped = False
             self._clean_shutdown = True
             self._residual_workers = []
 
-        # Unlink existing stale socket if it exists
-        if self.socket_path.exists():
-            # Test if a process is actually alive on this socket
+        # 1. Validate parent directory
+        parent_dir = self.socket_path.parent
+        if not parent_dir.exists():
+            old_umask = os.umask(0o077)
+            try:
+                parent_dir.mkdir(parents=True, mode=0o700, exist_ok=True)
+            finally:
+                os.umask(old_umask)
+        else:
+            try:
+                parent_st = os.stat(parent_dir)
+                current_uid = os.getuid() if hasattr(os, "getuid") else 1000
+                if parent_st.st_uid != current_uid:
+                    raise InsecurePermissionsError(
+                        f"Directorio de runtime '{parent_dir}' pertenece a UID {parent_st.st_uid}, "
+                        f"se esperaba UID actual {current_uid}."
+                    )
+                if (parent_st.st_mode & 0o022) != 0:
+                    raise InsecurePermissionsError(
+                        f"Permisos inseguros en directorio de socket '{parent_dir}': {oct(parent_st.st_mode)}, "
+                        f"se requiere acceso privado sin permisos de grupo ni otros."
+                    )
+            except OSError as e:
+                if isinstance(e, InsecurePermissionsError):
+                    raise
+                raise OSError(f"Error al verificar directorio de socket '{parent_dir}': {e}") from e
+
+        # 2. Inspect existing file at socket_path before any action
+        if os.path.lexists(self.socket_path):
+            try:
+                st = os.lstat(self.socket_path)
+            except OSError as e:
+                raise OSError(f"No se pudo acceder a '{self.socket_path}': {e}") from e
+
+            # Symlink protection: never unlink an arbitrary symlink target
+            if stat.S_ISLNK(st.st_mode):
+                raise UnsafePathError(
+                    f"Enlace simbólico inseguro detectado en ruta de socket '{self.socket_path}'"
+                )
+
+            # File type protection: must be a socket
+            if not stat.S_ISSOCK(st.st_mode):
+                raise UnsafePathError(
+                    f"La ruta '{self.socket_path}' existe pero no es un socket UNIX (modo: {oct(st.st_mode)})"
+                )
+
+            # Ownership protection: must belong to current user
+            current_uid = os.getuid() if hasattr(os, "getuid") else 1000
+            if st.st_uid != current_uid:
+                raise InsecurePermissionsError(
+                    f"El socket '{self.socket_path}' pertenece al UID {st.st_uid}, no al usuario actual {current_uid}. "
+                    f"Rechazando eliminación o sustitución de socket ajeno."
+                )
+
+            # Check if an active daemon is listening on the socket
             test_sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            test_sock.settimeout(0.5)
             try:
                 test_sock.connect(str(self.socket_path))
                 # Connection succeeded — another daemon is running
@@ -93,23 +148,34 @@ class IPCServer:
                     f"Socket {self.socket_path} is already in use by another running daemon process"
                 )
             except ConnectionRefusedError:
-                # Stale socket from dead process: clean it up
-                self.socket_path.unlink()
+                # Stale socket from dead process: verified own socket, safe to unlink
+                try:
+                    self.socket_path.unlink()
+                except OSError as e:
+                    raise OSError(f"No se pudo eliminar el socket obsoleto '{self.socket_path}': {e}") from e
+            except PermissionError as e:
+                raise InsecurePermissionsError(
+                    f"Permiso denegado al conectar al socket '{self.socket_path}': {e}"
+                ) from e
             except FileNotFoundError:
-                # Socket file was removed between exists() check and connect()
                 pass
             finally:
                 test_sock.close()
 
-        self.socket_path.parent.mkdir(parents=True, exist_ok=True)
+        # 3. Create server socket with atomic private permissions
+        old_umask = os.umask(0o177)
+        try:
+            self._server_sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            self._server_sock.bind(str(self.socket_path))
+            self._server_sock.listen(16)
+            self._server_sock.setblocking(False)
+        finally:
+            os.umask(old_umask)
 
-        self._server_sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self._server_sock.bind(str(self.socket_path))
-        self._server_sock.listen(16)
-        self._server_sock.setblocking(False)
-
-        # Restrict socket permissions strictly to current user
-        os.chmod(self.socket_path, 0o600)
+        try:
+            os.chmod(self.socket_path, 0o600)
+        except OSError:
+            pass
 
         self._selector = selectors.DefaultSelector()
         self._selector.register(self._server_sock, selectors.EVENT_READ, data=self._accept)
@@ -392,10 +458,13 @@ class IPCServer:
         self._buffers.clear()
         self._conn_timestamps.clear()
 
-        # 6. Unlink socket file
-        if self.socket_path.exists():
+        # 6. Unlink socket file safely
+        if os.path.lexists(self.socket_path):
             try:
-                self.socket_path.unlink()
+                st = os.lstat(self.socket_path)
+                current_uid = os.getuid() if hasattr(os, "getuid") else 1000
+                if stat.S_ISSOCK(st.st_mode) and st.st_uid == current_uid:
+                    self.socket_path.unlink()
             except OSError:
                 pass
 

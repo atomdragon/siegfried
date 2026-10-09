@@ -33,39 +33,73 @@ def _format_relative_path(path: Any, base_dir: Any) -> str:
         return str(path)
 
 
+class _FastArgparseTheme:
+    def __getattr__(self, name: str) -> str:
+        return ""
+
+
+class FastHelpFormatter(argparse.HelpFormatter):
+    """Zero-overhead HelpFormatter avoiding heavy dynamic imports of _colorize, shutil, and compression."""
+
+    def __init__(
+        self,
+        prog: str,
+        indent_increment: int = 2,
+        max_help_position: int = 24,
+        width: int | None = None,
+        color: bool = False,
+    ) -> None:
+        if width is None:
+            try:
+                import os
+                width = os.get_terminal_size().columns - 2
+            except OSError:
+                width = 78
+        super().__init__(prog, indent_increment, max_help_position, width, color=False)
+
+    def _set_color(self, color: bool) -> None:
+        self._theme = _FastArgparseTheme()
+        self._decolor = getattr(argparse, "_identity", lambda s: s)
+
+
 def run_cli(args: list[str] | None = None, paths: Any = None) -> int:
     """CLI main execution dispatcher."""
     parser = argparse.ArgumentParser(
         prog="siegfried",
-        description="Siegfried — Asistente Personal y Mayordomo Estratégico"
+        description="Siegfried — Asistente Personal y Mayordomo Estratégico",
+        formatter_class=FastHelpFormatter,
     )
     subparsers = parser.add_subparsers(dest="command")
 
+    def _add_parser(name: str, **kwargs: Any) -> argparse.ArgumentParser:
+        kwargs.setdefault("formatter_class", FastHelpFormatter)
+        return subparsers.add_parser(name, **kwargs)
+
     # init
-    subparsers.add_parser("init", help="Inicializar runtime seguro del usuario")
+    _add_parser("init", help="Inicializar runtime seguro del usuario")
 
     # doctor
-    subparsers.add_parser("doctor", help="Diagnóstico no destructivo del runtime y configuración")
+    _add_parser("doctor", help="Diagnóstico no destructivo del runtime y configuración")
 
     # ping
-    subparsers.add_parser("ping", help="Verificar conexión con el daemon")
+    _add_parser("ping", help="Verificar conexión con el daemon")
 
     # status
-    subparsers.add_parser("status", help="Consultar estado actual de enfoque y postura")
+    _add_parser("status", help="Consultar estado actual de enfoque y postura")
 
     # focus
-    focus_p = subparsers.add_parser("focus", help="Iniciar bloque de enfoque")
+    focus_p = _add_parser("focus", help="Iniciar bloque de enfoque")
     focus_p.add_argument("duration", type=int, nargs="?", default=25, help="Duración en minutos (default 25)")
     focus_p.add_argument("-t", "--task", type=str, default="Bloque General", help="Nombre de la tarea")
 
     # cancel
-    subparsers.add_parser("cancel", help="Cancelar bloque activo")
+    _add_parser("cancel", help="Cancelar bloque activo")
 
     # ack
-    subparsers.add_parser("ack", help="Silenciar alarma y confirmar descanso")
+    _add_parser("ack", help="Silenciar alarma y confirmar descanso")
 
     # ask
-    ask_p = subparsers.add_parser("ask", help="Consultar a Siegfried por la vía cognitiva")
+    ask_p = _add_parser("ask", help="Consultar a Siegfried por la vía cognitiva")
     ask_p.add_argument("prompt", type=str, nargs="+", help="Texto de la consulta")
     ask_p.add_argument(
         "--policy",

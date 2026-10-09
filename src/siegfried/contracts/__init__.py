@@ -32,6 +32,13 @@ from siegfried.contracts.inference import (
     InferenceResponse,
     InferenceUsage,
 )
+from siegfried.contracts.alerts import (
+    Alert,
+    AlertType,
+    AlertUrgency,
+    DeliveryStatus,
+    NotificationAttempt,
+)
 
 __all__ = [
     "SystemState",
@@ -56,5 +63,10 @@ __all__ = [
     "InferenceRequest",
     "InferenceResponse",
     "InferenceUsage",
+    "Alert",
+    "AlertType",
+    "AlertUrgency",
+    "DeliveryStatus",
+    "NotificationAttempt",
 ]
 

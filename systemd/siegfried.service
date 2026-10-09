@@ -1,13 +1,18 @@
 [Unit]
 Description=Siegfried Daemon — Asistente Personal y Mayordomo Estratégico
-Documentation=file:///media/okami/Mio/Siegfried/SPECIFICATION.md
+Documentation=https://github.com/okami/siegfried/blob/main/SPECIFICATION.md
 After=graphical-session.target pipewire.service
+StartLimitIntervalSec=30s
+StartLimitBurst=5
 
 [Service]
 Type=simple
 ExecStart=%h/.siegfried/bin/siegfried-daemon
-Restart=always
+Restart=on-failure
 RestartSec=2s
+RestartPreventExitStatus=78
+TimeoutStopSec=5s
+KillMode=control-group
 Environment=PYTHONUNBUFFERED=1
 
 # Hardening

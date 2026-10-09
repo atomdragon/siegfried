@@ -467,6 +467,7 @@ class TestStaleSocketAndDoubleInstance(unittest.TestCase):
         self.assertEqual(res.status, IPCStatus.OK.value)
 
         running = False
+        t.join(timeout=2.0)
         daemon.stop()
 
     def test_double_instance_blocked(self):
@@ -498,6 +499,7 @@ class TestStaleSocketAndDoubleInstance(unittest.TestCase):
         self.assertEqual(res.status, IPCStatus.OK.value)
 
         running = False
+        t.join(timeout=2.0)
         d1.stop()
 
 
@@ -538,14 +540,34 @@ class TestDaemonLifecycle(unittest.TestCase):
                 audio_player=StubAudioPlayer(),
             )
             daemon.start()
-            running = True
-            t = threading.Thread(target=lambda: [daemon.run_tick(0.01) or time.sleep(0.005) for _ in iter(lambda: running, False)], daemon=True)
+            stop_event = threading.Event()
+
+            def _reactor_loop(d=daemon, ev=stop_event):
+                while not ev.is_set():
+                    d.run_tick(0.01)
+                    time.sleep(0.005)
+
+            t = threading.Thread(target=_reactor_loop, daemon=True)
             t.start()
-            time.sleep(0.05)
+
+            # Explicit synchronization: verify PING succeeds within deadline
             client = IPCClient(self.paths.socket_file, timeout_seconds=2.0)
-            res = client.call(IPCCommand.PING)
+            deadline = time.monotonic() + 2.0
+            res = None
+            while time.monotonic() < deadline:
+                try:
+                    res = client.call(IPCCommand.PING)
+                    if res.status == IPCStatus.OK.value:
+                        break
+                except Exception:
+                    time.sleep(0.01)
+
+            self.assertIsNotNone(res)
             self.assertEqual(res.status, IPCStatus.OK.value)
-            running = False
+
+            stop_event.set()
+            t.join(timeout=2.0)
+            self.assertFalse(t.is_alive(), "Reactor thread should have terminated")
             daemon.stop()
 
 

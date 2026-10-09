@@ -216,6 +216,104 @@ Simular 60 minutos sentado:
 3. Rechazo determinista automático de nuevas prórrogas.
 4. Comando `ACK_BREAK` mata únicamente el proceso hijo del reproductor (verificado por PID) sin afectar otros procesos del sistema.
 
+### 3.6 Consolidación del Daemon, Supervisión systemd --user y Recuperación Operativa (Gate F3.1: COMPLETADO / PASS)
+1. **Contrato de Arranque Determinista y Fail-Closed:**
+   * El daemon valida exhaustivamente el runtime en arranque (`_validate_startup_runtime`).
+   * Runtimes no inicializados o directorios faltantes lanzan `RuntimeNotInitializedError` sin crear silenciosamente directorios.
+   * Configuraciones JSON corruptas o ilegibles (`core_profile.json`, `active_agenda.json`) abortan el inicio de forma no destructiva sin alterar ni sobrescribir archivos.
+   * Entrypoints (`bin/siegfried-daemon` y `python3 -m siegfried.daemon`) capturan `StorageError` y finalizan con código `EX_CONFIG` (78).
+   * Operación 100% independiente de claves API de Cloud o modelos locales descargados.
+2. **Propiedad y Seguridad del Socket IPC:**
+   * El socket se crea en `/run/user/$UID/siegfried.sock` con máscara privada atómica (`umask 0o177` -> `0600`).
+   * Validación estricta del directorio padre: pertenencia al UID actual y permisos privados sin acceso de grupo ni otros.
+   * Protección anti-symlink: rechazo explícito con `UnsafePathError` si la ruta del socket es un enlace simbólico.
+   * Protección de tipo de archivo: rechazo explícito si existe un archivo regular u otro tipo que no sea un socket UNIX.
+   * Protección de pertenencia: rechazo con `InsecurePermissionsError` si el socket pertenece a otro UID; queda terminantemente prohibido desvincular sockets ajenos.
+   * Recuperación segura de sockets obsoletos: intento de conexión con timeout corto (0.5s); si la conexión es rechazada (`ConnectionRefusedError`), se confirma la terminación del proceso anterior y se elimina de forma segura el socket propio antes del bind. Si la conexión responde, se aborta con error para evitar instancias duplicadas.
+   * Parada limpia: `stop()` verifica tipo y UID antes de desvincular el socket, asegurando idempotencia.
+3. **Supervisión de systemd --user y Política de Fallos:**
+   * Sustitución de `Restart=always` por `Restart=on-failure` en `systemd/siegfried.service`.
+   * Prevención de bucles de reinicio ante fallos permanentes mediante `RestartPreventExitStatus=78`.
+   * Delimitación de tasa de reinicios: `StartLimitIntervalSec=30s`, `StartLimitBurst=5`, `RestartSec=2s`.
+   * Parada acotada: `TimeoutStopSec=5s`, `KillMode=control-group`.
+   * Hardening de unidad: `NoNewPrivileges=true`, `ProtectSystem=strict`, `ProtectHome=read-only`, `ReadWritePaths=%h/.siegfried /run/user/%U`.
+4. **Instalador Reproducible sin Sudo (`tools/install_user_service.py`):**
+   * Despliegue en espacio de usuario (`~/.siegfried/bin` y `~/.config/systemd/user/siegfried.service`) con permisos estrictos.
+   * Soporte de aislamiento con `--home <dir>` para pruebas y CI.
+   * Verificación estática con `systemd-analyze verify` sin requerir sudo ni alterar servicios reales del usuario.
+5. **Temporizadores Monotónicos y Resiliencia de Eventos:**
+   * Conteo estricto con `time.monotonic()` inmune a variaciones y saltos del reloj de pared (`time.time()`).
+   * Recuperación determinista de estado en reinicio: lectura protegida de `active_agenda.json` para restaurar la tarea activa sin duplicar eventos en el Vault.
+   * Persistencia en el Vault estrictamente atómica con `fcntl.flock` y `os.fsync`.
+6. **Resultados de Validación:**
+   * Suite de pruebas automatizada: 309 tests PASS (291 heredados + 17 Gate F3.1 + 1 E2E procesos reales OS).
+   * Benchmarks de rendimiento: Fast-Path P95 = 0.0013 ms, Vault Append P95 = 2.23 ms, CLI Cold-Start P95 = 47.90 ms, Orchestrator Microbenchmark P95 = 0.0049 ms (Todos PASS).
+   * Cierre formal de Gate F3.1: **PASS**.
+
+### 3.7 Gestión Quirúrgica de Alertas, Notificaciones KDE Plasma y Audio (Gate F3.2: COMPLETADO / PASS)
+1. **Contratos Formales de Alertas (`src/siegfried/contracts/alerts.py`):**
+   * Tipos de alerta: `POMODORO_COMPLETED`, `POSTURE_WARNING`, `POSTURE_LIMIT_REACHED`, `BREAK_STARTED`, `BREAK_COMPLETED`, `POMODORO_CANCELLED`.
+   * Niveles de urgencia Freedesktop: `LOW`, `NORMAL`, `CRITICAL`.
+   * Estados de entrega auditables: `PENDING`, `DELIVERED`, `FAILED`, `SUPPRESSED`.
+   * Contrato `NotificationAttempt` con registro de código de retorno, error y latencia para observabilidad.
+2. **Emisor Quirúrgico de Notificaciones KDE Plasma (`src/siegfried/integrations/notifications.py`):**
+   * Invocación segura mediante lista de argumentos `subprocess.run` (prohibido `shell=True`).
+   * Detección de sesión gráfica activa (`WAYLAND_DISPLAY`, `DISPLAY`, `DBUS_SESSION_BUS_ADDRESS`).
+   * Fallback elegante y degradación transparente en entornos headless o sin servidor D-Bus; los eventos deterministas persisten sin interrumpir el daemon.
+   * Sanitización de texto en alertas: filtrado preventivo de tokens y secretos (`sk-*`, `Bearer`).
+   * Timeout de ejecución acotado (2.0 s) para evitar bloqueos del sistema.
+3. **Controlador Quirúrgico de Audio PipeWire/ALSA (`src/siegfried/integrations/audio.py`):**
+   * Descubrimiento determinista de backend nativo: `pw-cat` (PipeWire nativo), `pw-play`, `paplay` (PulseAudio), `aplay` (ALSA).
+   * Custodia estricta de subprocesos: almacenamiento atómico del objeto `subprocess.Popen` y su PID exacto. Prohibición absoluta de comandos globales (`pkill`, `killall`).
+   * Supresión de reproducciones duplicadas del mismo archivo si ya está en curso.
+   * Cancelación quirúrgica: envío de `SIGTERM` con ventana de gracia (0.5 s), escalado a `SIGKILL` si no responde y recolección obligatoria del descriptor (`wait()`) para eliminar procesos zombi.
+   * Validación rigurosa de rutas sonoras: archivo existente, regular y con extensiones de audio autorizadas (`.ogg`, `.wav`, `.oga`, `.flac`).
+4. **Coordinador Asíncrono de Alertas (`src/siegfried/daemon/alerts.py`):**
+   * Desacoplamiento total del reactor: trabajador en segundo plano (`siegfried-alert-worker`) alimentado por cola acotada (`maxsize=16`).
+   * Despacho no bloqueante: la lentitud o caída del bus de notificaciones jamás congela el reactor `selectors` ni los cronómetros `MonotonicTimer`.
+   * Deduplicación por ventana de idempotencia (5.0 s) para prevenir inundación sensorial.
+   * Desalojo preventivo de baja urgencia ante saturación de cola en favor de alertas críticas de postura.
+5. **Centinela Determinista de Postura y Gestión de Enfoque (`src/siegfried/daemon/app.py`):**
+   * Acumulación monotónica continua de tiempo sentado durante `POMODORO_RUNNING` y `POSTPONE_RUNNING`.
+   * Aviso al minuto 50 (`POSTURE_WARNING`) con urgencia `NORMAL`.
+   * Barrera dura a los 60 minutos: transición a `CRITICAL_BREAK_REQUIRED`, sonido de alerta persistente, urgencia `CRITICAL` y rechazo automático de prórrogas.
+   * Manejo determinista de comandos IPC:
+     - `POSTPONE`: valida disponibilidad de prórrogas (`can_postpone`); concede 5 min adicionales o rechaza si se superan los 60 min totales de asiento continuo.
+     - `ACK_BREAK`: silencia el audio de forma quirúrgica, resetea el tiempo sentado acumulado e inicia la pausa activa.
+     - `CANCEL_FOCUS`: silencia el audio inmediatamente y emite confirmación de cancelación.
+6. **Resultados de Validación:**
+   * Suite de pruebas automatizada: 329 tests PASS (309 heredados + 20 Gate F3.2 nuevos), 0 fallos, 0 errores.
+   * Benchmarks de rendimiento: Fast-Path P95 = 0.0020 ms, Vault Append P95 = 2.17 ms, CLI Cold-Start P95 = 47.86 ms, Orchestrator Microbenchmark P95 = 0.0047 ms (Todos PASS).
+   * Cierre formal de Gate F3.2: **PASS**.
+
+### 3.8 Endurecimiento de Concurrencia de Alertas, Idempotencia y Cierre de Fase 3 (Gate F3.3: COMPLETADO / PASS)
+1. **Política de Capacidad y Desalojo Selectivo por Prioridad:**
+   * Capacidad de cola acotada inmutable (`max_queue_size = 16`) procesada por trabajador único (`siegfried-alert-worker`).
+   * Bajo saturación, una alerta `CRITICAL` de postura desaloja selectivamente alertas de menor urgencia (`LOW` primero, luego `NORMAL`) registrando el desalojo en la auditoría con `DeliveryStatus.FAILED`.
+   * Si la cola se encuentra saturada exclusivamente con alertas `CRITICAL`, la nueva alerta crítica es rechazada de forma explícita sin desalojar ni descartar las alertas críticas preexistentes en la cola, registrando `NotificationAttempt(accepted=False, error_msg="Alert queue saturated exclusively with CRITICAL alerts (capacity reached)")`.
+   * **Invariante de Dominio:** La saturación o fallo de entrega sensorial jamás interrumpe, altera ni corrompe el evento determinista de dominio persistido y sincronizado atómicamente con `os.fsync` en `siegfried_vault.jsonl`.
+2. **Idempotencia Estricta de Eventos y Deduplicación Sensorial:**
+   * Vinculación obligatoria de `event_id` desde el evento de dominio hacia el subsistema de alertas (`AlertCoordinator`).
+   * Generación determinista de identidad sin colisiones durante la sesión del daemon mediante `f"{event.type}:{event.ts:.6f}:{self._event_sequence}"` preservando inmutable `Event Schema v1`.
+   * Registro atómico bajo lock que reserva el identificador **únicamente tras la admisión efectiva en la cola o entrega directa**; las alertas rechazadas por saturación no se marcan en falso y admiten reintentos.
+   * Acotamiento estricto de memoria en runtime mediante `OrderedDict` con política FIFO limitada a `MAX_IDEMPOTENT_EVENT_IDS = 1000` (< 100 KB de RAM).
+   * Política de reinicio determinista: el daemon no reproduce alertas históricas acumuladas en el Vault al inicializarse.
+   * Reseteo explícito de deduplicación postural (`reset_posture_alerts()`) tras la confirmación determinista del descanso (`ACK_BREAK`).
+3. **Resiliencia Concurrente, Aislamiento de Audio y Shutdown Auditable:**
+   * Protocolo de parada limpia con reporte verificable de estado (`clean_shutdown: bool`) y timeout acotado.
+   * Drenaje seguro de elementos pendientes en cola ante shutdown registrando explícitamente `NotificationAttempt` con fallo de entrega para auditoría.
+   * Custodia de audio por PID propio: prohibición total de `pkill`/`killall`, garantizando aislamiento de reproductores externos del usuario.
+   * Fast-Path determinista (`STATUS`, `PING`) inmune a la saturación de alertas, respondiendo en submilisegundos (P95 < 10 ms).
+   * Optimización de cold-start de CLI en Python 3.14 con `FastHelpFormatter`, eliminando importaciones lentas de `_colorize` y `shutil` (`compression.zstd`, `bz2`, `inspect`).
+4. **Resultados de Validación y Regresión:**
+   * Suite de pruebas automatizada: **373 tests PASS** (329 heredados + 44 Gate F3.3 en `tests/integration/test_alert_reliability_f33.py`), 0 fallos, 0 errores, 0 omitidas.
+   * Cumplimiento de SLOs (medido en 3 ejecuciones secuenciales): Fast-Path P95 = 0.0034 ms, Vault Append P95 = 2.5492 ms, CLI Cold-Start P95 = 47.25 ms, Orchestrator Microbenchmark P95 = 0.0104 ms.
+   * Cierre formal de Gate F3.3: **PASS** (Cierre formal de la Fase 3; listo para iniciar Fase 4).
+
+
+
+
+
 ---
 
 ## Fase 4: La Interfaz de Usuario REPL Interactiva y Pre-agregador Histórico

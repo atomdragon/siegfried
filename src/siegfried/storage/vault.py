@@ -171,6 +171,7 @@ class Vault:
         serialized = json.dumps(event.to_dict(), ensure_ascii=False) + "\n"
         fd = None
         try:
+            self.vault_path.parent.mkdir(parents=True, exist_ok=True)
             fd = os.open(self.vault_path, os.O_CREAT | os.O_RDWR, 0o600)
 
             # Acquire exclusive non-blocking lock with deadline backoff

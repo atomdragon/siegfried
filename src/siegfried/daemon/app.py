@@ -12,7 +12,7 @@ import sys
 import threading
 import time
 from typing import Any, Dict, Optional
-from siegfried.contracts.states import SystemState
+from siegfried.contracts.states import SystemState, MAX_CONTINUOUS_SITTING_SECONDS
 from siegfried.contracts.events import Event, EventType
 from siegfried.contracts.ipc import IPCRequest, IPCResponse, IPCCommand, IPCStatus
 from siegfried.contracts.inference import InferencePolicy, InferenceMessage, InferenceRequest
@@ -21,6 +21,7 @@ from siegfried.core.errors import (
     InvalidStateTransitionError,
     PostureLimitReachedError,
     StorageError,
+    RuntimeNotInitializedError,
     InferenceError,
     InferenceBusyError,
     NoAvailableEngineError,
@@ -31,6 +32,7 @@ from siegfried.storage.paths import SiegfriedPaths, default_paths
 from siegfried.storage.vault import Vault
 from siegfried.ipc.server import IPCServer
 from siegfried.daemon.timers import MonotonicTimer
+from siegfried.daemon.alerts import AlertCoordinator
 from siegfried.integrations.notifications import NotificationSender, DesktopNotificationSender
 from siegfried.integrations.audio import AudioPlayer, PipeWireAudioPlayer
 from siegfried.observability.logging import setup_logger
@@ -56,13 +58,27 @@ class SiegfriedDaemon:
         orchestrator: Any | None = None,
     ) -> None:
         self.paths = paths or default_paths
-        self.paths.ensure_directories()
-        self.logger = setup_logger("daemon", log_dir=self.paths.logs_dir)
+        # Do not silently create missing base directories on uninitialized runtimes
+        if self.paths.base_dir.exists():
+            try:
+                self.paths.logs_dir.mkdir(parents=True, exist_ok=True)
+                self.logger = setup_logger("daemon", log_dir=self.paths.logs_dir)
+            except OSError:
+                self.logger = setup_logger("daemon", log_dir=None)
+        else:
+            self.logger = setup_logger("daemon", log_dir=None)
 
-        self.vault = Vault(self.paths.vault_file, self.paths.vault_corrupt_log)
+        self._vault: Vault | None = None
+        if self.paths.base_dir.exists():
+            self._vault = Vault(self.paths.vault_file, self.paths.vault_corrupt_log)
         self.state_machine = HealthStateMachine()
         self.notifier = notifier or DesktopNotificationSender()
         self.audio_player = audio_player or PipeWireAudioPlayer()
+        self.alert_coordinator = AlertCoordinator(
+            notifier=self.notifier,
+            audio_player=self.audio_player,
+            alert_sound_file=self.paths.alert_sound_file,
+        )
 
         self.focus_timer = MonotonicTimer(on_expire=self._on_focus_expired)
         self.ipc_server = IPCServer(self.paths.socket_file, handler=self.handle_ipc_request)
@@ -71,6 +87,28 @@ class SiegfriedDaemon:
         self._active_task_name = ""
         self._orchestrator = orchestrator
         self._orchestrator_lock = threading.Lock()
+        self._last_tick_time: float = time.monotonic()
+        self._posture_warned_50m: bool = False
+        self._posture_barrier_triggered: bool = False
+        self._event_sequence: int = 0
+
+    def _create_event_id(self, event: Event) -> str:
+        """Create a collision-resistant deterministic domain event identifier.
+
+        Combines event type, microsecond timestamp, and monotonic daemon sequence counter.
+        """
+        self._event_sequence += 1
+        return f"{event.type}:{event.ts:.6f}:{self._event_sequence}"
+
+    @property
+    def vault(self) -> Vault:
+        if self._vault is None:
+            self._vault = Vault(self.paths.vault_file, self.paths.vault_corrupt_log)
+        return self._vault
+
+    @vault.setter
+    def vault(self, value: Vault) -> None:
+        self._vault = value
 
 
     def _validate_startup_runtime(self) -> None:
@@ -87,16 +125,30 @@ class SiegfriedDaemon:
         from siegfried.contracts.config import validate_core_profile, validate_active_agenda
 
         base_dir = self.paths.base_dir
-        if base_dir.exists():
-            _check_symlink_safety(base_dir, base_dir)
-            _verify_directory(base_dir)
-            _check_permissions(base_dir, is_dir=True)
+        if not base_dir.exists():
+            raise RuntimeNotInitializedError(
+                f"Runtime no inicializado: el directorio base '{base_dir}' no existe. Ejecute 'siegfried init'."
+            )
 
-        for d in [self.paths.config_dir, self.paths.data_dir, self.paths.assets_dir, self.paths.sounds_dir, self.paths.logs_dir]:
-            if d.exists():
-                _check_symlink_safety(d, base_dir)
-                _verify_directory(d)
-                _check_permissions(d, is_dir=True)
+        _check_symlink_safety(base_dir, base_dir)
+        _verify_directory(base_dir)
+        _check_permissions(base_dir, is_dir=True)
+
+        mandatory_dirs = [
+            self.paths.config_dir,
+            self.paths.data_dir,
+            self.paths.assets_dir,
+            self.paths.sounds_dir,
+            self.paths.logs_dir,
+        ]
+        for d in mandatory_dirs:
+            if not d.exists():
+                raise RuntimeNotInitializedError(
+                    f"Runtime no inicializado: falta el directorio '{d}'. Ejecute 'siegfried init'."
+                )
+            _check_symlink_safety(d, base_dir)
+            _verify_directory(d)
+            _check_permissions(d, is_dir=True)
 
         if self.paths.secrets_file.exists():
             _check_symlink_safety(self.paths.secrets_file, base_dir)
@@ -122,30 +174,80 @@ class SiegfriedDaemon:
             _check_permissions(self.paths.vault_file, is_dir=False)
             _verify_vault(self.paths.vault_file, deep_audit=False)
 
+    def _recover_deterministic_state(self) -> None:
+        """Recover deterministic state from persistent configuration/agenda without modifying files."""
+        from siegfried.storage.atomic_json import read_json_locked
+        if self.paths.active_agenda_file.exists():
+            try:
+                agenda = read_json_locked(self.paths.active_agenda_file, timeout_seconds=1.0)
+                crit = agenda.get("critical_task")
+                if isinstance(crit, dict) and "title" in crit and isinstance(crit["title"], str):
+                    self._active_task_name = crit["title"]
+            except Exception as e:
+                self.logger.warning(f"No se pudo cargar tarea activa de agenda: {e}")
+
     def start(self) -> None:
-        """Start daemon loop and register signal handlers."""
+        """Start daemon loop, alert coordinator and register signal handlers."""
         self.logger.info("Iniciando Siegfried Daemon...")
         try:
             self._validate_startup_runtime()
+            self._recover_deterministic_state()
         except StorageError as e:
             self.logger.error(f"Fallo de seguridad o validación en runtime: {e}")
             raise
+        self.alert_coordinator.start()
+        self._last_tick_time = time.monotonic()
         self.ipc_server.start()
         self._running = True
 
-        # Handle graceful termination
-        signal.signal(signal.SIGINT, self._handle_signal)
-        signal.signal(signal.SIGTERM, self._handle_signal)
+        # Handle graceful termination safely from main thread
+        if threading.current_thread() is threading.main_thread():
+            try:
+                signal.signal(signal.SIGINT, self._handle_signal)
+                signal.signal(signal.SIGTERM, self._handle_signal)
+            except (ValueError, AttributeError):
+                pass
 
         self.logger.info(f"Siegfried Daemon activo en socket {self.paths.socket_file}")
 
     def run_tick(self, timeout_seconds: float = 0.05) -> None:
-        """Execute a single reactor iteration (process IPC and check timers)."""
+        """Execute a single reactor iteration (process IPC, check timers, and track posture)."""
         # 1. Process pending IPC connections
         self.ipc_server.poll(timeout_seconds=timeout_seconds)
 
         # 2. Check timer expiration
         self.focus_timer.check_expiration()
+
+        # 3. Track continuous sitting time during active focus/postpone
+        now = time.monotonic()
+        elapsed = now - self._last_tick_time
+        self._last_tick_time = now
+
+        if self.state_machine.state in (SystemState.POMODORO_RUNNING, SystemState.POSTPONE_RUNNING):
+            self.state_machine.add_sitting_time(elapsed)
+            self._check_posture_milestones()
+
+    def _check_posture_milestones(self) -> None:
+        """Evaluate continuous sitting milestones (50 min warning and 60 min hard limit)."""
+        sitting = self.state_machine.continuous_sitting_seconds
+
+        # 50 minutes informative warning
+        if sitting >= 3000.0 and not self._posture_warned_50m:
+            self._posture_warned_50m = True
+            event = Event.create(EventType.POSTURE_WARNING, {"sitting_sec": round(sitting, 1)})
+            self.vault.append(event)
+            event_id = self._create_event_id(event)
+            self.alert_coordinator.trigger_posture_warning(sitting, event_id=event_id)
+
+        # 60 minutes hard barrier
+        if sitting >= MAX_CONTINUOUS_SITTING_SECONDS and not self._posture_barrier_triggered:
+            self._posture_barrier_triggered = True
+            if self.focus_timer.is_active():
+                self.focus_timer.cancel()
+            event = Event.create(EventType.POSTURE_LIMIT_REACHED, {"sitting_sec": round(sitting, 1)})
+            self.vault.append(event)
+            event_id = self._create_event_id(event)
+            self.alert_coordinator.trigger_posture_limit(sitting, event_id=event_id)
 
     def run_forever(self) -> None:
         """Main daemon event loop."""
@@ -163,13 +265,14 @@ class SiegfriedDaemon:
         self._stopped = True
         self.logger.info("Deteniendo Siegfried Daemon...")
         self._running = False
-        self.audio_player.stop_alert()
-        clean = self.ipc_server.stop(timeout_seconds=timeout_seconds)
+        coord_clean = self.alert_coordinator.stop(timeout_seconds=min(1.0, timeout_seconds / 2))
+        ipc_clean = self.ipc_server.stop(timeout_seconds=timeout_seconds)
+        clean = bool(coord_clean and ipc_clean)
         if clean:
             self.logger.info("Siegfried Daemon detenido correctamente.")
         else:
             self.logger.warning(
-                f"Siegfried Daemon detenido con {len(self.ipc_server.residual_workers)} trabajadores residuales."
+                f"Siegfried Daemon detenido con trabajadores residuales (ipc={ipc_clean}, alert={coord_clean})."
             )
         return clean
 
@@ -178,30 +281,31 @@ class SiegfriedDaemon:
 
     def _on_focus_expired(self) -> None:
         """Callback invoked when focus timer reaches deadline."""
-        self.logger.info(f"Bloque de enfoque completado para: '{self._active_task_name}'")
+        task = self.focus_timer.snapshot().task_name or self._active_task_name
+        self.logger.info(f"Bloque de enfoque completado para: '{task}'")
         
         # 1. Record event in Vault
         event_data = {
             "duration_sec": self.focus_timer.snapshot().total_duration_seconds,
-            "task": self._active_task_name,
+            "task": task,
         }
         event = Event.create(EventType.POMODORO_COMPLETED, event_data)
         self.vault.append(event)
+        event_id = self._create_event_id(event)
 
         # 2. Transition state machine
-        try:
-            self.state_machine.transition_to(SystemState.BREAK_RUNNING, reason="Timer focus expired")
-        except InvalidStateTransitionError as e:
-            self.logger.error(f"Error en transición de estado tras timer: {e}")
+        if self.state_machine.state in (SystemState.POMODORO_RUNNING, SystemState.POSTPONE_RUNNING):
+            try:
+                self.state_machine.transition_to(SystemState.BREAK_RUNNING, reason="Timer focus expired")
+            except InvalidStateTransitionError as e:
+                self.logger.error(f"Error en transición de estado tras timer: {e}")
 
-        # 3. Fire notification & audio alert
-        self.notifier.send(
-            title="Siegfried — Bloque Concluido",
-            message=f"Buen trabajo, Señor. Bloque de '{self._active_task_name}' finalizado. Inicie su descanso.",
-            urgency="normal"
+        # 3. Fire notification & audio alert through AlertCoordinator
+        self.alert_coordinator.trigger_pomodoro_completed(
+            task_name=task,
+            duration_sec=event_data["duration_sec"],
+            event_id=event_id,
         )
-        if self.paths.alert_sound_file.exists():
-            self.audio_player.play_alert(self.paths.alert_sound_file)
 
     def handle_ipc_request(self, req: IPCRequest) -> IPCResponse:
         """Dispatch IPC requests from CLI."""
@@ -214,12 +318,12 @@ class SiegfriedDaemon:
             snapshot = self.focus_timer.snapshot()
             return IPCResponse.ok(req.request_id, {
                 "state": self.state_machine.state.value,
-                "continuous_sitting_seconds": self.state_machine.continuous_sitting_seconds,
+                "continuous_sitting_seconds": round(self.state_machine.continuous_sitting_seconds, 1),
                 "timer_active": snapshot.is_active,
                 "remaining_seconds": snapshot.remaining_seconds,
                 "total_duration_seconds": snapshot.total_duration_seconds,
                 "task_name": snapshot.task_name,
-                "audio_playing": self.audio_player.is_playing(),
+                "audio_playing": self.alert_coordinator.is_audio_playing(),
             })
 
         elif cmd == IPCCommand.START_FOCUS.value:
@@ -233,6 +337,7 @@ class SiegfriedDaemon:
                 return IPCResponse.rejected(req.request_id, str(e))
 
             self._active_task_name = str(task_name)
+            self._last_tick_time = time.monotonic()
             self.focus_timer.start(duration_seconds=duration_sec, task_name=self._active_task_name)
             
             # Emit event to vault
@@ -252,25 +357,71 @@ class SiegfriedDaemon:
         elif cmd == IPCCommand.CANCEL_FOCUS.value:
             if self.focus_timer.is_active():
                 self.focus_timer.cancel()
+                self.alert_coordinator.stop_audio()
                 try:
                     self.state_machine.transition_to(SystemState.IDLE, reason="CANCEL_FOCUS")
                 except InvalidStateTransitionError:
                     pass
                 event = Event.create(EventType.POMODORO_CANCELLED, {"task": self._active_task_name})
                 self.vault.append(event)
+                event_id = self._create_event_id(event)
+                self.alert_coordinator.trigger_pomodoro_cancelled(self._active_task_name, event_id=event_id)
                 return IPCResponse.ok(req.request_id, {"message": "Bloque cancelado."})
             return IPCResponse.rejected(req.request_id, "No hay ningún bloque de enfoque activo.")
 
+        elif cmd == IPCCommand.POSTPONE.value:
+            minutes = req.args.get("minutes", 10)
+            try:
+                minutes = int(minutes)
+            except (ValueError, TypeError):
+                minutes = 10
+            requested_sec = float(minutes) * 60.0
+
+            if not self.state_machine.can_postpone(requested_sec):
+                event = Event.create(EventType.POSTPONE_REJECTED, {
+                    "requested_min": minutes,
+                    "sitting_sec": round(self.state_machine.continuous_sitting_seconds, 1),
+                    "state": self.state_machine.state.value
+                })
+                self.vault.append(event)
+                return IPCResponse.rejected(
+                    req.request_id,
+                    "Prórroga denegada: límite postural alcanzado (máx 60 min continuo) o estado inválido."
+                )
+
+            try:
+                self.state_machine.transition_to(SystemState.POSTPONE_RUNNING, reason=f"POSTPONE {minutes} min")
+            except (InvalidStateTransitionError, PostureLimitReachedError) as e:
+                return IPCResponse.rejected(req.request_id, str(e))
+
+            self.focus_timer.start(duration_seconds=requested_sec, task_name=self._active_task_name)
+            self.alert_coordinator.stop_audio()
+            event = Event.create(EventType.POSTPONE_GRANTED, {
+                "duration_min": minutes,
+                "task": self._active_task_name
+            })
+            self.vault.append(event)
+            return IPCResponse.ok(req.request_id, {
+                "message": f"Prórroga de {minutes} min concedida.",
+                "state": self.state_machine.state.value
+            })
+
         elif cmd == IPCCommand.ACK_BREAK.value:
             # Silence audio alert and transition
-            was_playing = self.audio_player.stop_alert()
+            was_playing = self.alert_coordinator.stop_audio()
             if self.state_machine.state == SystemState.CRITICAL_BREAK_REQUIRED:
                 try:
                     self.state_machine.transition_to(SystemState.BREAK_RUNNING, reason="ACK_BREAK")
                 except InvalidStateTransitionError:
                     pass
+            self.state_machine.reset_sitting_time()
+            self._posture_warned_50m = False
+            self._posture_barrier_triggered = False
+            self.alert_coordinator.reset_posture_alerts()
             event = Event.create(EventType.BREAK_STARTED, {"interrupted_audio": was_playing})
             self.vault.append(event)
+            event_id = self._create_event_id(event)
+            self.alert_coordinator.trigger_break_started(interrupted_audio=was_playing, event_id=event_id)
             return IPCResponse.ok(req.request_id, {"message": "Alarma silenciada y descanso iniciado.", "audio_stopped": was_playing})
 
         elif cmd == IPCCommand.SHUTDOWN.value:
