@@ -1,0 +1,17 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "siegfried@local",
+                "Name": "Siegfried Project"
+            }
+        ],
+        "Description": "Event-driven window focus watcher for Siegfried assistant under Wayland",
+        "Icon": "preferences-system-windows",
+        "Id": "siegfried_focus_watcher",
+        "License": "GPL-3.0-or-later",
+        "Name": "Siegfried Focus Watcher",
+        "Version": "1.0.0"
+    }
+}

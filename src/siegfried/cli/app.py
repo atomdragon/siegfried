@@ -182,7 +182,7 @@ def run_cli(args: list[str] | None = None, paths: Any = None) -> int:
     if parsed.command is None:
         # Modo interactivo REPL
         from siegfried.cli.repl import SiegfriedREPL
-        repl = SiegfriedREPL(client)
+        repl = SiegfriedREPL(client, paths=paths)
         repl.run()
         return 0
 
@@ -202,6 +202,11 @@ def run_cli(args: list[str] | None = None, paths: Any = None) -> int:
             args_payload = {"prompt": full_prompt}
             if parsed.policy:
                 args_payload["policy"] = parsed.policy
+            from siegfried.cli.router import CommandRouter
+            r_match = CommandRouter().route(full_prompt)
+            if r_match.args.get("is_historical"):
+                args_payload["is_historical"] = True
+                args_payload["time_window"] = r_match.args.get("time_window", "today")
             res = client.call(IPCCommand.QUERY, args_payload, timeout_seconds=15.0)
             if res.status == IPCStatus.OK.value:
                 content = res.payload.get("response", "")

@@ -16,20 +16,29 @@ SRC_DIR = REPO_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from siegfried.integrations.notifications import DesktopNotificationSender
+from siegfried.core.rest import ClockSample, RestEstimate, estimate_rest
 
 
-def calculate_estimated_rest_window(last_shutdown_epoch: float, now_epoch: float | None = None) -> float:
-    """Calcula la heurística de ventana de descanso en minutos."""
+def calculate_estimated_rest_window(last_shutdown_epoch: float | None,
+                                    now_epoch: float | None = None, *,
+                                    interval_verified: bool = False) -> RestEstimate:
+    """Pure bridge to the estimator. Wall timestamps alone are insufficient.
+
+    The caller must independently verify the shutdown/return pair and clock
+    continuity. No shutdown time is fabricated, no system log is scraped, and
+    no circadian event is written. Cross-boot inference stays explicit.
+    """
     now = now_epoch if now_epoch is not None else time.time()
-    elapsed_minutes = (now - last_shutdown_epoch) / 60.0
-    # Descuenta 25 minutos de latencia estimada de conciliación
-    estimated = max(0.0, elapsed_minutes - 25.0)
-    return estimated
+    start = ClockSample(last_shutdown_epoch) if last_shutdown_epoch is not None else None
+    return estimate_rest(start, ClockSample(now), cause="shutdown",
+                         continuous_evidence=interval_verified,
+                         wall_clock_verified=interval_verified)
 
 
 def main() -> None:
-    # Heurística inicial para boot hook
+    from siegfried.integrations.notifications import DesktopNotificationSender
+
+    # Existing greeting only; no Boot Briefing F5.3 is implemented here.
     notifier = DesktopNotificationSender()
     notifier.send(
         title="Siegfried — Sesión Iniciada",

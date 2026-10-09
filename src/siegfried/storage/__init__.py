@@ -11,6 +11,7 @@ from siegfried.storage.validation import (
     RuntimeValidationResult,
 )
 from siegfried.storage.secrets import load_secrets, get_secret
+from siegfried.storage.aggregator import HistoricalAggregator, AggregatedMetrics
 
 __all__ = [
     "SiegfriedPaths",
@@ -29,5 +30,7 @@ __all__ = [
     "RuntimeValidationResult",
     "load_secrets",
     "get_secret",
+    "HistoricalAggregator",
+    "AggregatedMetrics",
 ]
 

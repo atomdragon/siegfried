@@ -68,7 +68,7 @@ Los recursos efímeros se ubican en `/run/user/$UID/`:
 ### Requisitos
 
 - Linux (Kubuntu / KDE Plasma sobre Wayland recomendado).
-- Python 3.10+ (**exclusivamente Standard Library**; cero dependencias `pip` en runtime).
+- Python 3.10+: núcleo exclusivamente Standard Library, sin dependencias PyPI. Los adaptadores KWin/sesión optativos usan bindings nativos ajenos a stdlib; véase la excepción autorizada del Gate F5.2.
 
 ### Ejecutar Pruebas Automatizadas
 
@@ -181,16 +181,52 @@ Garantías finales de fiabilidad y concurrencia certificadas para el cierre form
 - **Capacidad Crítica y Apagado Verificable:** Cola fija de 16 procesada por 1 trabajador. Desalojo de baja urgencia (`LOW`/`NORMAL`) ante alertas críticas. Rechazo explícito con auditoría `NotificationAttempt` si la cola contiene 16 alertas críticas, protegiendo tanto las alertas críticas existentes como el evento persistido en el Vault. Apagado limpio que drena la cola y recolecta subprocesos sin procesos residuales.
 - **Optimización de CLI Cold-Start:** `FastHelpFormatter` en `argparse` elimina importaciones dinámicas lentas de `_colorize` y `shutil` en Python 3.14, manteniendo el cold-start P95 < 50 ms.
 
+### Shell Interactivo REPL, Enrutamiento Determinista y Pre-agregador Histórico (Gate F4.1)
+
+Consolidación de la experiencia conversacional interactiva y agregación analítica de alta velocidad:
+- **Consola REPL Fluida y Segura:** Navegación por historial con teclas de dirección vía `readline` persistida en `~/.siegfried/data/.history`. Captura limpia de `Ctrl+D` (cierre elegante), `Ctrl+C` en prompt (retención de sesión sin aborto anómalo) y `Ctrl+C` durante una consulta cognitiva en curso (cancelación inmediata de la espera del cliente sin afectar al demonio).
+- **Sondeo Rápido y Notificación No Bloqueante:** Al arrancar el REPL, verificación con timeout de 0.2 s hacia el socket; si el demonio no está activo, se emite una advertencia clara sin bloquear la consola.
+- **Silenciado Rápido de Emergencia:** Presionar `Enter` o `Espacio` en el REPL mientras una alarma auditiva o postura crítica está activa (`CRITICAL_BREAK_REQUIRED` o audio reproduciéndose) despacha automáticamente `ACK_BREAK`, silenciando el audio e iniciando el descanso de inmediato.
+- **Visualización Formateada del Estado:** El comando `status` presenta un resumen estructurado y legible con estado del sistema, cuenta regresiva de enfoque, tarea activa, tiempo continuo sentado y proximidad a los límites posturales (50m y 60m).
+- **Contexto Conversacional Efímero Acotado:** El REPL mantiene en memoria un búfer de hasta `max_context_turns * 2` mensajes (`InferenceMessage`) que se transmiten al demonio en cada turno para dar continuidad conversacional. Este contexto es estrictamente volátil en memoria del proceso CLI; **nunca se escriben transcripciones de chat en `siegfried_vault.jsonl`**, preservando la pureza de la bitácora (`Event Schema v1`).
+- **Pre-agregador Histórico Determinista:** `HistoricalAggregator` lee en reversa por bloques de 64 KB. El modo heurístico permite corte temprano con tolerancia limitada al desorden; las consultas IPC diarias/semanales usan explícitamente `allow_early_exit=False` para recorrer exhaustivamente el log. Computa enfoque, bloques, descansos, prórrogas y advertencias. Las latencias observadas de ambos modos se presentan por separado abajo; no son garantías universales.
+
+### Integración Segura del Contexto Histórico en la Inferencia Híbrida (Gate F4.2)
+
+Consolidación de la ruta cognitiva determinista alimentada con telemetría del Vault y garantías de privacidad reforzadas:
+- **Detección Determinista de Consultas Históricas:** `CommandRouter` detecta automáticamente preguntas sobre productividad («¿cuántas horas trabajé hoy?», «resumen de esta semana», «cuántos pomodoros llevo») clasificando la ventana temporal (`today` o `week`) mediante expresiones regulares precompiladas sin latencia perceptible.
+- **Inyección Determinista de Telemetría sin Alucinación:** El daemon calcula métricas exactas con `HistoricalAggregator` y genera el bloque determinista `<metricas_historicas>`, inyectándolo como mensaje del sistema previo a la consulta del usuario. Ante bóveda vacía o sin eventos, se suministran métricas en cero, evitando invención de números.
+- **Privacidad Cloud Deny-by-Default:** Toda consulta que involucre telemetría privada impone forzosamente `InferencePolicy.LOCAL_ONLY`. Si el usuario solicita explícitamente `--policy CLOUD_ONLY`, el daemon rechaza la petición con `IPCResponse.rejected`. Si el motor local falla, se prohíbe taxativamente el fallback a la nube para evitar fugas de telemetría personal.
+- **Resiliencia Temporal y Tolerancia a Desorden:** `HistoricalAggregator` incorpora ventana de tolerancia a desorden (`lookback_tolerance_count` y `max_skew_seconds`), permitiendo capturar eventos con pequeños desajustes de reloj NTP o escrituras tardías sin truncar prematuramente la lectura.
+- **Defensa contra Inyecciones de Prompt:** En `format_prompt_block()`, los nombres de tareas se sanean con `xml.sax.saxutils.escape`, se eliminan caracteres de control y saltos de línea, se truncan a 80 caracteres, se limitan a las 15 tareas principales (acumulando el resto en «Otras») y se incluye un comentario XML explícito que advierte al modelo que las métricas son de sólo lectura y los nombres de tareas son texto no confiable.
+- **Privacidad Estricta en Readline:** `SiegfriedREPL` desactiva el guardado automático de líneas (`set_auto_history(False)`), asegurando que sólo comandos deterministas y comandos de salida se persistan en `~/.siegfried/data/.history` con permisos estrictos `0600`, excluyendo cualquier prompt cognitivo privado.
+
+### Integración Event-Driven con KWin/Wayland, Privacidad y Telemetría de Foco (Gate F5.1)
+
+Integración nativa con KDE Plasma 6 y KWin sobre Wayland para captura de foco sin sobrecarga ni invasión de privacidad:
+- **Watcher Event-Driven en KWin (`kwin_focus_watcher.js`):** Enganche nativo a `workspace.windowActivated` en el compositor Wayland. **Cero polling periódico**, cero capturas de pantalla y cero invocaciones lentas en el hilo del compositor.
+- **Privacidad Estricta por Diseño:** Prohibición absoluta de capturar o persistir títulos de ventanas (`caption`), URLs, nombres de archivos, comandos de consola o argumentos de procesos. El watcher extrae únicamente identificadores normalizados (`desktopFileName` o `resourceClass`) y los sanea con whitelist estricta (`[a-z0-9_.-]`, máx. 64 caracteres). Aplicaciones no reconocidas o entradas sospechosas se clasifican deterministamente como `desconocida`.
+- **Adaptador D-Bus optativo:** Desactivado por defecto. La excepción autorizada en F5.2 permite `python3-dbus`, `python3-gi` y GLib de la distribución; `dbus`, `dbus.service`, `dbus.mainloop.glib` y `gi.repository` **no son stdlib**. No se instalaron paquetes; `SPECIFICATION.md` formaliza la autorización. Se habilita explícitamente con `SIEGFRIED_ENABLE_KWIN=1`. Sin bindings o sin bus/KWin, el núcleo continúa funcionando.
+- **Validación del canal:** Emisor igual al nombre único propietario de `org.kde.KWin`, UID local, firma `s`, identificador ASCII de hasta 64 bytes, cola de 64 transiciones y límite de 20/s con ráfaga de 40. Persistencia en trabajador separado. Esto autentica la conexión propietaria; no aísla frente al mismo usuario que pueda cargar scripts en KWin o apropiarse del nombre si KWin está ausente. El límite del payload se aplica después de la recepción nativa, no es un límite del mensaje completo del bus.
+- **FocusTracker Determinista con Tiempos Monotónicos:** La duración de cada bloque de ventana activa se calcula exclusivamente con `time.monotonic()`, garantizando valores no negativos y resistencia ante ajustes de reloj NTP.
+- **Foco nulo y suspensión:** El foco nulo cierra el intervalo. F5.2 conecta señales de logind y bloqueo KDE mediante el adaptador de sesión optativo; su trabajador cierra el intervalo y bloquea nuevos focos durante suspensión/bloqueo/inactividad o estado desconocido. La suspensión y el bloqueo físicos siguen pendientes de prueba con autorización.
+- **Ciclo de vida:** La pérdida de conexión/propietario descarta el intervalo incierto. Recuperar una conexión requiere reinicio explícito; recargar el watcher permite muestrear una ventana que siga activa. Tras desbloqueo/reanudación se espera una nueva señal válida; el watcher entrega también activaciones repetidas de la misma aplicación y Python deduplica dentro de cada generación. Para desactivar, deshabilitar el tracker y detener el adaptador, además de descargar el script; descargar sólo el watcher no comunica un cierre al daemon.
+- **Conformidad con Event Schema v1 y Compatibilidad Total:** Los eventos se registran como `window_focus_sampled` en `siegfried_vault.jsonl` sin alterar la integridad de `HistoricalAggregator`, la máquina de estados ni los temporizadores de Pomodoro.
+
 ---
 
 ## 4. Métricas y Service Level Objectives (SLOs) Verificados
 
+Mediciones finales F5.2, ejecutadas después de la regresión de 544 pruebas. Dataset histórico de 20,000 eventos sintéticos (~27.8 días), consulta de últimas 24 h y caché caliente. El [reporte F5.2](docs/gates/GATE_F5_2_REPORT.md) detalla muestras y límites; no son garantías universales de latencia ni demuestran por sí solas exactitud.
+
 | Componente | Métrica Objetivo | Medición Real (P50) | Medición Real (P95) | Veredicto |
 |---|---|---|---|---|
-| **Fast-Path Regex Router** | P95 < 10.0 ms | 0.0024 ms | 0.0034 ms | **PASS** |
-| **Orchestrator Routing Microbenchmark** | P95 < 1.0 ms | 0.0086 ms | 0.0098 ms | **PASS** |
-| **Vault Event Append** (`flock` + `fsync`) | P95 < 10.0 ms | 1.3485 ms | 2.5492 ms | **PASS** |
-| **CLI Cold-Start** (`siegfried --help`) | P95 < 50.0 ms | 37.77 ms | 47.25 ms | **PASS** |
+| **Fast-Path Regex Router** | P95 < 10.0 ms | 0.0009 ms | 0.0016 ms | **PASS** |
+| **Orchestrator Routing Microbenchmark** | P95 < 1.0 ms | 0.0099 ms | 0.0123 ms | **PASS** |
+| **Vault Event Append** (`flock` + `fsync`) | P95 < 10.0 ms | 1.1679 ms | 1.6960 ms | **PASS** |
+| **CLI Cold-Start** (`siegfried --help`) | P95 < 50.0 ms | 25.93 ms | 33.09 ms | **PASS** |
+| **Historical Aggregator (Modo Heurístico Early-Exit)** | P95 < 10.0 ms (20k eventos) | 1.9261 ms | 1.9635 ms | **PASS** |
+| **Historical Aggregator (Modo Exhaustivo)** | Medición observacional, 20k eventos / 25 muestras | 8.1661 ms | 8.2328 ms | Sin SLO propio |
 
 ---
 
@@ -203,4 +239,35 @@ Para consultar los documentos maestros detallados:
 - [GATE_F3_1_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F3_1_REPORT.md): Auditoría integral, consolidación del daemon, supervisión systemd y cierre formal de Gate F3.1.
 - [GATE_F3_2_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F3_2_REPORT.md): Auditoría integral, gestión quirúrgica de alertas, notificaciones KDE Plasma y audio (Gate F3.2).
 - [GATE_F3_3_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F3_3_REPORT.md): Auditoría integral, endurecimiento de alertas, idempotencia y cierre formal de Fase 3 (Gate F3.3).
+- [GATE_F4_1_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F4_1_REPORT.md): Auditoría integral, consolidación del REPL interactivo, enrutamiento determinista y pre-agregador histórico (Gate F4.1).
+- [GATE_F4_2_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F4_2_REPORT.md): Auditoría integral, integración segura del contexto histórico determinista e inferencia híbrida (Gate F4.2).
+- [GATE_F5_1_REPORT.md](file:///media/okami/Mio/Siegfried/docs/gates/GATE_F5_1_REPORT.md): Auditoría integral, integración event-driven con KWin/Wayland, privacidad y telemetría de foco (Gate F5.1).
 
+
+
+### Gate F5.1.1 — auditoría final
+
+**PASS_WITH_DEVIATIONS**: 480 pruebas PASS y E2E real KWin/Wayland con dos aplicaciones temporales. Estado histórico antes de F5.2: núcleo stdlib preservado, excepción nativa y conexión de sesión aún pendientes en ese momento. F5.2 autoriza e implementa esos puntos; la prueba física sigue pendiente. Informe histórico: [GATE_F5_1_1_REPORT.md](docs/gates/GATE_F5_1_1_REPORT.md), que corrige las garantías excesivas del reporte F5.1 anterior.
+
+Prueba E2E reproducible, únicamente con autorización de acceso a la sesión: `python3 tools/verify_kwin_f511.py`. Abre dos diálogos de prueba, usa un Vault temporal y descarga sus scripts al terminar. No suspende el equipo.
+
+
+### Gate F5.2 — sesión KDE y descanso estimado
+
+El adaptador de sesión es opcional y permanece **desactivado por defecto**. Con `SIEGFRIED_ENABLE_SESSION=1` recibe señales de suspensión/reanudación/apagado de logind y bloqueo de KDE; el foco usa además `SIEGFRIED_ENABLE_KWIN=1`. No se instalaron ni activaron servicios, paquetes o scripts en el HOME real. Sin bindings, KDE, logind o bus, daemon, CLI, Vault, temporizadores y alertas permanecen operativos. Con observabilidad de sesión incompleta, la telemetría de foco se conserva cerrada y no se infiere actividad.
+
+La ausencia debe estar corroborada y alcanzar **90 minutos**. El cálculo puro resta **25 minutos**: ausencia de 8 horas → ventana estimada de **7 h 35 min**. Esto no confirma sueño, biometría ni calidad de descanso. `SessionController.rest_estimate` expone los estados internos `ESTIMATED`, `INSUFFICIENT_DATA`, `NOT_APPLICABLE` e `INVALID_INTERVAL`; ninguna estimación se envía al LLM ni a Cloud. Suspensión se mide con `CLOCK_BOOTTIME`, no sólo con `time.monotonic()`. Entre arranques se requiere validación independiente del intervalo de pared, que el daemon no inventa ni reconstruye.
+
+No se añadieron eventos ni campos a contratos congelados. Las estimaciones de suspensión se mantienen en memoria: perder el daemon o el bus invalida la continuidad. Bloquear pantalla o retirar la sesión no constituye una observación de sueño. `scripts/boot_hook.py` delega el cálculo puro al estimador; no se implementa Boot Briefing F5.3.
+
+Pruebas específicas (sin suspensión ni bloqueo reales):
+
+```bash
+PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler -m unittest tests.integration.test_session_rest_f52 -v
+```
+
+Verificación operativa explícita: `PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler tools/verify_session_f52.py`. Lee el estado y suscribe/cancela señales del host; después genera señales sintéticas en un bus D-Bus aislado y un Vault temporal. No bloquea ni suspende el host.
+
+Informe y límites: [GATE_F5_2_REPORT.md](docs/gates/GATE_F5_2_REPORT.md). Veredicto **PASS_WITH_DEVIATIONS**: implementación y pruebas permitidas completas; suspensión, bloqueo y reinicio físicos pendientes. No se implementó F5.3.
+
+Certificación final: **64 pruebas F5.2**, también con `python3 -S`; **544 pruebas** de regresión en 34.812 s, cinco SLO del harness PASS y `git diff --check` PASS. Tres ciclos de suscripción/cancelación nativa en el host y transiciones sintéticas en bus aislado liberaron conexiones, hilos y el proceso hijo de prueba.

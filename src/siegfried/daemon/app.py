@@ -33,6 +33,9 @@ from siegfried.storage.vault import Vault
 from siegfried.ipc.server import IPCServer
 from siegfried.daemon.timers import MonotonicTimer
 from siegfried.daemon.alerts import AlertCoordinator
+from siegfried.daemon.focus import FocusTracker, FocusDBusAdapter
+from siegfried.daemon.session import SessionController
+from siegfried.integrations.session import SessionDBusAdapter
 from siegfried.integrations.notifications import NotificationSender, DesktopNotificationSender
 from siegfried.integrations.audio import AudioPlayer, PipeWireAudioPlayer
 from siegfried.observability.logging import setup_logger
@@ -82,8 +85,13 @@ class SiegfriedDaemon:
 
         self.focus_timer = MonotonicTimer(on_expire=self._on_focus_expired)
         self.ipc_server = IPCServer(self.paths.socket_file, handler=self.handle_ipc_request)
+        self.focus_tracker = FocusTracker(vault=self._vault)
+        self.focus_dbus_adapter = FocusDBusAdapter(self.focus_tracker)
+        self.session_controller = SessionController(self.focus_tracker)
+        self.session_dbus_adapter = SessionDBusAdapter(self.session_controller)
         self._running = False
         self._stopped = False
+        self._shutdown_clean = False
         self._active_task_name = ""
         self._orchestrator = orchestrator
         self._orchestrator_lock = threading.Lock()
@@ -109,6 +117,8 @@ class SiegfriedDaemon:
     @vault.setter
     def vault(self, value: Vault) -> None:
         self._vault = value
+        if hasattr(self, "focus_tracker") and self.focus_tracker is not None:
+            self.focus_tracker.vault = value
 
 
     def _validate_startup_runtime(self) -> None:
@@ -195,7 +205,11 @@ class SiegfriedDaemon:
         except StorageError as e:
             self.logger.error(f"Fallo de seguridad o validación en runtime: {e}")
             raise
+        if self.focus_tracker.vault is None:
+            self.focus_tracker.vault = self.vault
         self.alert_coordinator.start()
+        session_started = self.session_dbus_adapter.start()
+        self.focus_dbus_adapter.start(mainloop_owner=self.session_dbus_adapter if session_started else None)
         self._last_tick_time = time.monotonic()
         self.ipc_server.start()
         self._running = True
@@ -261,18 +275,42 @@ class SiegfriedDaemon:
     def stop(self, timeout_seconds: float = 2.0) -> bool:
         """Clean shutdown of daemon."""
         if self._stopped:
-            return True
+            return self._shutdown_clean
         self._stopped = True
         self.logger.info("Deteniendo Siegfried Daemon...")
         self._running = False
+        focus_clean = False
+        session_clean = True
+        session_enabled = self.session_controller.enabled
+        if session_enabled:
+            # The session worker owns terminal interval closure. Do not wait
+            # on its tracker/disk lock from the daemon's shutdown thread.
+            try:
+                session_clean = self.session_dbus_adapter.stop(timeout=min(1.0, timeout_seconds / 2))
+            except Exception:
+                session_clean = False
+                self.logger.warning("Error deteniendo adaptador de sesión")
+        try:
+            focus_clean = self.focus_dbus_adapter.stop(discard=session_enabled and not session_clean,
+                                                        close_tracker=not session_enabled)
+        except Exception:
+            self.logger.warning("Error deteniendo adaptador D-Bus de foco")
+        if not session_enabled:
+            try:
+                session_clean = self.session_dbus_adapter.stop(timeout=min(1.0, timeout_seconds / 2))
+            except Exception:
+                session_clean = False
+                self.logger.warning("Error deteniendo adaptador de sesión")
         coord_clean = self.alert_coordinator.stop(timeout_seconds=min(1.0, timeout_seconds / 2))
         ipc_clean = self.ipc_server.stop(timeout_seconds=timeout_seconds)
-        clean = bool(coord_clean and ipc_clean)
+        clean = bool(coord_clean and ipc_clean and focus_clean and session_clean)
+        self._shutdown_clean = clean
         if clean:
             self.logger.info("Siegfried Daemon detenido correctamente.")
         else:
             self.logger.warning(
-                f"Siegfried Daemon detenido con trabajadores residuales (ipc={ipc_clean}, alert={coord_clean})."
+                f"Siegfried Daemon detenido con trabajadores residuales "
+                f"(ipc={ipc_clean}, alert={coord_clean}, focus={focus_clean}, session={session_clean})."
             )
         return clean
 
@@ -316,6 +354,7 @@ class SiegfriedDaemon:
 
         elif cmd == IPCCommand.STATUS.value:
             snapshot = self.focus_timer.snapshot()
+            focus_snap = self.focus_tracker.snapshot()
             return IPCResponse.ok(req.request_id, {
                 "state": self.state_machine.state.value,
                 "continuous_sitting_seconds": round(self.state_machine.continuous_sitting_seconds, 1),
@@ -324,6 +363,8 @@ class SiegfriedDaemon:
                 "total_duration_seconds": snapshot.total_duration_seconds,
                 "task_name": snapshot.task_name,
                 "audio_playing": self.alert_coordinator.is_audio_playing(),
+                "focus_active_app": focus_snap.get("active_app"),
+                "focus_active_category": focus_snap.get("active_category"),
             })
 
         elif cmd == IPCCommand.START_FOCUS.value:
@@ -443,6 +484,26 @@ class SiegfriedDaemon:
                 except ValueError:
                     return IPCResponse.error(req.request_id, f"Política de inferencia inválida: {policy_arg}")
 
+            # Historical detection (C1 / C2)
+            is_historical = bool(req.args.get("is_historical", False))
+            time_window = req.args.get("time_window", "today")
+            if not is_historical:
+                from siegfried.cli.router import CommandRouter
+                r_match = CommandRouter().route(prompt)
+                if r_match.args.get("is_historical"):
+                    is_historical = True
+                    time_window = r_match.args.get("time_window", "today")
+
+            # Deny-by-default Cloud Privacy Enforcement (C3)
+            if is_historical:
+                if policy == InferencePolicy.CLOUD_ONLY or policy_arg == "CLOUD_ONLY":
+                    return IPCResponse.rejected(
+                        req.request_id,
+                        "Transmisión de métricas históricas a la nube bloqueada por política de privacidad (deny-by-default). Utilice inferencia LOCAL.",
+                    )
+                # Force LOCAL_ONLY for any historical telemetry query
+                policy = InferencePolicy.LOCAL_ONLY
+
             timeout_arg = req.args.get("timeout_seconds")
             timeout_seconds = float(timeout_arg) if timeout_arg else 10.0
 
@@ -454,6 +515,25 @@ class SiegfriedDaemon:
                     return IPCResponse.error(req.request_id, f"Mensajes inválidos: {e}")
             else:
                 messages = [InferenceMessage(role="user", content=prompt.strip())]
+
+            # Deterministic Context Aggregation and Injection (C2 / C4)
+            if is_historical:
+                from siegfried.storage.aggregator import HistoricalAggregator, AggregatedMetrics
+                try:
+                    aggregator = HistoricalAggregator(self.paths.vault_file)
+                    if time_window == "week":
+                        metrics = aggregator.aggregate_week(allow_early_exit=False)
+                    else:
+                        metrics = aggregator.aggregate_today(allow_early_exit=False)
+                except Exception as e:
+                    self.logger.warning(f"Error al agregar telemetría histórica: {e}")
+                    metrics = AggregatedMetrics()
+
+                prompt_block = HistoricalAggregator.format_prompt_block(metrics)
+                system_msg = InferenceMessage(role="system", content=prompt_block)
+                # Insert immediately before the last user query
+                insert_idx = max(0, len(messages) - 1)
+                messages.insert(insert_idx, system_msg)
 
             inf_req = InferenceRequest(
                 messages=messages,

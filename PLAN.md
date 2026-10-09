@@ -352,6 +352,41 @@ Con 20,000 eventos sintéticos (`Event Schema v1`) en `vault.jsonl`:
 2. El pre-agregador totaliza las métricas en P95 `<10 ms`.
 3. DeepSeek recibe los totales precalculados y formula la respuesta sin inventar números.
 
+### 4.6 Estado y Certificación del Hito F4.1 (2026-10-09)
+* **Estado:** **PASS** (100% de requisitos y garantías cumplidos).
+* **Entregables Implementados:**
+  1. `src/siegfried/cli/repl.py`: Shell interactivo `SiegfriedREPL` completo con soporte de `readline`, historial persistente de líneas (`~/.siegfried/data/.history`), manejo seguro de señales (`Ctrl+D`, `Ctrl+C` en prompt y durante consulta activa sin fugas ni interrupción del daemon), sondeo rápido no bloqueante (timeout 0.2 s), silenciado rápido de emergencia (`Enter` o `Espacio` ante alarma activa despacha `ACK_BREAK` silenciando el audio e iniciando el descanso), renderizado formateado y legible del estado del sistema (`STATUS`) y contexto conversacional efímero en memoria acotado a `max_context_turns * 2` mensajes.
+  2. `src/siegfried/cli/router.py`: Reglas deterministas extendidas para `ping` (vía IPC) y `ayuda`/`help`/`?` (despacho local inmediato sin IPC ni LLM), garantizando precedencia estricta del Fast-Path determinista sobre la ruta cognitiva.
+  3. `src/siegfried/storage/aggregator.py`: `HistoricalAggregator` y `AggregatedMetrics` con algoritmo de lectura reversa `_reverse_line_reader()` basado en bloques de 64 KB (`f.seek()`), parseo estricto de `Event Schema v1`, filtro temporal con corte anticipado (`break`) ante monotonía temporal, cálculo de métricas de salud/enfoque y formateo determinista del bloque XML `<metricas_historicas>`.
+  4. `src/siegfried/storage/__init__.py`: Exportación formal de `HistoricalAggregator` y `AggregatedMetrics`.
+  5. `tests/integration/test_repl_interactive_f41.py`: Suite exhaustiva con 38 pruebas (Grupos A, B, C, D, E) que validan el ciclo de vida del REPL, routing determinista, inferencia y backpressure, privacidad y agregación histórica, y E2E socket con daemon real.
+  6. `tools/benchmark.py`: Microbenchmark formal de 20,000 eventos sintéticos (`Event Schema v1`) para `HistoricalAggregator`.
+* **Regresión Completa:** **411 tests PASS** (373 heredados + 38 Gate F4.1), 0 fallos, 0 errores, 0 omitidos en 14.63 s.
+* **Cumplimiento de SLOs:**
+  - **Fast-Path Router P95:** 0.0032 ms (SLO < 10.0 ms) -> **PASS**
+  - **Vault Append P95:** 2.6442 ms (SLO < 10.0 ms) -> **PASS**
+  - **CLI Cold-Start P95:** 49.27 ms (SLO < 50.0 ms) -> **PASS**
+  - **Orchestrator Decision P95:** 0.0094 ms (SLO < 1.0 ms) -> **PASS**
+  - **Historical Aggregator P95 (20,000 eventos):** 4.2734 ms (SLO < 10.0 ms) -> **PASS**
+* **Cierre Formal de Gate F4.1:** **PASS** (Listo para abordar F4.2).
+
+### 4.7 Estado y Certificación del Hito F4.2 (2026-10-09)
+* **Estado:** **PASS** (100% de requisitos y garantías cumplidos).
+* **Entregables Implementados:**
+  1. `src/siegfried/cli/repl.py`: Privacidad reforzada en Readline (B1: sólo comandos deterministas y comandos de salida persisten en `~/.siegfried/data/.history`, `set_auto_history(False)`, permisos `0600` estrictos, carga no destructiva del historial previo); silenciado de emergencia riguroso (B2: Enter/Espacio en silencio no altera estado determinista ni invoca `ACK_BREAK`, sólo silencia ante alarma activa).
+  2. `src/siegfried/storage/aggregator.py`: Resiliencia temporal reforzada (B3: lookback tolerance window con `consecutive_older_events` y `max_skew_seconds` tolerando desorden leve y ajustes NTP sin truncamiento prematuro de lecturas); defensa robusta contra Prompt Injection y escaping XML (B4: sanitización de nombres de tareas con `xml.sax.saxutils.escape`, eliminación de caracteres de control y saltos de línea, truncado a 80 caracteres, tope a las 15 tareas principales y acumulación en 'Otras', e inclusión de comentario XML de sistema advirtiendo que las métricas son de sólo lectura y los nombres de tareas son texto no confiable).
+  3. `src/siegfried/cli/router.py`: Detección determinista de consultas históricas (C1) mediante regexes precompiladas clasificando `time_window="today"` y `time_window="week"`, retornando metadatos para la ruta cognitiva sin penalizar el Fast-Path.
+  4. `src/siegfried/daemon/app.py`: Inyección determinista de contexto histórico en el manejador de `IPCCommand.QUERY` (C2 y C4: cálculo de métricas deterministas e inyección de bloque `<metricas_historicas>` como mensaje de rol `system` previo a la consulta); política estricta de privacidad Cloud deny-by-default (C3: imposición de `InferencePolicy.LOCAL_ONLY` ante telemetría privada; rechazo formal con `IPCResponse.rejected` ante peticiones `CLOUD_ONLY`; prohibición total de fallback a Cloud ante fallos del motor local).
+  5. `tests/integration/test_historical_inference_f42.py`: Suite exhaustiva con 20 pruebas cubriendo los 4 grupos críticos (Grupos A, B, C, D).
+* **Regresión Completa:** **431 tests PASS** (411 heredados + 20 Gate F4.2), 0 fallos, 0 errores, 0 omitidos en 34.38 s.
+* **Cumplimiento de SLOs:**
+  - **Fast-Path Router P95:** 0.0030 ms (SLO < 10.0 ms) -> **PASS**
+  - **Vault Append P95:** 2.5065 ms (SLO < 10.0 ms) -> **PASS**
+  - **CLI Cold-Start P95:** 42.58 ms (SLO < 50.0 ms) -> **PASS**
+  - **Orchestrator Decision P95:** 0.0078 ms (SLO < 1.0 ms) -> **PASS**
+  - **Historical Aggregator P95 (20,000 eventos):** 3.6049 ms (SLO < 10.0 ms) -> **PASS**
+* **Cierre Formal de Gate F4.2:** **PASS** (Listo para el siguiente hito de Fase 4).
+
 ---
 
 ## Fase 5: Integración Event-Driven con Wayland, KWin Focus Sanitizado y Boot Briefing
@@ -390,6 +425,54 @@ Completar la integración en Kubuntu mediante un watcher de ventanas enfocado ba
 ### 5.5 Criterio de Verificación
 1. Al cambiar de ventana activa en KDE Plasma Wayland, el watcher notifica inmediatamente sin polling y se guarda el evento categorizado sin persistir títulos privados.
 2. Tras reinicio de máquina, en <2 s aparece la notificación con la `ventana_descanso_estimada` calculada y el botón interactivo que despliega el REPL.
+
+### 5.6 Estado histórico de Verificación de Gate F5.1
+* **Componentes Implementados:**
+  1. `scripts/kwin_focus_watcher.js`: Watcher event-driven para KWin 6 (KDE Plasma 6 / Wayland) suscrito a `workspace.windowActivated`. Zero polling, privacidad estricta (no captions, no URLs, no paths).
+  2. `scripts/kwin_focus_watcher/metadata.json` y `contents/code/main.js`: Estructura KPackage formal para KWin 6.
+  3. `src/siegfried/daemon/focus.py`: `FocusTracker` determinista con cálculo monotónico (`time.monotonic()`), manejo de foco nulo, resiliencia ante suspensión/bloqueo de pantalla y deduplicación. `FocusDBusAdapter` en el bus de sesión D-Bus (`org.siegfried.FocusWatcher`).
+  4. Integración en `SiegfriedDaemon`: Inicio y parada cleanly coordinados con el reactor sin impacto en timers de Pomodoro, postura ni alertas.
+  5. `tests/integration/test_kwin_focus_f51.py`: Suite exhaustiva con 26 pruebas cubriendo Grupos A, B, C, D y E.
+* **Validación Real en KDE Plasma 6 Wayland:**
+  - Script cargado dinámicamente en KWin 6.6 (`qdbus6 org.kde.KWin /Scripting loadScript`).
+  - D-Bus connection a `org.siegfried.FocusWatcher` verificada bidireccionalmente.
+  - Evento real de foco generado y persistido en `siegfried_vault.jsonl` bajo `Event Schema v1` (`window_focus_sampled`) sin fugas de títulos ni URLs.
+* **Regresión Completa:** **464 tests PASS** (438 heredados + 26 Gate F5.1), 0 fallos, 0 errores, 0 omitidos en 37.31 s.
+* **Cumplimiento de SLOs:**
+  - **Fast-Path Router P95:** 0.0016 ms (SLO < 10.0 ms) -> **PASS**
+  - **Vault Append P95:** 2.4426 ms (SLO < 10.0 ms) -> **PASS**
+  - **CLI Cold-Start P95:** 31.04 ms (SLO < 50.0 ms) -> **PASS**
+  - **Orchestrator Decision P95:** 0.0046 ms (SLO < 1.0 ms) -> **PASS**
+  - **Historical Aggregator Heurístico P95:** 1.9426 ms (SLO < 10.0 ms) -> **PASS**
+  - **Historical Aggregator Exhaustivo Exacto P95:** 8.1923 ms (20,000 eventos) -> **PASS**
+* **Cierre histórico F5.1:** PASS reportado originalmente; revisado por F5.1.1. La condición anterior de no avanzar fue sustituida por la autorización explícita del Gate F5.2, que aprueba los bindings optativos e implementa la coordinación de sesión.
+
+
+### 5.7 Gate F5.1.1 — auditoría de cierre
+
+**PASS_WITH_DEVIATIONS**, con [reporte histórico F5.1.1](docs/gates/GATE_F5_1_1_REPORT.md). El reporte F5.1 se conserva como evidencia histórica, no como certificación vigente de seguridad o suspensión. Las observaciones siguientes describen aquel cierre; F5.2 resuelve la autorización nativa y la integración de sesión en 5.8.
+
+- Núcleo Standard Library preservado. `dbus`/`gi` son bindings externos nativos, importados sólo al habilitar el adaptador con `SIEGFRIED_ENABLE_KWIN=1`; la excepción de distribución es una propuesta pendiente de aprobación. No se modificó la restricción de `SPECIFICATION.md`.
+- Correcciones mínimas: identidad del propietario KWin, validación de firma/tamaño sin truncado, rechazo de identificadores sospechosos, cola acotada con control de tasa, persistencia separada y liberación de recursos. Regresión corregida de notificación tardía de desconexión durante un reinicio.
+- E2E real: kdialog → zenity → kdialog, duraciones 1.31/0.81 s (tolerancia 0.4 s), duplicados inducidos desde KWin, foco nulo, rechazo de suplantación directa del mismo UID, desconexión/reinicio/recarga, desactivación/descarga y privacidad del Vault temporal.
+- Regresión: 480 pruebas PASS. Cinco SLOs PASS. Exhaustivo: P95 8.2012 ms en 25 muestras de 20k eventos sintéticos (~27.8 días, caché caliente); no garantiza exactitud universal ni latencia en producción. IPC histórico diario/semanal utiliza `allow_early_exit=False`, cubierto por regresión específica.
+- Pendientes: aprobación de excepción nativa; conexión automática con logind/bloqueo y validación real de suspensión, que no se provocó. Recuperación mediante recarga explícita; no se certifica reconexión automática. El mismo UID con autoridad de scripting sigue dentro de la frontera de confianza.
+- Estado histórico al cerrar F5.1.1: F5.2 permanecía sin iniciar; su implementación posterior está registrada en 5.8. No se instalaron paquetes, modificó configuración persistente ni ejecutaron commits.
+
+
+### 5.8 Gate F5.2 — sesión KDE, suspensión y descanso estimado
+
+**Implementado incrementalmente; PASS_WITH_DEVIATIONS.** Informe vigente: [GATE_F5_2_REPORT.md](docs/gates/GATE_F5_2_REPORT.md).
+
+- Excepción de `dbus-python`/PyGObject nativos **autorizada explícitamente** y formalizada en `SPECIFICATION.md`. Imports diferidos, núcleo stdlib, cero pip. Adaptadores `SIEGFRIED_ENABLE_SESSION`/`SIEGFRIED_ENABLE_KWIN` optativos y desactivados por defecto.
+- logind: `PrepareForSleep`, `PrepareForShutdown`, `SessionRemoved`, cambios de propiedades de sesión. KDE: `org.freedesktop.ScreenSaver.ActiveChanged` y `GetActive` inicial. Emisores fijados, UID validado, sesión gráfica validada y pérdida de observabilidad conservadora, sin polling.
+- Un único `FocusTracker`, barrera de admisión sin espera de disco, generaciones para rechazar foco obsoleto, trabajador de sesión con cola de 32 y tasa de 20/s (ráfaga 40), loop GLib compartido y cierre acotado que informa trabajadores residuales. Activaciones repetidas de la misma app se entregan para recuperar después de desbloqueo; deduplicación permanece en Python.
+- Estimador puro: ausencia corroborada ≥90 min, ventana = ausencia −25 min. 8 h → 7 h 35 min. `CLOCK_BOOTTIME` incluye suspensión; `CLOCK_MONOTONIC` no. Cuatro estados internos, sin interpretación biométrica ni inferencia LLM/Cloud.
+- Brecha contractual preservada: no se convierte suspensión/bloqueo en `sleep_initiated`/`wake_detected`; no se persisten eventos incompatibles ni se reconstruyen pares entre reinicios sin evidencia. El cálculo puro de `boot_hook.py` exige evidencia explícita y no añade efectos de escritorio.
+- Pruebas F5.2: 64 casos, incluidos saturación/memoria, disco bloqueado, apagado concurrente, recuperación de la misma app, ausencia de KDE/logind/bindings y mantenimiento de temporizadores/alertas. Verificación nativa del host: 3 ciclos, 7 suscripciones, ambas fuentes disponibles y recursos liberados. Bus aislado: bloqueo/suspensión sintéticos y rechazo de suplantación/tipos inválidos PASS.
+- Regresión final: **544 pruebas PASS en 34.812 s** (480 previas + 64 F5.2), 0 fallos/errores/omitidos. Suite F5.2 también PASS con `python3 -S`. Cinco SLO del harness PASS: P95 Fast-Path 0.0016 ms, Vault 1.6960 ms, CLI 33.09 ms, routing 0.0123 ms e histórico heurístico 1.9635 ms. Histórico exhaustivo: P95 **8.2328 ms**, 25 muestras de 20k eventos, sin garantía universal. `git diff --check` PASS.
+- Suspensión, bloqueo, apagado/reinicio físicos quedan **pendientes**; no se efectuaron ni solicitaron. La reconexión tras pérdida de bus requiere reinicio explícito.
+- F5.3 permanece **sin implementar**. No se realizaron commits, push, instalaciones ni cambios persistentes en el HOME real.
 
 ---
 

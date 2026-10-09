@@ -152,14 +152,85 @@ def benchmark_orchestrator_decision() -> bool:
     return passed
 
 
+def benchmark_historical_aggregator() -> bool:
+    import json
+    from siegfried.storage.aggregator import HistoricalAggregator
+
+    event_types = [
+        EventType.POMODORO_COMPLETED,
+        EventType.BREAK_COMPLETED,
+        EventType.POSTURE_WARNING,
+        EventType.POSTPONE_GRANTED,
+    ]
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        vault_path = Path(tmp_dir) / "siegfried_vault.jsonl"
+
+        # Populate 20,000 synthetic Event Schema v1 events
+        total_events = 20000
+        now = 1700000000.0
+        start_time = now - (total_events * 120.0)
+        lines = []
+        for i in range(total_events):
+            ts = start_time + (i * 120.0)
+            etype = event_types[i % len(event_types)]
+            data = {"duration_min": 25, "task": f"Task-{i % 5}"} if etype == EventType.POMODORO_COMPLETED else {}
+            ev = Event.create(etype, data, ts=ts)
+            lines.append(json.dumps(ev.to_dict()) + "\n")
+
+        with open(vault_path, "w", encoding="utf-8") as f:
+            f.writelines(lines)
+
+        aggregator = HistoricalAggregator(vault_path=vault_path)
+
+        # Query recent window (last 24 hours: 720 events)
+        window_start = now - 86400.0
+        window_end = now
+
+        # 1. Heuristic Early-Exit Mode (SLO P95 < 10.0 ms)
+        durations_heuristic: list[float] = []
+        iterations = 100
+        for _ in range(iterations):
+            t0 = time.perf_counter()
+            metrics = aggregator.aggregate(start_ts=window_start, end_ts=window_end, allow_early_exit=True)
+            _ = aggregator.format_prompt_block(metrics)
+            t1 = time.perf_counter()
+            durations_heuristic.append((t1 - t0) * 1000.0)
+
+        stats_heuristic = calculate_latency_stats(durations_heuristic)
+        slo = 10.0
+        passed_heuristic = stats_heuristic.p95_ms < slo
+        verdict_heuristic = "PASS" if passed_heuristic else "FAIL"
+        print(f"\n[SLO Historical Aggregator — Modo Heurístico Early-Exit (P95 < {slo:.1f} ms para 20k eventos)]")
+        print(f"  Count: {stats_heuristic.count} | Mean: {stats_heuristic.mean_ms:.4f} ms | P50: {stats_heuristic.p50_ms:.4f} ms | P95: {stats_heuristic.p95_ms:.4f} ms | Max: {stats_heuristic.max_ms:.4f} ms")
+        print(f"  Verdict: {verdict_heuristic}")
+
+        # 2. Exhaustive scan latency; correctness covered separately by tests.
+        durations_exhaustive: list[float] = []
+        for _ in range(25):
+            t0 = time.perf_counter()
+            metrics_ex = aggregator.aggregate(start_ts=window_start, end_ts=window_end, allow_early_exit=False)
+            _ = aggregator.format_prompt_block(metrics_ex)
+            t1 = time.perf_counter()
+            durations_exhaustive.append((t1 - t0) * 1000.0)
+
+        stats_exhaustive = calculate_latency_stats(durations_exhaustive)
+        print(f"\n[Historical Aggregator — Modo Exhaustivo Exacto (20k eventos sintéticos, 25 muestras)]")
+        print(f"  Count: {stats_exhaustive.count} | Mean: {stats_exhaustive.mean_ms:.4f} ms | P50: {stats_exhaustive.p50_ms:.4f} ms | P95: {stats_exhaustive.p95_ms:.4f} ms | Max: {stats_exhaustive.max_ms:.4f} ms")
+        print(f"  Nota Técnica: Escaneo y formato de 20k eventos separados 120 s (~27.8 días), caché caliente; sin garantía de latencia o exactitud universal.")
+
+        return passed_heuristic
+
+
 def main() -> int:
     print("=== Ejecutando Benchmark Harness de Siegfried ===")
     r_router = benchmark_fast_path_router()
     r_vault = benchmark_vault_atomic_append()
     r_cli = benchmark_cli_cold_start()
     r_orch = benchmark_orchestrator_decision()
-    
-    all_passed = r_router and r_vault and r_cli and r_orch
+    r_agg = benchmark_historical_aggregator()
+
+    all_passed = r_router and r_vault and r_cli and r_orch and r_agg
     if all_passed:
         print("\n=== Todos los benchmarks cumplieron sus SLOs (PASS) ===")
         return 0
