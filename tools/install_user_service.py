@@ -1,122 +1,200 @@
 #!/usr/bin/env python3
-"""Siegfried User Service & Binary Installer (Sudo-free).
+"""Private daemon/CLI deployment; never starts or enables a real service.
 
-Reproducibly installs:
-1. Executable wrapper entrypoints into ~/.siegfried/bin/
-2. User systemd service unit into ~/.config/systemd/user/siegfried.service
-3. Validates unit syntax with systemd-analyze verify (non-root)
-
-Zero root/sudo privileges required.
-Supports isolated temporary home directory installation via --home.
+Reuses the briefing snapshot machinery with an independent owned package, so
+uninstalling a briefing cannot remove the daemon. Foreign files are preserved.
 """
-
 import argparse
 import os
-import shutil
+from pathlib import Path
 import stat
 import subprocess
 import sys
-from pathlib import Path
-
+import tempfile
+import uuid
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+from tools.install_boot_briefing import (
+    _validate_home, directory_fd, prepare_package, remove_package,
+)
+
+OWNER_TAG = '# X-Siegfried-Owner=F5.5'
 
 
-def install_user_service(
-    target_home: Path | None = None,
-    dry_run: bool = False,
-    verify: bool = True,
-) -> int:
-    home_dir = Path(target_home or Path.home()).resolve()
-    siegfried_base = home_dir / ".siegfried"
-    bin_dir = siegfried_base / "bin"
-    systemd_user_dir = home_dir / ".config" / "systemd" / "user"
-    service_src = REPO_ROOT / "systemd" / "siegfried.service"
-    service_dst = systemd_user_dir / "siegfried.service"
+def wrapper_content(name):
+    # The wrapper resolves only the installed private package relative to HOME.
+    # No PYTHONPATH, development checkout or shell interpolation is needed.
+    return ("#!/usr/bin/env python3\n" + OWNER_TAG + "\n"
+            "import os, sys\nfrom pathlib import Path\n"
+            "package = Path(__file__).absolute().parents[2] / '.local/share/siegfried-daemon'\n"
+            f"os.execv(sys.executable, [sys.executable, '-B', str(package / 'bin/{name}'), *sys.argv[1:]])\n").encode()
 
-    print(f"[INSTALL] Target HOME: {home_dir}")
-    print(f"[INSTALL] Siegfried base: {siegfried_base}")
-    print(f"[INSTALL] Executables dir: {bin_dir}")
-    print(f"[INSTALL] Systemd user dir: {systemd_user_dir}")
 
-    if dry_run:
-        print("[INSTALL] Modo dry-run activado: no se escribirán archivos en disco.")
-        return 0
+def deployment_files(home):
+    unit = (REPO_ROOT / 'systemd/siegfried.service').read_bytes()
+    if b'/media/' in unit or b'%h/.local/share/siegfried-daemon/bin/siegfried-daemon' not in unit:
+        raise ValueError('unsafe_service_template')
+    return {
+        home / '.siegfried/bin/siegfried': (wrapper_content('siegfried'), 0o700),
+        home / '.siegfried/bin/siegfried-daemon': (wrapper_content('siegfried-daemon'), 0o700),
+        home / '.config/systemd/user/siegfried.service': (unit, 0o600),
+    }
 
-    # 1. Create target directories with 0700 permissions
-    old_umask = os.umask(0o077)
+
+def inspect_file(path, expected, mode):
+    parent = directory_fd(path.parent)
+    fd = None
     try:
-        bin_dir.mkdir(parents=True, mode=0o700, exist_ok=True)
-        systemd_user_dir.mkdir(parents=True, mode=0o700, exist_ok=True)
+        try:
+            fd = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+        except FileNotFoundError:
+            return False
+        st = os.fstat(fd)
+        if (not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or
+                st.st_nlink != 1 or stat.S_IMODE(st.st_mode) != mode or
+                st.st_size != len(expected) or os.read(fd, len(expected) + 1) != expected):
+            raise ValueError('foreign_or_modified_deployment_file')
+        return True
     finally:
-        os.umask(old_umask)
+        if fd is not None:
+            os.close(fd)
+        os.close(parent)
 
-    # 2. Install executable binaries (siegfried and siegfried-daemon)
-    for bin_name in ["siegfried", "siegfried-daemon"]:
-        src_bin = REPO_ROOT / "bin" / bin_name
-        dst_bin = bin_dir / bin_name
-        if src_bin.exists():
-            # Copy content
-            content = src_bin.read_text(encoding="utf-8")
-            dst_bin.write_text(content, encoding="utf-8")
-            os.chmod(dst_bin, 0o755)
-            print(f"[INSTALL] Instalado ejecutable: {dst_bin}")
+
+def preflight(home, files):
+    _validate_home(home)
+    for relative in ('.siegfried', '.siegfried/bin', '.config/systemd', '.config/systemd/user'):
+        path = home / relative
+        if not path.exists() and not path.is_symlink():
+            continue
+        fd = directory_fd(path)
+        try:
+            st = os.fstat(fd)
+            if st.st_uid != os.getuid() or st.st_mode & 0o022:
+                raise ValueError('unsafe_install_directory')
+            if relative.startswith('.siegfried') and stat.S_IMODE(st.st_mode) != 0o700:
+                raise ValueError('insecure_runtime_directory')
+        finally:
+            os.close(fd)
+    existing = {}
+    for path, (content, mode) in files.items():
+        if path.parent.exists():
+            existing[path] = inspect_file(path, content, mode)
         else:
-            print(f"[WARN] No se encontró ejecutable origen: {src_bin}", file=sys.stderr)
+            existing[path] = False
+    package = home / '.local/share/siegfried-daemon'
+    if package.exists() or package.is_symlink():
+        # Existing snapshot: content validation is idempotent and writes nothing.
+        prepare_package(home, REPO_ROOT, False, daemon=True)
+        remove_package(home, REPO_ROOT, daemon=True, check_only=True)
+    return existing
 
-    # 3. Install systemd user service unit
-    if service_src.exists():
-        content = service_src.read_text(encoding="utf-8")
-        service_dst.write_text(content, encoding="utf-8")
-        os.chmod(service_dst, 0o644)
-        print(f"[INSTALL] Instalada unidad systemd: {service_dst}")
-    else:
-        print(f"[ERROR] No se encontró archivo de unidad: {service_src}", file=sys.stderr)
-        return 1
 
-    # 4. Verification with systemd-analyze if requested and available
-    if verify:
-        analyze_path = shutil.which("systemd-analyze")
-        if analyze_path:
-            env = os.environ.copy()
-            env["HOME"] = str(home_dir)
+def ensure_directory(home, relative):
+    fd = directory_fd(home)
+    try:
+        for part in Path(relative).parts:
             try:
-                proc = subprocess.run(
-                    [analyze_path, "verify", str(service_dst)],
-                    env=env,
-                    capture_output=True,
-                    text=True,
-                    timeout=5.0,
-                )
-                if proc.returncode == 0:
-                    print("[VERIFY] systemd-analyze verify: UNIDAD VÁLIDA (PASS)")
-                else:
-                    print(f"[VERIFY] Advertencias/Errores de verificación:\n{proc.stderr.strip()}", file=sys.stderr)
-            except Exception as e:
-                print(f"[WARN] No se pudo ejecutar systemd-analyze verify: {e}", file=sys.stderr)
-        else:
-            print("[INFO] systemd-analyze no disponible en PATH.")
+                os.mkdir(part, 0o700, dir_fd=fd)
+            except FileExistsError:
+                pass
+            nxt = os.open(part, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            st = os.fstat(nxt)
+            if st.st_uid != os.getuid() or st.st_mode & 0o022:
+                os.close(nxt)
+                raise ValueError('unsafe_install_directory')
+            os.close(fd)
+            fd = nxt
+    finally:
+        os.close(fd)
 
-    print("\n[SUCCESS] Instalación completada con éxito.")
-    print("Para activar el servicio en su entorno real (sin sudo):")
-    print("  systemctl --user daemon-reload")
-    print("  systemctl --user enable --now siegfried.service")
+
+def publish(path, content, mode):
+    parent = directory_fd(path.parent)
+    temp = '.' + path.name + '.' + uuid.uuid4().hex
+    try:
+        fd = os.open(temp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, mode, dir_fd=parent)
+        try:
+            with os.fdopen(fd, 'wb') as stream:
+                stream.write(content)
+                stream.flush()
+                os.fsync(stream.fileno())
+            # Atomic publication that cannot overwrite a concurrently added file.
+            os.link(temp, path.name, src_dir_fd=parent, dst_dir_fd=parent, follow_symlinks=False)
+        except FileExistsError:
+            inspect_file(path, content, mode)
+        finally:
+            os.unlink(temp, dir_fd=parent)
+        os.fsync(parent)
+    finally:
+        os.close(parent)
+
+
+def verify_unit(home, content):
+    # systemd's %h uses the real account, even with a temporary HOME env.
+    # Verify identical syntax with only the fixture's HOME specifier substituted.
+    escaped = str(home).replace('\\', '\\\\').replace('"', '\\"').replace('%', '%%')
+    with tempfile.TemporaryDirectory(prefix='siegfried-unit-verify-') as tmp:
+        unit = Path(tmp) / 'siegfried.service'
+        unit.write_bytes(content.replace(b'%h', escaped.encode()))
+        result = subprocess.run(['systemd-analyze', '--user', 'verify', str(unit)],
+                                capture_output=True, timeout=10)
+        if result.returncode:
+            raise ValueError('systemd_unit_verification_failed')
+
+
+def install_user_service(target_home=None, dry_run=False, verify=True, *, operation='install'):
+    home = Path(target_home or Path.home())
+    if operation not in ('install', 'uninstall'):
+        raise ValueError('invalid_operation')
+    files = deployment_files(home)
+    existing = preflight(home, files)
+    if dry_run:
+        prepare_package(home, REPO_ROOT, True, daemon=True)
+        print('DRY-RUN: snapshot privado, dos wrappers propios y unidad; sin activación.')
+        return 0
+    if operation == 'uninstall':
+        # Full preflight precedes every deletion; no runtime data is in files.
+        remove_package(home, REPO_ROOT, daemon=True, check_only=True)
+        for path, present in existing.items():
+            if present:
+                parent = directory_fd(path.parent)
+                try:
+                    inspect_file(path, *files[path])
+                    os.unlink(path.name, dir_fd=parent)
+                    os.fsync(parent)
+                finally:
+                    os.close(parent)
+        remove_package(home, REPO_ROOT, daemon=True)
+        print('Desinstalación propia completada; configuración, historial y Vault preservados.')
+        return 0
+    package = prepare_package(home, REPO_ROOT, False, daemon=True)
+    if verify:
+        verify_unit(home, files[home / '.config/systemd/user/siegfried.service'][0])
+    for path, (content, mode) in files.items():
+        ensure_directory(home, path.parent.relative_to(home))
+        if not existing[path]:
+            publish(path, content, mode)
+    print(f'Instalación privada verificada: {package}; servicio sin activar.')
     return 0
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description="Instalador reproducible del servicio de usuario Siegfried")
-    parser.add_argument("--home", type=Path, default=None, help="Directorio HOME destino (default: actual del usuario)")
-    parser.add_argument("--dry-run", action="store_true", help="Simular sin escribir en disco")
-    parser.add_argument("--no-verify", action="store_true", help="Omitir systemd-analyze verify")
+def main():
+    parser = argparse.ArgumentParser(description='Despliegue privado explícito de daemon y REPL')
+    parser.add_argument('--home', type=Path, default=Path.home())
+    parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--apply', action='store_true')
+    parser.add_argument('--no-verify', action='store_true')
+    parser.add_argument('--operation', choices=('install', 'uninstall'), default='install')
     args = parser.parse_args()
+    try:
+        return install_user_service(args.home, dry_run=not args.apply or args.dry_run,
+                                    verify=not args.no_verify, operation=args.operation)
+    except (OSError, ValueError, subprocess.SubprocessError):
+        print('Despliegue rechazado: ruta, permisos, integridad o verificación inseguros.', file=sys.stderr)
+        return 1
 
-    return install_user_service(
-        target_home=args.home,
-        dry_run=args.dry_run,
-        verify=not args.no_verify,
-    )
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

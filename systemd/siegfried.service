@@ -1,4 +1,5 @@
 [Unit]
+# X-Siegfried-Owner=F5.5
 Description=Siegfried Daemon — Asistente Personal y Mayordomo Estratégico
 Documentation=https://github.com/okami/siegfried/blob/main/SPECIFICATION.md
 After=graphical-session.target pipewire.service
@@ -7,19 +8,20 @@ StartLimitBurst=5
 
 [Service]
 Type=simple
-ExecStart=%h/.siegfried/bin/siegfried-daemon
+ExecStart=/usr/bin/python3 -B "%h/.local/share/siegfried-daemon/bin/siegfried-daemon"
 Restart=on-failure
 RestartSec=2s
 RestartPreventExitStatus=78
 TimeoutStopSec=5s
 KillMode=control-group
 Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
 
 # Hardening
 NoNewPrivileges=true
 ProtectSystem=strict
 ProtectHome=read-only
-ReadWritePaths=%h/.siegfried /run/user/%U
+ReadWritePaths="%h/.siegfried" /run/user/%U
 
 [Install]
 WantedBy=default.target

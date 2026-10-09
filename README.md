@@ -153,15 +153,21 @@ El daemon opera como servicio de usuario de Linux con garantías deterministas d
 - **Arranque Fail-Closed:** El daemon valida el entorno (`~/.siegfried`) antes de aceptar conexiones. Runtimes no inicializados o configuraciones corruptas impiden el inicio limpiamente con código de salida `78` (`EX_CONFIG`) sin alterar ni crear archivos silenciosamente.
 - **Seguridad y Propiedad de Sockets:** El socket UNIX (`/run/user/$UID/siegfried.sock`) se crea con permisos privados `0600` (`umask 0o177`) en un directorio perteneciente exclusivamente al UID del usuario. Se rechazan enlaces simbólicos, archivos no-socket y sockets de otros usuarios. Los sockets obsoletos de procesos caídos se detectan y eliminan de forma segura tras verificar el rechazo de conexión.
 - **Supervisión systemd Resiliente:** La unidad `systemd/siegfried.service` aplica `Restart=on-failure`, `RestartSec=2s`, y `RestartPreventExitStatus=78` para detener el bucle de reinicios ante configuraciones erróneas, junto con `TimeoutStopSec=5s` y rate limiting (`StartLimitIntervalSec=30s`, `StartLimitBurst=5`).
-- **Instalación Sudo-Free:** El script `tools/install_user_service.py` instala los binarios en `~/.siegfried/bin/` y la unidad en `~/.config/systemd/user/siegfried.service` sin privilegios de root, verificando la sintaxis con `systemd-analyze verify`:
+- **Instalación Sudo-Free:** El script `tools/install_user_service.py` prepara un snapshot de código privado en `~/.local/share/siegfried-daemon`, wrappers en `~/.siegfried/bin/` y la unidad en `~/.config/systemd/user/siegfried.service`. Rechaza padres inseguros y archivos ajenos, verifica la sintaxis con `systemd-analyze verify` y no activa servicios. La CLI simula por defecto; cada escritura/activación real requiere autorización para el piloto:
   ```bash
-  # Instalación en el HOME del usuario:
-  python3 tools/install_user_service.py
+  # Auditoría sin escrituras:
+  python3 tools/install_user_service.py --dry-run
+
+  # Instalación en el HOME del usuario, sólo tras autorización:
+  python3 tools/install_user_service.py --apply
 
   # Habilitación y arranque del servicio de usuario:
   systemctl --user daemon-reload
   systemctl --user enable --now siegfried.service
   ```
+  La retirada explícita con `--operation uninstall --apply` conserva configuración,
+  secretos, historial y Vault; antes debe desactivarse el servicio propio. El
+  paquete del daemon es independiente del snapshot del Boot Briefing.
 - **Inmunidad de Temporizadores:** `MonotonicTimer` utiliza `time.monotonic()`, garantizando conteo exacto ante suspensiones o cambios de hora del reloj de pared.
 
 ### Gestión Quirúrgica de Alertas, Notificaciones KDE Plasma y Audio (Gate F3.2)

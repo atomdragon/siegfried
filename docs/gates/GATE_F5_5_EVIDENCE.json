@@ -1,0 +1,689 @@
+{
+  "doctor_exit": 0,
+  "unknown_cli_exit": 2,
+  "ping_status": "OK",
+  "status_status": "OK",
+  "idle_before_cognitive_query": {
+    "seconds": 30.002014844998484,
+    "samples": 7,
+    "cpu_core_percent": 0.19998656860208294,
+    "rss_min_bytes": 29495296,
+    "rss_max_bytes": 29495296,
+    "temporary_runtime": true
+  },
+  "repl_exit": 0,
+  "repl_eof_exit": 0,
+  "daemon_after_repl": "OK",
+  "idle_measurement": {
+    "seconds": 45.00333391100139,
+    "samples": 10,
+    "cpu_core_percent": 0.15554403177869452,
+    "cpu_seconds_delta": 0.07,
+    "cpu_clock_tick_seconds": 0.01,
+    "rss_min_bytes": 30806016,
+    "rss_max_bytes": 30806016,
+    "rss_limit_decimal_bytes": 30000000,
+    "temporary_runtime": true,
+    "kde_adapters_enabled": false,
+    "model_process_started": false,
+    "unavailable_cognitive_query_previously_attempted": true
+  },
+  "daemon_exit": 0,
+  "socket_removed": true,
+  "secret_pattern_matches": 0,
+  "python_3_10_grammar": "PASS; execution only Python 3.14.4",
+  "source_hashes": {
+    "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+    "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+    "bin/siegfried-daemon": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b",
+    "scripts/kwin_focus_watcher.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+    "scripts/kwin_focus_watcher/metadata.json": "0f7476fddf2625d9e76fba6445ea92905c1f383fb393f4027e1cc0586a4bbb97",
+    "scripts/kwin_focus_watcher/contents/code/main.js": "0230a49aac6ced09cabe3040274adf30dbdfee3a501bc9a7e4cfa2f7508847cb",
+    "src/siegfried/__init__.py": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+    "src/siegfried/cli/__init__.py": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+    "src/siegfried/cli/app.py": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+    "src/siegfried/cli/repl.py": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+    "src/siegfried/cli/router.py": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+    "src/siegfried/contracts/__init__.py": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+    "src/siegfried/contracts/alerts.py": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+    "src/siegfried/contracts/config.py": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+    "src/siegfried/contracts/events.py": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+    "src/siegfried/contracts/inference.py": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+    "src/siegfried/contracts/ipc.py": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+    "src/siegfried/contracts/states.py": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+    "src/siegfried/core/__init__.py": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+    "src/siegfried/core/briefing.py": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+    "src/siegfried/core/clock.py": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+    "src/siegfried/core/errors.py": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+    "src/siegfried/core/rest.py": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+    "src/siegfried/core/state_machine.py": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+    "src/siegfried/daemon/__init__.py": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+    "src/siegfried/daemon/__main__.py": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+    "src/siegfried/daemon/alerts.py": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+    "src/siegfried/daemon/app.py": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+    "src/siegfried/daemon/focus.py": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+    "src/siegfried/daemon/session.py": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+    "src/siegfried/daemon/timers.py": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+    "src/siegfried/inference/__init__.py": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+    "src/siegfried/inference/cloud.py": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+    "src/siegfried/inference/llama_manager.py": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+    "src/siegfried/inference/local.py": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+    "src/siegfried/inference/orchestrator.py": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+    "src/siegfried/inference/resources.py": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+    "src/siegfried/integrations/__init__.py": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+    "src/siegfried/integrations/audio.py": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+    "src/siegfried/integrations/boot_briefing.py": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+    "src/siegfried/integrations/briefing_files.py": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+    "src/siegfried/integrations/briefing_kde.py": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+    "src/siegfried/integrations/kwin.py": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+    "src/siegfried/integrations/notifications.py": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+    "src/siegfried/integrations/session.py": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+    "src/siegfried/integrations/weather.py": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+    "src/siegfried/ipc/__init__.py": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+    "src/siegfried/ipc/client.py": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+    "src/siegfried/ipc/protocol.py": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+    "src/siegfried/ipc/server.py": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+    "src/siegfried/observability/__init__.py": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+    "src/siegfried/observability/benchmarks.py": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+    "src/siegfried/observability/logging.py": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+    "src/siegfried/storage/__init__.py": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+    "src/siegfried/storage/aggregator.py": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+    "src/siegfried/storage/atomic_json.py": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+    "src/siegfried/storage/initialization.py": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+    "src/siegfried/storage/paths.py": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+    "src/siegfried/storage/secrets.py": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+    "src/siegfried/storage/validation.py": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+    "src/siegfried/storage/vault.py": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+  },
+  "source_files": 61,
+  "source_bytes": 401229,
+  "desktop_file_validate": "PASS",
+  "systemd_analyze_verify": "PASS; fixture %h substituted, no service started",
+  "scope": "Real host process using private temporary code/runtime; not user runtime, login, KDE visual confirmation or persistent service",
+  "briefing_source_hashes": {
+    "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+    "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+    "src/siegfried/__init__.py": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+    "src/siegfried/cli/__init__.py": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+    "src/siegfried/cli/app.py": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+    "src/siegfried/cli/repl.py": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+    "src/siegfried/cli/router.py": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+    "src/siegfried/contracts/__init__.py": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+    "src/siegfried/contracts/alerts.py": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+    "src/siegfried/contracts/config.py": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+    "src/siegfried/contracts/events.py": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+    "src/siegfried/contracts/inference.py": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+    "src/siegfried/contracts/ipc.py": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+    "src/siegfried/contracts/states.py": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+    "src/siegfried/core/__init__.py": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+    "src/siegfried/core/briefing.py": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+    "src/siegfried/core/clock.py": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+    "src/siegfried/core/errors.py": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+    "src/siegfried/core/rest.py": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+    "src/siegfried/core/state_machine.py": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+    "src/siegfried/daemon/__init__.py": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+    "src/siegfried/daemon/__main__.py": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+    "src/siegfried/daemon/alerts.py": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+    "src/siegfried/daemon/app.py": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+    "src/siegfried/daemon/focus.py": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+    "src/siegfried/daemon/session.py": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+    "src/siegfried/daemon/timers.py": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+    "src/siegfried/inference/__init__.py": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+    "src/siegfried/inference/cloud.py": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+    "src/siegfried/inference/llama_manager.py": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+    "src/siegfried/inference/local.py": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+    "src/siegfried/inference/orchestrator.py": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+    "src/siegfried/inference/resources.py": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+    "src/siegfried/integrations/__init__.py": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+    "src/siegfried/integrations/audio.py": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+    "src/siegfried/integrations/boot_briefing.py": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+    "src/siegfried/integrations/briefing_files.py": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+    "src/siegfried/integrations/briefing_kde.py": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+    "src/siegfried/integrations/kwin.py": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+    "src/siegfried/integrations/notifications.py": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+    "src/siegfried/integrations/session.py": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+    "src/siegfried/integrations/weather.py": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+    "src/siegfried/ipc/__init__.py": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+    "src/siegfried/ipc/client.py": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+    "src/siegfried/ipc/protocol.py": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+    "src/siegfried/ipc/server.py": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+    "src/siegfried/observability/__init__.py": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+    "src/siegfried/observability/benchmarks.py": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+    "src/siegfried/observability/logging.py": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+    "src/siegfried/storage/__init__.py": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+    "src/siegfried/storage/aggregator.py": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+    "src/siegfried/storage/atomic_json.py": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+    "src/siegfried/storage/initialization.py": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+    "src/siegfried/storage/paths.py": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+    "src/siegfried/storage/secrets.py": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+    "src/siegfried/storage/validation.py": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+    "src/siegfried/storage/vault.py": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+  },
+  "deployment_file_hashes": {
+    ".siegfried/bin/siegfried": {
+      "sha256": "f1b38ac730d1cb31a8f80ebaed11ddc8f746cfa8c233c5f0d378c0d878cecf16",
+      "mode": "0700"
+    },
+    ".siegfried/bin/siegfried-daemon": {
+      "sha256": "9d4a3b2277be63f8ed808ed6afc5174b5cdf11e8aa098a121ffdc4f1d9ad927a",
+      "mode": "0700"
+    },
+    ".config/systemd/user/siegfried.service": {
+      "sha256": "8bd2908b95074de28c931af6fe4066623d00870cc6da0ac10a85a7d6e090bab7",
+      "mode": "0600"
+    }
+  },
+  "reviewed_tool_hashes": {
+    "tools/install_user_service.py": "37f4f836f3de847aa3fff65f88e2df62b6825902a62784b10e6fcafe26bc2665",
+    "tools/install_boot_briefing.py": "e859f91ef731436161e64e25c45d73d905718bffd05f4893f0754a42be583b3f",
+    "systemd/siegfried.service": "8bd2908b95074de28c931af6fe4066623d00870cc6da0ac10a85a7d6e090bab7"
+  },
+  "regression": {
+    "tests": 655,
+    "seconds": 36.157,
+    "result": "PASS",
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "baseline_tests_preserved": 644
+  },
+  "kde_read_only": {
+    "owner": ":1.31",
+    "uid": 1000,
+    "pid": 2816,
+    "inhibited": false,
+    "capabilities_count": 13,
+    "actions": true,
+    "canonical_kwin_script_loaded": false,
+    "visual_confirmation": null,
+    "physical_click": null
+  },
+  "benchmarks": {
+    "architecture": {
+      "result": "PASS",
+      "fast_path_p95_ms": 0.0016,
+      "vault_p95_ms": 2.2926,
+      "cli_p95_ms": 31.09,
+      "routing_p95_ms": 0.0055,
+      "history_heuristic_p95_ms": 1.9575,
+      "history_exhaustive_observational_p95_ms": 8.2975
+    },
+    "briefing": {
+      "pure_composition": {
+        "count": 1000,
+        "mean_ms": 0.00031914996361592785,
+        "p50_ms": 0.00030199953471310437,
+        "p95_ms": 0.000347998138749972,
+        "max_ms": 0.004694000381277874
+      },
+      "hook_cold_start_dry_run": {
+        "count": 25,
+        "mean_ms": 115.05341164025594,
+        "p50_ms": 115.10685100074625,
+        "p95_ms": 115.52771999777178,
+        "max_ms": 115.57281700152089
+      },
+      "notification_visible_ms": null,
+      "note": "Dry-run is not KDE delivery or visual appearance."
+    }
+  },
+  "first_post_query_observation": {
+    "seconds": 45.0038791099978,
+    "samples": 10,
+    "cpu_core_percent": 0.17776245421970227,
+    "rss_bytes": 30769152,
+    "temporary_runtime": true
+  },
+  "git_final": {
+    "head": "8011f64e771813b1ae1b5fbdeafdf6abef9ece0b",
+    "branch": "main",
+    "status": " M README.md\n M systemd/siegfried.service\n M tools/install_boot_briefing.py\n M tools/install_user_service.py\n?? docs/gates/GATE_F5_5_EVIDENCE.json\n?? docs/gates/GATE_F5_5_RECOVERY.json\n?? docs/gates/GATE_F5_5_REPORT.md\n?? tests/integration/test_private_deployment_f55.py\n",
+    "diff_check": "PASS",
+    "contracts_changed": false,
+    "commits_performed": false,
+    "push_performed": false
+  },
+  "permission_actions": [
+    {
+      "authorization": "User explicitly authorized only these two commands and five directories. No additional directory/runtime/deployment activation authorized.",
+      "precheck_at_utc": "2026-10-09T17:54:57.840914+00:00",
+      "verified_at_utc": "2026-10-09T17:56:28.800836+00:00",
+      "commands_executed": [
+        "chmod 755 \"$HOME/.config\" \"$HOME/.config/autostart\" \"$HOME/.local\" \"$HOME/.local/share\"",
+        "chmod 700 \"$HOME/.siegfried\""
+      ],
+      "precheck": [
+        {
+          "path": "/home/okami/.config",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 276,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/autostart",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 52014,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 268,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local/share",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 269,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.siegfried",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529574,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        }
+      ],
+      "postcheck": [
+        {
+          "path": "/home/okami/.config",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 276,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/autostart",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 52014,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 268,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local/share",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 269,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.siegfried",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "device": 48,
+          "inode": 1529574,
+          "acl": "user::rwx\ngroup::---\nother::---\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        }
+      ],
+      "verification": "PASS: stat/getfacl and stable inode/owner checks; additional three directories unchanged.",
+      "additional_proposal_not_executed": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "boot_dry_run_exit": 0,
+      "service_dry_run_exit": 1
+    },
+    {
+      "stage": "additional_three_directories",
+      "status": "APPLIED_VERIFIED",
+      "precheck_at_utc": "2026-10-09T18:00:03.269512+00:00",
+      "authorization": "User authorized exclusively the two chmod commands for these three directories. No runtime initialization, installation or activation authorized.",
+      "commands_executed": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "commands_authorized": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "precheck": [
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        }
+      ],
+      "postcheck": [
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 1407192,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 1407193,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "device": 48,
+          "inode": 1529575,
+          "acl": "user::rwx\ngroup::---\nother::---\n\n"
+        }
+      ],
+      "verified_at_utc": "2026-10-09T18:01:47.936826+00:00",
+      "verification": "PASS: stat/getfacl, ownership/inodes retained; no internal file or other permissions modified."
+    }
+  ],
+  "post_permission_preflight": [
+    {
+      "checked_at_utc": "2026-10-09T18:01:48.140017+00:00",
+      "installer_results": {
+        "daemon_dry_run": {
+          "returncode": 0,
+          "output": "DRY-RUN: snapshot privado, dos wrappers propios y unidad; sin activaci\u00f3n.\n",
+          "stderr": ""
+        },
+        "briefing_dry_run": {
+          "returncode": 0,
+          "output": "[Desktop Entry]\nType=Application\nVersion=1.0\nName=Siegfried\nComment=Briefing determinista de inicio\nIcon=dialog-information\nExec=\"/usr/bin/python3\" \"/home/okami/.local/share/siegfried-boot/scripts/boot_hook.py\"\nTryExec=/usr/bin/python3\nOnlyShowIn=KDE;\nTerminal=false\nStartupNotify=false\nHidden=false\nX-Siegfried-Gate=F5.3\nDRY-RUN: no se modific\u00f3 Autostart.\n",
+          "stderr": ""
+        },
+        "doctor": {
+          "returncode": 1,
+          "output": "[Siegfried] Diagn\u00f3stico del runtime\n\nConfiguraci\u00f3n: OK\nPermisos: OK\nVault: OK\nRutas: NOT_INITIALIZED\nArchivo: config\n\nEstado: NOT_READY\n",
+          "stderr": ""
+        }
+      },
+      "runtime_metadata": [
+        {
+          "path": "/home/okami/.siegfried",
+          "exists": true,
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "symlink": false,
+          "regular": false,
+          "directory": true,
+          "nlink": 1,
+          "size": null
+        },
+        {
+          "path": "/home/okami/.siegfried/config",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "exists": true,
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "symlink": false,
+          "regular": false,
+          "directory": true,
+          "nlink": 1,
+          "size": null
+        },
+        {
+          "path": "/home/okami/.siegfried/assets",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/assets/sounds",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/logs",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/config/secrets.env",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/config/core_profile.json",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/config/active_agenda.json",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/config/active_agenda.lock",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/data/siegfried_vault.jsonl",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/data/.history",
+          "exists": true,
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0600",
+          "symlink": false,
+          "regular": true,
+          "directory": false,
+          "nlink": 1,
+          "size": 6056
+        },
+        {
+          "path": "/home/okami/.siegfried/data/history.lock",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/data/vault.lock",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.siegfried/bin",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.local/share/siegfried-daemon",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.local/share/siegfried-boot",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.config/systemd/user/siegfried.service",
+          "exists": false
+        },
+        {
+          "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+          "exists": false
+        }
+      ],
+      "private_contents_read": false,
+      "orphan_temp_count": 0,
+      "lock_count": 0,
+      "other_entries_count": 0,
+      "runtime_ephemeral": [
+        {
+          "path": "/run/user/1000/siegfried.sock",
+          "exists": false
+        },
+        {
+          "path": "/run/user/1000/siegfried_llama.pid",
+          "exists": false
+        },
+        {
+          "path": "/run/user/1000/siegfried_briefing.lock",
+          "exists": false
+        }
+      ],
+      "identified_daemon_or_hook_pids": [],
+      "source_integrity": "PASS: 61 source hashes and reviewed installer/unit hashes unchanged",
+      "host_readonly": {
+        "unit_load_state": "not-found",
+        "unit_active_state": "inactive",
+        "main_pid": 0,
+        "graphical_targets_active": true,
+        "canonical_kwin_script_loaded": false,
+        "notifications_inhibited": false,
+        "notifications_owner": ":1.31",
+        "notifications_actions": true,
+        "optional_distro_bindings_available": true
+      },
+      "real_initialization_performed": false,
+      "real_installation_performed": false,
+      "real_activation_performed": false
+    }
+  ],
+  "preinit_preservation_fixture": {
+    "scope": "Synthetic temporary runtime with nonempty history; no real HOME writes",
+    "init_exit": 0,
+    "doctor_exit": 0,
+    "nonempty_history_bytes_inode_mode_preserved": true,
+    "real_runtime_initialized": false
+  }
+}

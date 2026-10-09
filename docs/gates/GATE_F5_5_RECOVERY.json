@@ -1,0 +1,490 @@
+{
+  "head": "8011f64e771813b1ae1b5fbdeafdf6abef9ece0b",
+  "branch": "main",
+  "initial_git_status": "",
+  "paths": [
+    {
+      "path": "/home/okami/.config",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.config/autostart",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.local",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.local/share",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.siegfried",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.config/systemd",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.config/systemd/user",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "type": "directory",
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.config/systemd/user/siegfried.service",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.config/systemd/user/default.target.wants/siegfried.service",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.local/share/siegfried-boot",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.local/share/siegfried-daemon",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.siegfried/bin",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.siegfried/bin/siegfried",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.siegfried/bin/siegfried-daemon",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.local/share/kwin/scripts/siegfried_focus_watcher",
+      "exists": false
+    },
+    {
+      "path": "/run/user/1000/siegfried.sock",
+      "exists": false
+    },
+    {
+      "path": "/run/user/1000/siegfried_llama.pid",
+      "exists": false
+    },
+    {
+      "path": "/run/user/1000/siegfried_briefing.lock",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.siegfried/data",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "symlink": false,
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.local/bin",
+      "exists": true,
+      "uid": 1000,
+      "gid": 1000,
+      "mode": "0775",
+      "symlink": false,
+      "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+    },
+    {
+      "path": "/home/okami/.local/share/systemd/user",
+      "exists": false
+    },
+    {
+      "path": "/home/okami/.local/share/kwin/scripts",
+      "exists": false
+    }
+  ],
+  "runtime_metadata_only": {
+    "private_content_read": false,
+    "top_level_known_metadata": [
+      {
+        "path": "/home/okami/.siegfried/config",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/data",
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0775",
+        "symlink": false,
+        "size": null
+      },
+      {
+        "path": "/home/okami/.siegfried/assets",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/assets/sounds",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/logs",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/config/secrets.env",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/config/core_profile.json",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/config/active_agenda.json",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/config/active_agenda.lock",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/data/siegfried_vault.jsonl",
+        "exists": false
+      },
+      {
+        "path": "/home/okami/.siegfried/data/.history",
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "symlink": false,
+        "size": 6056
+      }
+    ]
+  },
+  "note": "No file to be overwritten exists. Directory modes and ACL are recovery evidence; no private content copied or hashed.",
+  "additional_installation_candidates": [],
+  "certified_head_source_hashes": {
+    "tools/install_boot_briefing.py": "88264f4534f9a09e2bc68098286ef6aea09cf3ea9103257a3bacef7e28449d1d",
+    "tools/install_user_service.py": "04d2a47591231acfa70d00041a3941d595a888ef749ac1e10a7426b7c7402a2f",
+    "systemd/siegfried.service": "554189fec5fc434ffd535870679470bd9757bfc24daf97a1c0b32bebaeadf529",
+    "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+    "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+    "bin/siegfried-daemon": "ebc289a396c3f564a4634211b2999c58deca4fc2fd67c397a17c0fba46ee779b"
+  },
+  "source_recovery": "Original tracked code recoverable from the recorded HEAD; do not reset or overwrite user changes automatically. No commit or repository reset executed.",
+  "permission_actions": [
+    {
+      "authorization": "User explicitly authorized only these two commands and five directories. No additional directory/runtime/deployment activation authorized.",
+      "precheck_at_utc": "2026-10-09T17:54:57.840914+00:00",
+      "verified_at_utc": "2026-10-09T17:56:28.800836+00:00",
+      "commands_executed": [
+        "chmod 755 \"$HOME/.config\" \"$HOME/.config/autostart\" \"$HOME/.local\" \"$HOME/.local/share\"",
+        "chmod 700 \"$HOME/.siegfried\""
+      ],
+      "precheck": [
+        {
+          "path": "/home/okami/.config",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 276,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/autostart",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 52014,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 268,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local/share",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 269,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.siegfried",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529574,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        }
+      ],
+      "postcheck": [
+        {
+          "path": "/home/okami/.config",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 276,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/autostart",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 52014,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 268,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.local/share",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 269,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.siegfried",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "device": 48,
+          "inode": 1529574,
+          "acl": "user::rwx\ngroup::---\nother::---\n\n",
+          "scope": "authorized"
+        },
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n",
+          "scope": "diagnosis_only"
+        }
+      ],
+      "verification": "PASS: stat/getfacl and stable inode/owner checks; additional three directories unchanged.",
+      "additional_proposal_not_executed": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "boot_dry_run_exit": 0,
+      "service_dry_run_exit": 1
+    },
+    {
+      "stage": "additional_three_directories",
+      "status": "APPLIED_VERIFIED",
+      "precheck_at_utc": "2026-10-09T18:00:03.269512+00:00",
+      "authorization": "User authorized exclusively the two chmod commands for these three directories. No runtime initialization, installation or activation authorized.",
+      "commands_executed": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "commands_authorized": [
+        "chmod 755 \"$HOME/.config/systemd\" \"$HOME/.config/systemd/user\"",
+        "chmod 700 \"$HOME/.siegfried/data\""
+      ],
+      "precheck": [
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407192,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1407193,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0775",
+          "device": 48,
+          "inode": 1529575,
+          "real_directory": true,
+          "symlink_ancestors": false,
+          "acl": "user::rwx\ngroup::rwx\nother::r-x\n\n"
+        }
+      ],
+      "postcheck": [
+        {
+          "path": "/home/okami/.config/systemd",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 1407192,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.config/systemd/user",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0755",
+          "device": 48,
+          "inode": 1407193,
+          "acl": "user::rwx\ngroup::r-x\nother::r-x\n\n"
+        },
+        {
+          "path": "/home/okami/.siegfried/data",
+          "uid": 1000,
+          "gid": 1000,
+          "mode": "0700",
+          "device": 48,
+          "inode": 1529575,
+          "acl": "user::rwx\ngroup::---\nother::---\n\n"
+        }
+      ],
+      "verified_at_utc": "2026-10-09T18:01:47.936826+00:00",
+      "verification": "PASS: stat/getfacl, ownership/inodes retained; no internal file or other permissions modified."
+    }
+  ]
+}

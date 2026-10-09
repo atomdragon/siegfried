@@ -42,9 +42,14 @@ def desktop_content(repository=REPO_ROOT, *, enabled=True, weather=False, show_t
             f'{OWNER_TAG}\n')
 
 
-def package_sources(repository):
+def package_sources(repository, *, daemon=False):
     root = Path(repository)
     files = [root / 'scripts/boot_hook.py', root / 'bin/siegfried']
+    if daemon:
+        files.extend(root / name for name in (
+            'bin/siegfried-daemon', 'scripts/kwin_focus_watcher.js',
+            'scripts/kwin_focus_watcher/metadata.json',
+            'scripts/kwin_focus_watcher/contents/code/main.js'))
     files.extend(sorted((root / 'src/siegfried').rglob('*.py')))
     result = {}
     for source in files:
@@ -68,10 +73,12 @@ def package_sources(repository):
     return result
 
 
-def prepare_package(home, repository, dry_run):
+def prepare_package(home, repository, dry_run, *, daemon=False):
     """Private code snapshot, not a new domain data source or another daemon."""
-    target = home / '.local/share/siegfried-boot'
-    sources = package_sources(repository)
+    package_name = 'siegfried-daemon' if daemon else 'siegfried-boot'
+    target = home / '.local/share' / package_name
+    sources = package_sources(repository, daemon=daemon)
+    marker = b'F5.5\n' if daemon else b'F5.3\n'
     if dry_run:
         return target
     # mkdir/open each parent without following symlinks.
@@ -92,7 +99,7 @@ def prepare_package(home, repository, dry_run):
         if target.exists() or target.is_symlink():
             fd = directory_fd(target, private=True)
             os.close(fd)
-            for relative, expected in {**sources, '.siegfried-owned':b'F5.3\n'}.items():
+            for relative, expected in {**sources, '.siegfried-owned':marker}.items():
                 path = target / relative
                 if (path.is_symlink() or not path.is_file() or path.stat().st_size != len(expected)
                         or path.stat().st_uid != os.getuid() or path.stat().st_nlink != 1 or
@@ -100,19 +107,25 @@ def prepare_package(home, repository, dry_run):
                     raise ValueError('package_content_differs')
                 fd = directory_fd(path.parent)
                 os.close(fd)
+                if daemon:
+                    expected_mode = 0o700 if relative in ('scripts/boot_hook.py', 'bin/siegfried', 'bin/siegfried-daemon') else 0o600
+                    if stat.S_IMODE(path.stat().st_mode) != expected_mode:
+                        raise ValueError('insecure_package_file')
+                    fd = directory_fd(path.parent, private=True)
+                    os.close(fd)
             return target
-        temp = '.siegfried-boot-' + uuid.uuid4().hex
+        temp = '.' + package_name + '-' + uuid.uuid4().hex
         os.mkdir(temp, 0o700, dir_fd=parent)
         staging = target.parent / temp
         try:
-            for relative, data in {**sources, '.siegfried-owned':b'F5.3\n'}.items():
+            for relative, data in {**sources, '.siegfried-owned':marker}.items():
                 dest = staging / relative
                 current = staging
                 for part in Path(relative).parts[:-1]:
                     current = current / part
                     current.mkdir(mode=0o700, exist_ok=True)
                 fd = os.open(dest, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
-                             0o700 if relative in ('scripts/boot_hook.py','bin/siegfried') else 0o600)
+                             0o700 if relative in ('scripts/boot_hook.py','bin/siegfried','bin/siegfried-daemon') else 0o600)
                 try:
                     os.write(fd, data)
                     os.fsync(fd)
@@ -153,16 +166,16 @@ def _validate_home(home):
     return home
 
 
-def remove_package(home, repository):
-    target = home / '.local/share/siegfried-boot'
+def remove_package(home, repository, *, daemon=False, check_only=False):
+    target = home / '.local/share' / ('siegfried-daemon' if daemon else 'siegfried-boot')
     if not target.exists() and not target.is_symlink():
         return
     fd = directory_fd(target, private=True)
     os.close(fd)
     marker = target / '.siegfried-owned'
-    if marker.is_symlink() or marker.read_bytes() != b'F5.3\n':
+    if marker.is_symlink() or marker.read_bytes() != (b'F5.5\n' if daemon else b'F5.3\n'):
         raise ValueError('foreign_boot_package')
-    allowed = set(package_sources(repository)) | {'.siegfried-owned'}
+    allowed = set(package_sources(repository, daemon=daemon)) | {'.siegfried-owned'}
     for path in target.rglob('*'):
         st = path.lstat()
         if path.is_symlink() or st.st_uid != os.getuid() or st.st_mode & 0o022:
@@ -170,7 +183,8 @@ def remove_package(home, repository):
         if path.is_file() and str(path.relative_to(target)) not in allowed:
             if path.parent.name != '__pycache__' or path.suffix != '.pyc':
                 raise ValueError('foreign_package_contents')
-    shutil.rmtree(target)  # Only this private, marked code package; never runtime data.
+    if not check_only:
+        shutil.rmtree(target)  # Only this private, marked code package; never runtime data.
 
 
 def manage_autostart(home, *, operation='install', dry_run=True, repository=REPO_ROOT,
