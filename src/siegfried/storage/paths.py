@@ -91,6 +91,10 @@ class SiegfriedPaths:
     def llama_pid_file(self) -> Path:
         return self.runtime_dir / "siegfried_llama.pid"
 
+    @property
+    def briefing_marker_file(self) -> Path:
+        return self.runtime_dir / "siegfried_briefing.lock"
+
     # Asset files
     @property
     def alert_sound_file(self) -> Path:

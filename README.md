@@ -271,3 +271,40 @@ Verificación operativa explícita: `PYTHONPATH=src timeout -s INT -k 5s 60s pyt
 Informe y límites: [GATE_F5_2_REPORT.md](docs/gates/GATE_F5_2_REPORT.md). Veredicto **PASS_WITH_DEVIATIONS**: implementación y pruebas permitidas completas; suspensión, bloqueo y reinicio físicos pendientes. No se implementó F5.3.
 
 Certificación final: **64 pruebas F5.2**, también con `python3 -S`; **544 pruebas** de regresión en 34.812 s, cinco SLO del harness PASS y `git diff --check` PASS. Tres ciclos de suscripción/cancelación nativa en el host y transiciones sintéticas en bus aislado liberaron conexiones, hilos y el proceso hijo de prueba.
+
+### Gate F5.3 — Boot Briefing KDE
+
+El saludo es determinista, adapta el horario y no inicia el LLM. El hook consulta disponibilidad con un worker de plazo limitado y presenta el saludo antes de cualquier clima. `--weather` habilita una consulta HTTPS de Lima de un solo intento (0.8 s), sin ping, proxies, redirecciones ni geolocalización. Fallar o estar offline no impide saludar.
+
+La agenda no se lee por defecto. `--show-task` autoriza exponer el título de tarea, con lectura protegida y pantalla desbloqueada verificada; bloqueo/estado desconocido omite datos privados. Se reutilizan tipos F5.2, pero el hook independiente carece de evidencia persistida entre reinicios y **no muestra duración de descanso por defecto**.
+
+Plasma puede ofrecer **Abrir sesión** si declara soporte de acciones y los ejecutables son seguros. Sólo esa acción abre Konsole y el REPL con argumentos fijos. Sin bindings/acciones hay notificación pasiva o salida local. La escucha dura 12 s (máximo 30 s), sin polling ni proceso permanente; un marcador efímero evita repetir el briefing en la misma sesión.
+
+Preparación de Autostart, sin escribir por defecto:
+
+```bash
+python3 tools/install_boot_briefing.py --dry-run
+```
+
+La comprobación rechaza rutas compartidas/inseguras; no cambia sus permisos. Una instalación explícita futura utiliza una copia privada de código y la entrada XDG `org.siegfried.BootBriefing.desktop`, sin instalar servicios ni modificar datos. Los siguientes comandos son procedimientos para autorización humana posterior; **no se ejecutaron en HOME real**:
+
+```bash
+python3 tools/install_boot_briefing.py --apply
+python3 tools/install_boot_briefing.py --apply --operation disable
+python3 tools/install_boot_briefing.py --apply --operation enable
+python3 tools/install_boot_briefing.py --apply --operation uninstall
+```
+
+Las opciones `--weather` y `--show-task` del instalador son optativas y quedan en la entrada. No se sobrescribe una instalación con opciones distintas; debe retirarse antes de preparar otra. `--home /ruta/temporal` permite ensayar todo sin alterar HOME real. El checkout actual tiene ancestros compartidos: la acción desde ese checkout se deshabilita; la copia privada preparada en HOME temporal pasó la validación de ejecutables.
+
+Pruebas y verificación explícitas:
+
+```bash
+PYTHONPATH=src timeout -s INT -k 5s 60s python3 -X faulthandler -m unittest tests.integration.test_boot_briefing_f53 -v
+PYTHONPATH=src python3 tools/benchmark_boot_briefing.py
+PYTHONPATH=src timeout -s INT -k 5s 20s python3 -X faulthandler tools/verify_boot_briefing_f53.py
+```
+
+El último comando emite una notificación de prueba y activa su acción por la API de KDE hacia Konsole con un ejecutable inocuo temporal; no inicia Siegfried. La aparición visual y el plazo desde login permanecen pendientes: no se alteró la inhibición de notificaciones del usuario. Informe: [GATE_F5_3_REPORT.md](docs/gates/GATE_F5_3_REPORT.md).
+
+**F5.3: PASS_WITH_DEVIATIONS.** 90 pruebas específicas y **634 pruebas totales PASS**, cinco SLO del harness PASS y `git diff --check` PASS. P95 finales: Fast-Path 0.0016 ms, Vault 1.7600 ms, CLI 34.10 ms, routing 0.0074 ms, histórico heurístico 2.0248 ms; exhaustivo observacional 8.3791 ms. Benchmark separado: composición P95 0.000527 ms y cold-start dry-run 115.144380 ms. El envío KDE real tomó 37.289 ms en un ensayo parcial; no demuestra popup visible <2 s desde login. [Inventario y propuesta de recuperación Git](docs/gates/GATE_F5_3_INVENTORY.md), sin staging ni commits.

@@ -411,7 +411,7 @@ Completar la integración en Kubuntu mediante un watcher de ventanas enfocado ba
 
 ### 5.3 Matriz de Riesgos y Mitigación
 * **Fallas en API de KWin Scripting:** Si el script de KWin se desactiva, el demonio funciona normalmente sin telemetría de foco sin interrumpir timers.
-* **Arranque sin red:** Ping de 0.5 s a `1.1.1.1`. Si no hay red, emitir saludo determinista precalculado en <100 ms.
+* **Arranque sin red:** Saludo determinista independiente de red. F5.3 omite el ping y solicita clima únicamente como opción posterior al primer mensaje, con plazo acotado; un fallo no impide saludar.
 * **Suspensiones breves:** Umbral mínimo de 90 minutos para clasificar el encendido como sesión de descanso circadiano.
 
 ### 5.4 Estimación Temporal
@@ -475,6 +475,20 @@ Completar la integración en Kubuntu mediante un watcher de ventanas enfocado ba
 - F5.3 permanece **sin implementar**. No se realizaron commits, push, instalaciones ni cambios persistentes en el HOME real.
 
 ---
+
+### 5.9 Gate F5.3 — Boot Briefing determinista y Autostart preparado
+
+Implementación incremental del compositor, contexto opcional, clima HTTPS de Lima, presentación nativa KDE con acción y preparación explícita de XDG Autostart. No reconstruye F5.2 ni inicia inferencia.
+
+- Núcleo stdlib; bindings nativos sólo dentro del presentador opcional. Sin paquetes nuevos, servicio extra o cambios en contratos v1.
+- Descanso se muestra sólo con `ESTIMATED` coherente y pantalla desbloqueada. El hook independiente no recupera evidencia volátil del daemon ni añade persistencia: briefing sin duración por defecto.
+- Agenda no leída por defecto; `--show-task` autoriza exposición del título validado con pantalla desbloqueada. Bloqueo/pérdida de estado retira contenido privado.
+- Clima desactivado por defecto: `--weather`, destino Lima fijo HTTPS, sin proxies/redirects/ping, DNS público fijado, UTF-8 y tamaño acotados. Primer saludo antes del worker climático.
+- Deduplicación efímera por sesión con flock no bloqueante. Un hook finito, acción one-shot y argv fijo a Konsole; cleanup de hijos de contexto/clima y conexiones.
+- Autostart con `OnlyShowIn=KDE;`, `TryExec`, `Hidden`; dry-run por defecto. Copia privada de código por las rutas compartidas del checkout, instalación/desactivación/retirada idempotentes en HOME temporal. Autoinicio real no activado.
+- Verificación nativa: KDE recibió la notificación y `InvokeAction` lanzó Konsole con ejecutable inocuo temporal una sola vez. No se abrió una sesión real de Siegfried. Aparición visual/login <2 s pendiente porque el servidor anuncia inhibición; ese ajuste se preservó.
+- Certificación, pruebas y métricas finales: [GATE_F5_3_REPORT.md](docs/gates/GATE_F5_3_REPORT.md). Inventario y propuesta de recuperación: [GATE_F5_3_INVENTORY.md](docs/gates/GATE_F5_3_INVENTORY.md). No commits, push, instalaciones de paquetes ni cambios en HOME real.
+- **PASS_WITH_DEVIATIONS:** 90 pruebas F5.3 (también sin site-packages), regresión **634 PASS en 34.900 s** y cinco SLO PASS. P95: Fast-Path 0.0016 ms, Vault 1.7600 ms, CLI 34.10 ms, routing 0.0074 ms, histórico heurístico 2.0248 ms; exhaustivo observacional 8.3791 ms. Composición P95 0.000527 ms; cold-start dry-run 115.144380 ms. Entrega KDE real final 37.289 ms, medida parcial: no certifica aparición desde login. `git diff --check` PASS y contratos v1 intactos.
 
 ## Cronograma Total Consolidado y Previsión Operativa
 
