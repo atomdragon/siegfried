@@ -7379,7 +7379,7 @@
   },
   "boot_cache_remediation_proposal": {
     "prepared_at_utc": "2026-10-10T01:19:09.578046+00:00",
-    "status": "PREPARED_NOT_APPLIED_AWAITING_SPECIFIC_AUTHORIZATION",
+    "status": "APPLIED_AND_VERIFIED",
     "cause_root": {
       "autostart_python_flags": "No -B; bytecode suppression absent from current user-manager environment",
       "workers": "-S suppresses site only; worker environment explicitly discards PYTHONDONTWRITEBYTECODE; Python flags are not inherited",
@@ -7491,7 +7491,7 @@
         "Postcleanup only known source files/directories remain"
       ],
       "real_backup_if_authorized": "/home/okami/.local/share/siegfried-gate-f55/cache-backup-f55.json; 0600 within 0700 parent",
-      "applied_real": false,
+      "applied_real": true,
       "recovery": "Guarded restore of only two modified modules/XDG from new verified private backups; bytecode backup before unlink. Stop on partial cleanup, changed destination or new entry; do not broad-delete or promise original inode/ctime restoration.",
       "concurrency_limit": "No multi-file transaction or lock recognized by hook; repeated process checks plus no login/hook invocation during application. Same-UID malicious writer exclusion is not guaranteed."
     },
@@ -7756,6 +7756,95 @@
       "runtime_or_private_data_modified": false,
       "recovery": "Not executed. If required, restore only targets still matching this operation’s candidate hashes, from verified private component backup; stop on any unexpected identity/content.",
       "gate_verdict": "PASS_WITH_DEVIATIONS; authorized remediation and current operational checks pass; historical baseline/RSS/history incident/SLO limitations remain."
+    },
+    "proposal_state_at_preparation": {
+      "status": "PREPARED_NOT_APPLIED_AWAITING_SPECIFIC_AUTHORIZATION",
+      "cleanup_applied_real": false
+    },
+    "state_reconciled_at_utc": "2026-10-10T03:33:12.249781+00:00",
+    "state_reconciliation_note": "Current metadata reflects the authorized deployment and exact cleanup; original proposal, inventories and historical baseline remain preserved."
+  },
+  "current_boot_snapshot": {
+    "path": "/home/okami/.local/share/siegfried-boot",
+    "source_hashes": {
+      "scripts/boot_hook.py": "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736",
+      "bin/siegfried": "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc",
+      "src/siegfried/__init__.py": "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c",
+      "src/siegfried/cli/__init__.py": "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12",
+      "src/siegfried/cli/app.py": "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a",
+      "src/siegfried/cli/repl.py": "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b",
+      "src/siegfried/cli/router.py": "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d",
+      "src/siegfried/contracts/__init__.py": "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae",
+      "src/siegfried/contracts/alerts.py": "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6",
+      "src/siegfried/contracts/config.py": "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752",
+      "src/siegfried/contracts/events.py": "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa",
+      "src/siegfried/contracts/inference.py": "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249",
+      "src/siegfried/contracts/ipc.py": "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a",
+      "src/siegfried/contracts/states.py": "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98",
+      "src/siegfried/core/__init__.py": "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a",
+      "src/siegfried/core/briefing.py": "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47",
+      "src/siegfried/core/clock.py": "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f",
+      "src/siegfried/core/errors.py": "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581",
+      "src/siegfried/core/rest.py": "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6",
+      "src/siegfried/core/state_machine.py": "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a",
+      "src/siegfried/daemon/__init__.py": "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f",
+      "src/siegfried/daemon/__main__.py": "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9",
+      "src/siegfried/daemon/alerts.py": "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827",
+      "src/siegfried/daemon/app.py": "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e",
+      "src/siegfried/daemon/focus.py": "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af",
+      "src/siegfried/daemon/session.py": "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485",
+      "src/siegfried/daemon/timers.py": "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad",
+      "src/siegfried/inference/__init__.py": "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07",
+      "src/siegfried/inference/cloud.py": "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e",
+      "src/siegfried/inference/llama_manager.py": "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a",
+      "src/siegfried/inference/local.py": "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183",
+      "src/siegfried/inference/orchestrator.py": "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d",
+      "src/siegfried/inference/resources.py": "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8",
+      "src/siegfried/integrations/__init__.py": "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d",
+      "src/siegfried/integrations/audio.py": "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a",
+      "src/siegfried/integrations/boot_briefing.py": "bafa71ddc991aba2207495f4a0ea779d43921abc18077eb27e1474d84ee81ff4",
+      "src/siegfried/integrations/briefing_files.py": "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579",
+      "src/siegfried/integrations/briefing_kde.py": "10d6926711bcf58cfcc5a1d2d493b29044d90df2978bb4be1bf344aaa86478a6",
+      "src/siegfried/integrations/kwin.py": "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08",
+      "src/siegfried/integrations/notifications.py": "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c",
+      "src/siegfried/integrations/session.py": "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62",
+      "src/siegfried/integrations/weather.py": "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d",
+      "src/siegfried/ipc/__init__.py": "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137",
+      "src/siegfried/ipc/client.py": "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817",
+      "src/siegfried/ipc/protocol.py": "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36",
+      "src/siegfried/ipc/server.py": "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286",
+      "src/siegfried/observability/__init__.py": "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e",
+      "src/siegfried/observability/benchmarks.py": "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb",
+      "src/siegfried/observability/logging.py": "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8",
+      "src/siegfried/storage/__init__.py": "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a",
+      "src/siegfried/storage/aggregator.py": "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb",
+      "src/siegfried/storage/atomic_json.py": "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe",
+      "src/siegfried/storage/initialization.py": "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407",
+      "src/siegfried/storage/paths.py": "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1",
+      "src/siegfried/storage/secrets.py": "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9",
+      "src/siegfried/storage/validation.py": "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4",
+      "src/siegfried/storage/vault.py": "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+    },
+    "files": 57,
+    "marker": {
+      "path": ".siegfried-owned",
+      "content": "F5.3\n"
+    },
+    "verified_at_utc": "2026-10-10T03:33:12.249781+00:00",
+    "baseline_scope": "Post-remediation Boot snapshot; not a pre-login runtime reference",
+    "provenance": {
+      "historical_source_hashes": "GATE_F5_5_EVIDENCE.json:briefing_source_hashes (preserved unchanged)",
+      "approved_deployment": "boot_cache_remediation_proposal.authorized_attempt.deployment",
+      "authorized_source_changes": {
+        "src/siegfried/integrations/boot_briefing.py": {
+          "before_sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+          "after_sha256": "bafa71ddc991aba2207495f4a0ea779d43921abc18077eb27e1474d84ee81ff4"
+        },
+        "src/siegfried/integrations/briefing_kde.py": {
+          "before_sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+          "after_sha256": "10d6926711bcf58cfcc5a1d2d493b29044d90df2978bb4be1bf344aaa86478a6"
+        }
+      }
     }
   }
 }

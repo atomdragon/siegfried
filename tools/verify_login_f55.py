@@ -127,7 +127,7 @@ def diagnose(reference, seconds, post):
         evidence = json.loads(read(REPO/'docs/gates/GATE_F5_5_EVIDENCE.json'))
         results = {}
         for name, hashes in [('daemon', evidence['current_daemon_snapshot']['source_hashes']),
-                             ('boot', evidence['briefing_source_hashes'])]:
+                             ('boot', evidence['current_boot_snapshot']['source_hashes'])]:
             root = HOME/'.local/share'/('siegfried-'+name)
             expected = set(hashes) | {'.siegfried-owned'}
             files = set()
