@@ -30,6 +30,7 @@ import urllib.request
 from siegfried.core.errors import (
     InferenceConcurrencyExceededError,
     InferenceConfigError,
+    InferenceDeadlineExceededError,
     InferenceSecurityError,
     InsufficientResourcesError,
     LlamaBinaryNotFoundError,
@@ -52,6 +53,7 @@ from siegfried.inference.resources import (
     SystemResources,
 )
 from siegfried.storage.paths import SiegfriedPaths, default_paths
+from siegfried.inference.deadline import remaining_timeout, read_deadline_chunk
 
 
 class LlamaServerState(str, Enum):
@@ -235,8 +237,12 @@ class LlamaLifecycleManager:
         return resources
 
 
-    def ensure_started(self) -> bool:
+    def ensure_started(self, deadline: Optional[float] = None) -> bool:
         """Start local llama-server if not already running and wait for READY state."""
+        startup_deadline = time.monotonic() + self.max_startup_seconds
+        if deadline is not None:
+            startup_deadline = min(startup_deadline, deadline)
+        remaining_timeout(self.max_startup_seconds, deadline)
         with self._lock:
             if self.is_running:
                 return True
@@ -246,20 +252,21 @@ class LlamaLifecycleManager:
                 pass
             else:
                 resources = self.validate_prerequisites()
+                remaining_timeout(self.max_startup_seconds, startup_deadline)
                 self._state = LlamaServerState.STARTING
                 self._last_error = None
 
                 # Build startup arguments
                 args = [
                     str(self.binary_path),
-                    "-m", str(self.model_path),
+                    "--model", str(self.model_path),
                     "--host", self.host,
                     "--port", str(self.port),
-                    "-c", str(self.ctx_size),
-                    "-ngl", str(self.gpu_layers),
+                    "--ctx-size", str(self.ctx_size),
+                    "--n-gpu-layers", str(self.gpu_layers),
                 ]
                 if self.threads:
-                    args.extend(["-t", str(self.threads)])
+                    args.extend(["--threads", str(self.threads)])
 
                 try:
                     # Clean up old stale PID file before spawn
@@ -281,9 +288,14 @@ class LlamaLifecycleManager:
                     raise LlamaStartupError(f"Failed to launch llama-server process: {e}") from e
 
         # Health check polling (outside lock to avoid blocking other status queries)
-        ready = self._wait_for_health_check()
+        try:
+            ready = self._wait_for_health_check(deadline=startup_deadline)
+        except InferenceDeadlineExceededError:
+            self.stop_server(timeout=0.0)
+            raise
         if not ready:
-            self.stop_server()
+            self.stop_server(timeout=0.0 if deadline is not None else 5.0)
+            remaining_timeout(self.max_startup_seconds, deadline)
             raise LlamaHealthCheckError(
                 f"llama-server failed to pass health checks within {self.max_startup_seconds}s"
             )
@@ -293,10 +305,10 @@ class LlamaLifecycleManager:
             self._last_activity_time = self._clock()
             return True
 
-    def _wait_for_health_check(self) -> bool:
+    def _wait_for_health_check(self, deadline: Optional[float] = None) -> bool:
         """Poll /health endpoint until server responds ready or fails."""
         start_time = time.monotonic()
-        deadline = start_time + self.max_startup_seconds
+        deadline = min(deadline, start_time + self.max_startup_seconds) if deadline is not None else start_time + self.max_startup_seconds
         health_url = f"http://{self.host}:{self.port}/health"
 
         while time.monotonic() < deadline:
@@ -316,9 +328,18 @@ class LlamaLifecycleManager:
 
             try:
                 req = urllib.request.Request(health_url, headers={"User-Agent": "Siegfried-HealthCheck/1.0"})
-                with urllib.request.urlopen(req, timeout=self.health_check_timeout) as resp:
+                probe_deadline = min(deadline, time.monotonic() + self.health_check_timeout)
+                with urllib.request.urlopen(req, timeout=remaining_timeout(self.health_check_timeout, deadline)) as resp:
                     if resp.status == 200:
-                        body = resp.read(1024).decode("utf-8", errors="replace")
+                        chunks = []
+                        size = 0
+                        while size < 1024:
+                            chunk = read_deadline_chunk(resp, 1024 - size, probe_deadline)
+                            if not chunk:
+                                break
+                            chunks.append(chunk)
+                            size += len(chunk)
+                        body = b"".join(chunks).decode("utf-8", errors="replace")
                         try:
                             data = json.loads(body)
                             # llama-server returns {"status": "ok"} or {"status": "loading model"}
@@ -329,10 +350,10 @@ class LlamaLifecycleManager:
                         except Exception:
                             # If plain 200 returned without strict json, consider ready
                             return True
-            except (urllib.error.URLError, socket.timeout, TimeoutError, http.client.HTTPException, ConnectionError, OSError):
+            except (InferenceDeadlineExceededError, urllib.error.URLError, socket.timeout, TimeoutError, http.client.HTTPException, ConnectionError, OSError):
                 pass
 
-            time.sleep(0.02)
+            time.sleep(min(0.02, max(0.0, deadline - time.monotonic())))
 
         return False
 
@@ -341,8 +362,11 @@ class LlamaLifecycleManager:
     def active_inference(self, deadline: Optional[float] = None) -> Generator[None, None, None]:
         """Context manager acquiring an active inference slot and updating last activity time."""
         with self._lock:
+            remaining_timeout(self.max_startup_seconds, deadline)
             if not self.is_running:
-                self.ensure_started()
+                self.ensure_started(deadline=deadline)
+
+            remaining_timeout(self.max_startup_seconds, deadline)
 
             if self._active_requests >= self.resource_budget.max_concurrency:
                 raise InferenceConcurrencyExceededError(
@@ -397,8 +421,8 @@ class LlamaLifecycleManager:
                     except subprocess.TimeoutExpired:
                         # 2. Hard SIGKILL against own process only
                         proc_to_kill.kill()
-                        proc_to_kill.wait(timeout=1.0)
-                except ProcessLookupError:
+                        proc_to_kill.wait(timeout=max(0.0, min(1.0, timeout)))
+                except (ProcessLookupError, subprocess.TimeoutExpired):
                     pass
                 except OSError as e:
                     pass

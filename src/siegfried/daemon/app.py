@@ -7,6 +7,7 @@ Manages:
 - Notifications and sensory alerts with exact PID custody
 """
 
+import os
 import signal
 import sys
 import threading
@@ -240,6 +241,13 @@ class SiegfriedDaemon:
         if self.state_machine.state in (SystemState.POMODORO_RUNNING, SystemState.POSTPONE_RUNNING):
             self.state_machine.add_sitting_time(elapsed)
             self._check_posture_milestones()
+
+        if self.state_machine.state == SystemState.IDLE and self._orchestrator is not None:
+            manager = getattr(self._orchestrator, "local_manager", None)
+            if manager is None:
+                manager = getattr(getattr(self._orchestrator, "local_client", None), "manager", None)
+            if manager is not None:
+                manager.check_idle()
 
     def _check_posture_milestones(self) -> None:
         """Evaluate continuous sitting milestones (50 min warning and 60 min hard limit)."""
@@ -605,7 +613,7 @@ class SiegfriedDaemon:
         try:
             api_key = get_secret("DEEPSEEK_API_KEY", secrets_file=self.paths.secrets_file)
             if api_key:
-                cloud_client = CloudInferenceClient(api_key=api_key, paths=self.paths)
+                cloud_client = CloudInferenceClient(api_key=api_key, secrets_file=self.paths.secrets_file)
         except Exception as e:
             self.logger.warning("No se pudo inicializar cliente Cloud.")
 
@@ -613,8 +621,16 @@ class SiegfriedDaemon:
         local_client = None
         local_mgr = None
         try:
-            local_mgr = LlamaLifecycleManager(paths=self.paths)
-            local_client = LocalInferenceClient(manager=local_mgr)
+            local_mgr = LlamaLifecycleManager(
+                paths=self.paths,
+                binary_path=os.environ.get("SIEGFRIED_LLAMA_BINARY") or self.paths.base_dir / "bin" / "llama-server",
+                model_path=os.environ.get("SIEGFRIED_LLAMA_MODEL") or self.paths.base_dir / "models" / "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+                gpu_layers=int(os.environ.get("SIEGFRIED_LLAMA_GPU_LAYERS", "0")),
+                threads=int(os.environ.get("SIEGFRIED_LLAMA_THREADS", "8")),
+                ctx_size=int(os.environ.get("SIEGFRIED_LLAMA_CTX_SIZE", "2048")),
+                port=int(os.environ.get("SIEGFRIED_LLAMA_PORT", "8080")),
+            )
+            local_client = LocalInferenceClient(manager=local_mgr, endpoint_url=f"http://127.0.0.1:{local_mgr.port}")
         except Exception as e:
             self.logger.warning("No se pudo inicializar gestor Local.")
 

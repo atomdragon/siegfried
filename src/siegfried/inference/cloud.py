@@ -41,6 +41,7 @@ from siegfried.core.errors import (
     InferenceTransportError,
 )
 from siegfried.storage.secrets import get_secret
+from siegfried.inference.deadline import remaining_timeout, read_deadline_chunk
 
 
 DEFAULT_DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"
@@ -235,7 +236,9 @@ class CloudInferenceClient:
 
         # Monotonic deadline budget calculation
         start_monotonic = time.monotonic()
-        deadline = request.deadline
+        deadline = start_monotonic + request.timeout_seconds
+        if request.deadline is not None:
+            deadline = min(deadline, request.deadline)
         if deadline is not None:
             remaining_before = deadline - start_monotonic
             if remaining_before <= 0:
@@ -275,6 +278,7 @@ class CloudInferenceClient:
         http_status = 200
 
         try:
+            effective_timeout = remaining_timeout(effective_timeout, deadline)
             response = self._opener.open(req, timeout=effective_timeout)
             try:
                 http_status = getattr(response, "status", 200)
@@ -442,7 +446,7 @@ class CloudInferenceClient:
                     "Monotonic deadline exceeded while receiving response body"
                 )
 
-            chunk = response.read(min(chunk_size, max_bytes - total_bytes + 1))
+            chunk = read_deadline_chunk(response, min(chunk_size, max_bytes - total_bytes + 1), deadline)
             if not chunk:
                 break
 

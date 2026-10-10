@@ -36,6 +36,7 @@ from siegfried.core.errors import (
     LocalInferenceUnavailableError,
 )
 from siegfried.inference.cloud import InferenceEngine
+from siegfried.inference.deadline import remaining_timeout, read_deadline_chunk
 from siegfried.inference.llama_manager import LlamaLifecycleManager, LlamaServerState
 
 
@@ -81,7 +82,9 @@ class LocalInferenceClient:
 
         # 2. Monotonic deadline check
         start_monotonic = time.monotonic()
-        deadline = request.deadline
+        deadline = start_monotonic + request.timeout_seconds
+        if request.deadline is not None:
+            deadline = min(deadline, request.deadline)
         if deadline is not None:
             remaining_before = deadline - start_monotonic
             if remaining_before <= 0:
@@ -138,6 +141,7 @@ class LocalInferenceClient:
         http_status = 200
 
         try:
+            effective_timeout = remaining_timeout(effective_timeout, deadline)
             with urllib.request.urlopen(req, timeout=effective_timeout) as response:
                 http_status = getattr(response, "status", 200)
                 raw_response_bytes = self._read_bounded_response(
@@ -251,7 +255,7 @@ class LocalInferenceClient:
                     "Monotonic deadline exceeded while receiving local response body"
                 )
 
-            chunk = response.read(min(chunk_size, max_bytes - total_bytes + 1))
+            chunk = read_deadline_chunk(response, min(chunk_size, max_bytes - total_bytes + 1), deadline)
             if not chunk:
                 break
 
