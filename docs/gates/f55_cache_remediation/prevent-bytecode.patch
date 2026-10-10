@@ -1,0 +1,33 @@
+--- a/tools/install_boot_briefing.py
++++ b/tools/install_boot_briefing.py
+@@ -30,7 +30,7 @@
+     hook = Path(repository) / 'scripts' / 'boot_hook.py'
+     if not trusted_executable(sys.executable) or (not planned and not trusted_executable(hook)):
+         raise ValueError('unsafe_boot_executable')
+-    argv = [sys.executable, str(hook)]
++    argv = [sys.executable, '-B', str(hook)]
+     if weather:
+         argv.append('--weather')
+     if show_task:
+--- a/src/siegfried/integrations/boot_briefing.py
++++ b/src/siegfried/integrations/boot_briefing.py
+@@ -20,7 +20,7 @@
+     """Hard process deadline also bounds blocking libc DNS; no lingering workers."""
+     child = None
+     try:
+-        child = subprocess.Popen([sys.executable, '-S', str(Path(repository) / 'scripts/boot_hook.py'), *arguments],
++        child = subprocess.Popen([sys.executable, '-B', '-S', str(Path(repository) / 'scripts/boot_hook.py'), *arguments],
+             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+             env={'PATH':'/usr/bin:/bin', 'LANG':'C.UTF-8'}, close_fds=True)
+         output, _ = child.communicate(timeout=timeout)
+--- a/src/siegfried/integrations/briefing_kde.py
++++ b/src/siegfried/integrations/briefing_kde.py
+@@ -34,7 +34,7 @@
+     def __init__(self, repository):
+         self.cli = Path(repository) / 'bin' / 'siegfried'
+         self.konsole = shutil.which('konsole')
+-        self.argv = [self.konsole, '--separate', '-e', sys.executable, str(self.cli)] if self.konsole else []
++        self.argv = [self.konsole, '--separate', '-e', sys.executable, '-B', str(self.cli)] if self.konsole else []
+ 
+     def available(self):
+         return bool(self.argv and all(trusted_executable(p) for p in (self.konsole, sys.executable, self.cli)))

@@ -34,7 +34,7 @@ class REPLLauncher:
     def __init__(self, repository):
         self.cli = Path(repository) / 'bin' / 'siegfried'
         self.konsole = shutil.which('konsole')
-        self.argv = [self.konsole, '--separate', '-e', sys.executable, str(self.cli)] if self.konsole else []
+        self.argv = [self.konsole, '--separate', '-e', sys.executable, '-B', str(self.cli)] if self.konsole else []
 
     def available(self):
         return bool(self.argv and all(trusted_executable(p) for p in (self.konsole, sys.executable, self.cli)))

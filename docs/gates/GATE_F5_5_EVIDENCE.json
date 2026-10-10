@@ -235,13 +235,13 @@
     "temporary_runtime": true
   },
   "git_final": {
-    "head": "8011f64e771813b1ae1b5fbdeafdf6abef9ece0b",
+    "head": "8cba97bdfaf759eb1d6bee156b6cbf3af4622e00",
     "branch": "main",
-    "status": " M README.md\n M systemd/siegfried.service\n M tools/install_boot_briefing.py\n M tools/install_user_service.py\n?? docs/gates/GATE_F5_5_EVIDENCE.json\n?? docs/gates/GATE_F5_5_RECOVERY.json\n?? docs/gates/GATE_F5_5_REPORT.md\n?? tests/integration/test_private_deployment_f55.py\n",
+    "status": " M docs/gates/GATE_F5_5_EVIDENCE.json\n M docs/gates/GATE_F5_5_RECOVERY.json\n M docs/gates/GATE_F5_5_REPORT.md\n M tests/integration/test_operational_pilot_f54.py\n M tools/install_boot_briefing.py\n?? tests/integration/test_autostart_disabled_f55.py\n?? tools/verify_login_f55.py\n",
     "diff_check": "PASS",
-    "contracts_changed": false,
     "commits_performed": false,
-    "push_performed": false
+    "push_performed": false,
+    "note": "Current preparation state; older git observations remain historical."
   },
   "permission_actions": [
     {
@@ -2956,7 +2956,7 @@
   ],
   "observability_correction": {
     "verified_at_utc": "2026-10-09T20:43:16.989762+00:00",
-    "status": "PRIVATE_DAEMON_SNAPSHOT_UPDATED_VERIFIED_NO_START",
+    "status": "PRIVATE_DAEMON_INFO_VERIFIED_REAL_SYSTEMD_TRIAL_WITH_RSS_DEVIATION",
     "product_cause": "setup_logger ignores level argument; effective WARNING filters INFO.",
     "supervisor_cause": "line 176: len(appended_log_lines)==4; actual private log empty. Assertion ran after successful IPC/resource/TERM and private-content comparisons. No extra real pilot.",
     "changes": {
@@ -5971,5 +5971,2024 @@
       }
     },
     "verified_at_utc": "2026-10-09T21:27:53.886581+00:00"
+  },
+  "systemd_operational_trial_actions": [
+    {
+      "status": "PASS_WITH_DEVIATIONS",
+      "authorized_limit_seconds": 90,
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "doctor_before": "READY",
+      "log_before": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1574642,
+        "device": 48,
+        "size": 0,
+        "nlink": 1,
+        "atime_ns": 1791577611092990583,
+        "mtime_ns": 1791577611092990583,
+        "ctime_ns": 1791577611092990583,
+        "directory": false,
+        "regular": true
+      },
+      "updated_and_all_snapshot_hashes_verified": true,
+      "execstart_private": true,
+      "kwin_session_disabled": true,
+      "precheck_at_utc": "2026-10-09T21:44:13.464623+00:00",
+      "private_content_printed": false,
+      "private_hashes_persisted": false,
+      "unit_running": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "UnitFileState": "disabled",
+        "InvocationID": "6d9155880f804dd2be8045815ff6e82e",
+        "MainPID": "236021",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/siegfried.service"
+      },
+      "main_pid": 236021,
+      "process_start_ticks": 6646556,
+      "socket_mode": "0600",
+      "ipc_initial": {
+        "PING": {
+          "status": "OK"
+        },
+        "STATUS": {
+          "status": "OK"
+        }
+      },
+      "info_live_verified": true,
+      "ipc_after_sampling": {
+        "PING": {
+          "status": "OK"
+        },
+        "STATUS": {
+          "status": "OK"
+        }
+      },
+      "measurement": {
+        "sample_count": 13,
+        "interval_count": 12,
+        "duration_seconds": 60.000571990000026,
+        "warmup_seconds": 3,
+        "interval_target_seconds": 5,
+        "cpu_one_core_mean_percent": 0.19999809338484267,
+        "cpu_max_interval_percent": 0.40001709537065927,
+        "cpu_interval_percent": [
+          0.19997624726119287,
+          0.19999892496586977,
+          0.2000052051753902,
+          0.19999209703238557,
+          0.0,
+          0.4000046166134638,
+          0.19999115323113725,
+          0.0,
+          0.20001501324703289,
+          0.1999975564297588,
+          0.19999139597024446,
+          0.40001709537065927
+        ],
+        "rss_mean_bytes": 30011392,
+        "rss_max_bytes": 30011392,
+        "rss_mean_MB_decimal": 30.011392,
+        "rss_max_MB_decimal": 30.011392,
+        "clock_ticks_per_second": 100,
+        "child_count_max": 0,
+        "threads_max": 2,
+        "samples": [
+          {
+            "time_monotonic": 41098.517046691,
+            "ticks": 10,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41103.51764058,
+            "ticks": 11,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41108.517667456,
+            "ticks": 12,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41113.51753733,
+            "ticks": 13,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41118.517734912,
+            "ticks": 14,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41123.517640118,
+            "ticks": 14,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41128.517582411,
+            "ticks": 16,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41133.51780359,
+            "ticks": 17,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41138.517931467,
+            "ticks": 17,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41143.517556164,
+            "ticks": 18,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41148.517617254,
+            "ticks": 19,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41153.517832364,
+            "ticks": 20,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          },
+          {
+            "time_monotonic": 41158.517618681,
+            "ticks": 22,
+            "rss_bytes": 30011392,
+            "child_count": 0,
+            "threads": 2
+          }
+        ],
+        "cpu_objective_pass": true,
+        "rss_objective_pass": false
+      },
+      "stop_exit_code": 0,
+      "shutdown_seconds": 0.12499199600279098,
+      "unit_after_stop": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "UnitFileState": "disabled",
+        "InvocationID": "",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ExecMainCode": "0",
+        "ExecMainStatus": "0",
+        "ControlGroup": ""
+      },
+      "elapsed_start_to_stop_seconds": 63.39508636199753,
+      "doctor_after": "READY",
+      "log_after": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1574642,
+        "device": 48,
+        "size": 362,
+        "nlink": 1,
+        "atime_ns": 1791577611092990583,
+        "mtime_ns": 1791582316801932933,
+        "ctime_ns": 1791582316801932933,
+        "directory": false,
+        "regular": true
+      },
+      "logging": {
+        "operational_info_count": 4,
+        "allowed_messages": [
+          "Iniciando Siegfried Daemon...",
+          "Siegfried Daemon activo en socket /run/user/1000/siegfried.sock",
+          "Deteniendo Siegfried Daemon...",
+          "Siegfried Daemon detenido correctamente."
+        ],
+        "prefix_inode_mode_preserved": true,
+        "only_exact_allowlisted_messages": true,
+        "sensitive_log_content_detected": false
+      },
+      "runtime_changes": [
+        {
+          "path": "logs/daemon.log",
+          "fields": [
+            "size",
+            "mtime_ns",
+            "ctime_ns",
+            "sha256"
+          ]
+        }
+      ],
+      "runtime_nonlog_content_owners_modes_inodes_mtime_ctime_preserved": true,
+      "history_all_metadata_and_content_preserved": true,
+      "snapshot_and_unit_autostart_preserved": true,
+      "processes_children_socket_removed": true,
+      "clean_shutdown": true,
+      "SIGKILL_used": false,
+      "watchdog": {
+        "reason": "normal_cancel",
+        "stop_sent": false
+      },
+      "postcheck_correction": {
+        "initial_clean_shutdown_boolean": false,
+        "cause": "Verifier required ExecMainCode=1 after stop; actual inactive unit reports 0 with empty InvocationID. That condition is not evidence of failed shutdown.",
+        "product_shutdown_defect": false,
+        "service_restarted": false,
+        "evaluation": "stop exit 0, Result success, four matching INFO including clean-shutdown message, cgroup/PID/socket gone, 0.125s below 5s escalation timeout; journal INFO/no error/kill/timeout."
+      },
+      "journal_validation": {
+        "record_count": 7,
+        "daemon_records": 4,
+        "invocation_id": "6d9155880f804dd2be8045815ff6e82e",
+        "all_daemon_records_exact_allowlist": true,
+        "daemon_priority": 6,
+        "errors_kill_timeouts_detected": false,
+        "messages_printed": false
+      },
+      "resource_deviations": {
+        "rss_excess_bytes": 11392,
+        "rss_excess_percent": 0.03797333333333333,
+        "cpu_near_threshold": true,
+        "cpu_one_tick_resolution_over_interval_percent": 0.01666650778207022,
+        "cpu_interpretation": "Measured mean numerically below 0.2%, essentially at threshold; no robust margin demonstrated. 5s maximum is interval CPU, not instantaneous peak."
+      },
+      "completed_by_readonly_postcheck_at_utc": "2026-10-09T21:46:24.615459+00:00",
+      "supervisor_sha256": "b5d0410462c2d62d8a59a1469fcda04064e0e55589455f930157162492ce3f71",
+      "commands_start_stop": [
+        "systemctl --user start siegfried.service",
+        "systemctl --user stop siegfried.service"
+      ],
+      "supervision": {
+        "independent_watchdog_stop_deadline_seconds": 80,
+        "total_authorized_limit_seconds": 90,
+        "watchdog_armed_before_start": true,
+        "parent_try_finally_stop": true,
+        "watchdog_result": {
+          "reason": "normal_cancel",
+          "stop_sent": false
+        },
+        "start_enable_restart_unit_modifications": {
+          "start": 1,
+          "stop": 1,
+          "enable": 0,
+          "restart": 0,
+          "reload": 0,
+          "unit_or_manager_environment_changes": 0
+        }
+      },
+      "observation_limits": [
+        "CPU mean numerically below 0.2% with no robust margin; tick resolution 0.016667 percentage points over 60s.",
+        "No model/inference requests issued; only PING/STATUS, no children or model loading commanded. This is not a network syscall trace.",
+        "SIGKILL not used by supervisor; systemd stop returned in 0.125s, below 5s fallback, no kill/timeout journal evidence.",
+        "RSS measured in decimal MB; 30.011392 exceeds 30.0 by 11392 bytes."
+      ],
+      "git_close": {
+        "head_observed_at_close": "8cba97bdfaf759eb1d6bee156b6cbf3af4622e00",
+        "branch": "main",
+        "status_short": [
+          " M docs/gates/GATE_F5_5_EVIDENCE.json",
+          " M docs/gates/GATE_F5_5_RECOVERY.json",
+          " M docs/gates/GATE_F5_5_REPORT.md"
+        ],
+        "staging_empty": true,
+        "agent_commits_or_push": false,
+        "product_code_changed_in_this_trial": false
+      }
+    }
+  ],
+  "next_stage_preparation_after_systemd_trial": {
+    "prepared_at": "after completed and stopped systemd trial",
+    "visual": {
+      "helper": "/tmp/siegfried-f55-visual-manual.py",
+      "sha256": "61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6",
+      "command": "timeout -s INT -k 5s 30s /usr/bin/python3 -B /tmp/siegfried-f55-visual-manual.py --manual",
+      "mode": "manual human click required; innocuous Konsole launcher in fixture; private Boot snapshot imports",
+      "executed": true,
+      "status": "PASS_HUMAN_AND_TECHNICAL",
+      "execution_count": 1,
+      "authorized_executions_total": 2
+    },
+    "autostart": {
+      "official_api": "tools.install_boot_briefing.manage_autostart",
+      "repository_argument": "/home/okami/.local/share/siegfried-boot",
+      "reason": "Preserve existing audited Boot snapshot; checkout contains changed logging/app and default prepare_package rejects that preimage mismatch.",
+      "existing_boot_57_sources_match_original_manifest": true,
+      "dry_run": "PASS, no real writes",
+      "desktop_file_validate": "PASS",
+      "destination": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+      "private_exec_only": true,
+      "installed_or_enabled": false,
+      "requires_separate_later_authorization": true,
+      "next_authorization_scope": "Initial disabled entry only (Hidden=true); previous enable/install activation proposal superseded. No systemctl enable or login."
+    }
+  },
+  "current_operational_state": {
+    "systemd": {
+      "ActiveState": "active",
+      "UnitFileState": "enabled",
+      "MainPID": "2704",
+      "NRestarts": "0"
+    },
+    "doctor": "READY",
+    "daemon_or_socket_remaining": true,
+    "autostart_activated": true,
+    "real_history_decision": "STRICT_PRESERVED_AGAINST_EARLIER_AUTHENTIC_ACTIVATION_REFERENCE",
+    "last_trial_verdict": "PASS_WITH_DEVIATIONS",
+    "gate_verdict": "BLOCKED",
+    "updated_at_utc": "2026-10-10T01:19:09.578046+00:00",
+    "autostart_installed": true,
+    "autostart_enabled": true,
+    "autostart_hidden": false,
+    "disabled_autostart_installation_verdict": "PASS",
+    "real_repl_verdict": "PASS",
+    "visual_verdict": "PASS",
+    "gate_pending": "Specific authorization for preventive patch/deployment and exact cache cleanup; first-login global baseline still unavailable.",
+    "kde_to_real_repl_verdict": "PASS_TECHNICAL_AND_HUMAN",
+    "login_human_briefing": "PASS; automatic single notification and greeting confirmed by user",
+    "login_to_visible_ms": null
+  },
+  "visual_manual_validation_actions": [
+    {
+      "status": "BLOCKED_BEFORE_NOTIFY",
+      "reason": "Audited helper hardcodes Buenos días; installed compose_briefing selects Buenas tardes at current local hour. User prohibits code changes, so helper was not changed or executed.",
+      "helper": "/tmp/siegfried-f55-visual-manual.py",
+      "helper_sha256": "f4ba98a887654c57875824959c3e5d22992b5e0314a288938e5e6803c7a71586",
+      "helper_integrity_matches": true,
+      "service_state": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "daemon_or_socket_present": false,
+      "doctor": "READY",
+      "session": {
+        "id": "3",
+        "desktop": "KDE",
+        "type": "wayland",
+        "active": true,
+        "locked": false
+      },
+      "notification_service": {
+        "owner": ":1.31",
+        "uid": 1000,
+        "inhibited": false,
+        "supports_actions": true
+      },
+      "helper_scope_review": {
+        "uses_private_boot_imports": true,
+        "launcher": "Temporary synthetic Python marker in separate Konsole; not real REPL",
+        "private_data_writer": false,
+        "manual_flag_required": true,
+        "fixed_public_body": "Buenos días, Señor. Prueba F5.3 sin información privada."
+      },
+      "notify_sent": false,
+      "visual_command_executed": false,
+      "marker_created": false,
+      "konsole_opened": false,
+      "human_observations": "Not requested: no notification sent. Pending after corrected-helper authorization.",
+      "runtime_and_snapshots_all_metadata_and_contents_preserved_during_readonly_checks": true,
+      "autostart_absent": true,
+      "code_changed": false,
+      "commits_or_push": false,
+      "next_autostart_constraint": "If visual passes, propose only initial Hidden=true entry; no systemctl enable or login activation. Prior enable/install proposal superseded.",
+      "recorded_at_utc": "2026-10-09T22:10:55.265837+00:00",
+      "proposed_helper_correction": {
+        "scope": "Temporary visual helper only; import pure installed composer and datetime; replace fixed test body with public default BriefingContext. No repository/snapshot edits.",
+        "old_sha256": "f4ba98a887654c57875824959c3e5d22992b5e0314a288938e5e6803c7a71586",
+        "candidate_sha256": "61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6",
+        "candidate_written_or_executed": false,
+        "requires_explicit_authorization_due_to_no_code_changes_instruction": true
+      }
+    },
+    {
+      "status": "PENDING_HUMAN_CONFIRMATION_NO_ACTION_MARKER",
+      "sha256": "61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "started_at_utc": "2026-10-09T22:15:33.420512+00:00",
+      "local_time_before": "2026-10-09T17:15:33.420524",
+      "manual_only": true,
+      "execution_count": 1,
+      "exit_code": 0,
+      "duration_seconds": 19.96534880699619,
+      "helper_output": [
+        {
+          "phase": "awaiting_human_observation",
+          "notification_id": 214,
+          "actions": true,
+          "inhibited": false
+        },
+        {
+          "native_notify": "PASS",
+          "native_action": "PENDING_HUMAN_ACTION",
+          "konsole_test_executable": "PENDING_HUMAN_ACTION",
+          "automatic_launch": false,
+          "action_count": 0,
+          "sent_ms": 50.012,
+          "notification_id": 214,
+          "manual": true,
+          "visible_ms": null,
+          "inhibited": false,
+          "visual_validation": "PENDING; API acceptance is not visual appearance",
+          "real_siegfried_started": false,
+          "autostart_modified": false
+        }
+      ],
+      "stderr_present": false,
+      "technical_status": "PENDING_HUMAN_ACTION",
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "residual_test_process_count": 0,
+      "new_fixture_paths_remaining": [],
+      "runtime_all_metadata_preserved": true,
+      "private_content_read_by_supervisor": false,
+      "private_contents_fingerprinted": false,
+      "daemon_all_content_and_metadata_preserved": true,
+      "boot_all_content_and_metadata_preserved": true,
+      "autostart_preserved": true,
+      "doctor_after": "READY",
+      "visual_status": "PENDING_HUMAN_CONFIRMATION",
+      "helper_correction": {
+        "original_sha256": "f4ba98a887654c57875824959c3e5d22992b5e0314a288938e5e6803c7a71586",
+        "corrected_sha256": "61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6",
+        "candidate_matches_prepared_manifest": true,
+        "signature_Context": "(now: datetime.datetime, available: bool = False, title: str = 'Señor', critical_task: str | None = None, expose_task: bool = False, unlocked: bool = False, rest: siegfried.core.rest.RestEstimate | None = None, weather: str | None = None) -> None",
+        "signature_compose": "(context: siegfried.core.briefing.BriefingContext) -> str",
+        "return_type_verified": "str",
+        "greeting_probes": [
+          {
+            "hour": 8,
+            "expected_greeting": "Buenos días",
+            "return_type": "str",
+            "pass": true
+          },
+          {
+            "hour": 15,
+            "expected_greeting": "Buenas tardes",
+            "return_type": "str",
+            "pass": true
+          },
+          {
+            "hour": 22,
+            "expected_greeting": "Buenas noches",
+            "return_type": "str",
+            "pass": true
+          }
+        ],
+        "only_helper_changed": true,
+        "data_files_read_by_correction": false
+      },
+      "marker_created": false,
+      "human_confirmation": null,
+      "automatic_retry": false,
+      "command_exact": "timeout -s INT -k 5s 30s /usr/bin/python3 -B /tmp/siegfried-f55-visual-manual.py --manual",
+      "public_context": {
+        "effective_time": "local datetime.now immediately before send",
+        "greeting_at_send": "Buenas tardes",
+        "title": "Señor",
+        "available": false,
+        "critical_task": null,
+        "expose_task": false,
+        "rest": null,
+        "weather": null
+      },
+      "preservation_scope": "Private file metadata only: no private content fingerprinted by supervisor; doctor executed in read-only sandbox. Both code snapshots compared by SHA plus metadata.",
+      "execution_finished": true,
+      "notify_acceptance_not_visual_proof": true,
+      "human_checks_requested_async": true,
+      "reviewed_source_files_changed": false,
+      "autostart_initial_disabled_proposal_status": "Deferred pending completed visual evidence; no installation/activation permitted."
+    },
+    {
+      "status": "PASS",
+      "sha256": "61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "started_at_utc": "2026-10-09T22:27:56.705994+00:00",
+      "local_time_before": "2026-10-09T17:27:56.706008",
+      "manual_only": true,
+      "execution_count": 1,
+      "exit_code": 0,
+      "duration_seconds": 4.816470814999775,
+      "helper_output": [
+        {
+          "phase": "awaiting_human_observation",
+          "notification_id": 215,
+          "actions": true,
+          "inhibited": false
+        },
+        {
+          "native_notify": "PASS",
+          "native_action": "PASS",
+          "konsole_test_executable": "PASS",
+          "automatic_launch": false,
+          "action_count": 1,
+          "sent_ms": 46.346,
+          "notification_id": 215,
+          "manual": true,
+          "visible_ms": null,
+          "inhibited": false,
+          "visual_validation": "PENDING; API acceptance is not visual appearance",
+          "real_siegfried_started": false,
+          "autostart_modified": false
+        }
+      ],
+      "stderr_present": false,
+      "technical_status": "PASS",
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "residual_test_process_count": 0,
+      "new_fixture_paths_remaining": [],
+      "runtime_all_metadata_preserved": true,
+      "private_content_read_by_supervisor": false,
+      "private_contents_fingerprinted": false,
+      "daemon_all_content_and_metadata_preserved": true,
+      "boot_all_content_and_metadata_preserved": true,
+      "autostart_preserved": true,
+      "doctor_after": "READY",
+      "visual_status": "PASS",
+      "authorized_round": 2,
+      "human_confirmation": {
+        "confirmed_at_recording_utc": "2026-10-09T22:38:19.742998+00:00",
+        "source": "Explicit user confirmation in conversation",
+        "single_notification_visible": true,
+        "open_session_button_worked": true,
+        "physical_click": true,
+        "konsole_opened": true,
+        "immediate_close_expected_innocuous_marker": true,
+        "visual_test_satisfactory": true,
+        "actual_visual_latency_ms": null,
+        "real_repl_validated": false
+      },
+      "marker_created_and_contents_verified": true,
+      "marker_removed_with_fixture": true,
+      "automatic_retry": false,
+      "no_code_modified_in_round": true,
+      "physical_click_certification": "Pending human confirmation; manual helper receives trusted KDE signal, no programmatic invocation by test.",
+      "command_exact": "timeout -s INT -k 5s 30s /usr/bin/python3 -B /tmp/siegfried-f55-visual-manual.py --manual",
+      "private_preservation_scope": "Runtime metadata unchanged and readonly doctor READY; no private content read/fingerprinted by supervisor. Snapshot sources SHA+metadata unchanged.",
+      "prior_round_evidence": "/tmp/siegfried-f55-visual-execution-result-round1.json"
+    }
+  ],
+  "real_repl_pilot_preparation": {
+    "status": "PASS_HUMAN_AND_TECHNICAL",
+    "helper": "/tmp/siegfried-f55-repl-supervised.py",
+    "helper_sha256": "0a5daca81cbb0bb1f133b7d32370d8aa011188837e88e985a075aea1776445e6",
+    "command": "/usr/bin/python3 -B /tmp/siegfried-f55-repl-supervised.py --run",
+    "limit_seconds": 90,
+    "watchdog_stop_deadline_seconds": 80,
+    "interactive_deadline_seconds": 70,
+    "terminal_confirmations_required": [
+      "Prompt persists and terminal remains interactive",
+      "ayuda works",
+      "status works",
+      "salir closes REPL"
+    ],
+    "preflight": {
+      "status": "PASS",
+      "snapshot_61_sources_verified": true,
+      "unit": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "doctor": "READY",
+      "isolation": {
+        "checkout_hidden": true,
+        "real_history_and_vault_hidden": true,
+        "temporary_history_writable": true,
+        "host_ipc_socket_accessible": true
+      },
+      "private_wrapper_help": "PASS",
+      "daemon_started": false,
+      "repl_started": false,
+      "private_history_written": false
+    },
+    "history_safety": "Read-only filesystem with checkout /media hidden; empty ephemeral tmpfs overlays ~/.siegfried/data for REPL only; host IPC stays visible. No source edits, copies of history/Vault or disabling readline. Real daemon uses original runtime; log append operationally required after authorization.",
+    "daemon_started": true,
+    "konsole_repl_opened": true,
+    "live_ping_status": "Deferred until authorized service is active",
+    "autostart": "Not installed or enabled; initial Hidden=true proposal only after real REPL validation",
+    "product_features_added": false
+  },
+  "real_repl_operational_trial_actions": [
+    {
+      "status": "PASS",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": ""
+      },
+      "started_at_utc": "2026-10-09T22:40:24.002208+00:00",
+      "prompt_human_confirmation": "PASS",
+      "private_fingerprints_persisted": false,
+      "max_seconds": 90,
+      "unit_running": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "UnitFileState": "disabled",
+        "MainPID": "245353",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/siegfried.service"
+      },
+      "ipc_before_repl": {
+        "PING": "OK",
+        "STATUS": "OK"
+      },
+      "terminal_pid": 245358,
+      "terminal_exit_code": 0,
+      "daemon_survived_repl_exit": true,
+      "ipc_after_repl_exit": {
+        "PING": "OK",
+        "STATUS": "OK"
+      },
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": ""
+      },
+      "elapsed_seconds": 34.772387968994735,
+      "doctor": "READY",
+      "runtime_nonlog_preserved": true,
+      "real_history_all_metadata_and_content_preserved": true,
+      "watchdog": {
+        "triggered": false
+      },
+      "supervisor_sha256": "0a5daca81cbb0bb1f133b7d32370d8aa011188837e88e985a075aea1776445e6",
+      "residual_repl_daemon_pid_count": 0,
+      "residual_ipc_socket": false,
+      "human_confirmation": {
+        "recorded_at_utc": "2026-10-09T22:45:55.363761+00:00",
+        "prompt_visible": true,
+        "ayuda_correct": true,
+        "status_correct": true,
+        "salir_correct": true,
+        "source": "Explicit user confirmation; real REPL approved",
+        "daemon_survived_exit_confirmed": true
+      },
+      "interactive_commands": {
+        "ayuda": "Deterministic direct response, no IPC inference",
+        "status": "Deterministic IPCCommand.STATUS, no inference",
+        "salir": "Local exit branch before router, no inference"
+      },
+      "actual_human_commands_executed": "Pending user confirmation; no terminal transcript captured",
+      "code_modified": false,
+      "automatic_retry": false,
+      "watch_armed_before_start": true,
+      "history_isolation": "Empty tmpfs ~/.siegfried/data for REPL; real file masked; remaining filesystem readonly; checkout /media hidden",
+      "log_preservation": "Append is the only permitted runtime content change; log owner/mode/inode preserved by supervisor",
+      "completed_at_utc": "2026-10-09T22:42:04.726293+00:00"
+    }
+  ],
+  "disabled_autostart_installation_actions": [
+    {
+      "status": "PASS",
+      "authorization": "Only one own XDG desktop initially Hidden=true; no execution/activation/data writes.",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "doctor_before": "READY",
+      "dry_run": "PASS",
+      "initial_content_sha256": "985a5a4d5d5334b36ced08dff2446b39c56de8a16689f6cc6af4bf7045da2da6",
+      "installer_sha256": "8b72cb4efcb2446551c588c967bbf45247850a8a581b0f5a81989d7a6757ae4a",
+      "scope": "Existing audited Boot snapshot as repository argument; no code copy or update; first publication no-replace hard link of fully written disabled staging file.",
+      "verified_at_utc": "2026-10-09T22:52:03.631442+00:00",
+      "created_file_path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+      "created_file": {
+        "uid": 1000,
+        "gid": 1000,
+        "mode": "0600",
+        "inode": 1582265,
+        "device": 48,
+        "size": 321,
+        "nlink": 1,
+        "atime_ns": 1791586323466242320,
+        "mtime_ns": 1791586323466242320,
+        "ctime_ns": 1791586323471242355,
+        "directory": false,
+        "regular": true,
+        "sha256": "985a5a4d5d5334b36ced08dff2446b39c56de8a16689f6cc6af4bf7045da2da6"
+      },
+      "disabled_from_first_publication": true,
+      "desktop_file_validate": "PASS",
+      "acl": "basic POSIX only",
+      "idempotent_second_operation": "unchanged; file content and all metadata preserved",
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0"
+      },
+      "doctor_after": "READY",
+      "runtime_all_content_and_metadata_preserved": true,
+      "history_all_content_and_metadata_preserved": true,
+      "snapshots_all_content_and_metadata_preserved": true,
+      "other_autostart_files_preserved": true,
+      "hook_or_konsole_or_daemon_started": false,
+      "rollback_applied": false,
+      "private_fingerprints_persisted": false,
+      "commands": "manage_autostart(Path.home(), operation=\"install\", dry_run=False, repository=Path.home()/\".local/share/siegfried-boot\", enabled=False) twice: initial publication then idempotence",
+      "rollback_scope": "Only recorded own desktop after same inode, SHA, owner, mode and nlink; unlink using verified parent dir_fd. Preserve snapshots/runtime/unit; never general uninstall.",
+      "validation": {
+        "specific_tests": 111,
+        "regression_tests": 689,
+        "new_tests": 11,
+        "regression_seconds": 38.675,
+        "harness_slos": "5 PASS",
+        "isolated_results": {
+          "results": {
+            "regression": {
+              "command": [
+                "timeout",
+                "-s",
+                "INT",
+                "-k",
+                "5s",
+                "180s",
+                "/usr/bin/python3",
+                "-B",
+                "tools/run_isolated_tests.py"
+              ],
+              "exit_code": 0,
+              "seconds": 38.92891727400274,
+              "log": "/tmp/siegfried-f55-disabled-regression.log"
+            },
+            "benchmark": {
+              "command": [
+                "/usr/bin/python3",
+                "-B",
+                "tools/run_isolated_tests.py",
+                "tools/benchmark.py"
+              ],
+              "exit_code": 0,
+              "seconds": 2.174232119003136,
+              "log": "/tmp/siegfried-f55-disabled-benchmark.log"
+            },
+            "boot_benchmark": {
+              "command": [
+                "/usr/bin/python3",
+                "-B",
+                "tools/run_isolated_tests.py",
+                "tools/benchmark_boot_briefing.py"
+              ],
+              "exit_code": 0,
+              "seconds": 3.0282591650029644,
+              "log": "/tmp/siegfried-f55-disabled-boot_benchmark.log"
+            }
+          },
+          "real_runtime_and_both_snapshots_preserved": true,
+          "metadata_changes": [],
+          "private_fingerprints_persisted": false
+        },
+        "boot_composition_p95_ms": 0.00034199911169707775,
+        "boot_hook_dry_run_p95_ms": 115.70501800451893,
+        "visual_login_latency_measured": false
+      },
+      "rollback_helper": {
+        "path": "/tmp/siegfried-f55-remove-own-autostart.py",
+        "sha256": "7c2b0d501027f07cb59c6772ddf2af8cdbd428a80e6e18cc5ab3bd330ae364fd",
+        "command_dry_run": "/usr/bin/python3 -B /tmp/siegfried-f55-remove-own-autostart.py",
+        "command_authorization_required": "/usr/bin/python3 -B /tmp/siegfried-f55-remove-own-autostart.py --apply",
+        "preserves": "runtime, history, secrets, Vault, both snapshots, wrappers and unit",
+        "executed": false
+      },
+      "supervisor": {
+        "path": "/tmp/siegfried-f55-install-disabled-autostart.py",
+        "sha256": "e7593b66cb5f896011a902d2e33879c4e32e31d428f8ceb379fc564128c295d4"
+      }
+    }
+  ],
+  "kde_to_real_repl_integration_actions": [
+    {
+      "status": "TECHNICAL_PASS_PENDING_HUMAN_CONFIRMATION",
+      "unit_before": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": ""
+      },
+      "started_at_utc": "2026-10-09T23:06:39.663875+00:00",
+      "prompt_human_confirmation": "PENDING",
+      "private_fingerprints_persisted": false,
+      "max_seconds": 120,
+      "unit_running": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "UnitFileState": "disabled",
+        "MainPID": "251324",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/siegfried.service"
+      },
+      "ipc_before_repl": {
+        "PING": "OK",
+        "STATUS": "OK"
+      },
+      "notification_id": 216,
+      "notify_count": 1,
+      "inhibited": false,
+      "local_greeting_hour": 18,
+      "socket_mode": "0o600",
+      "physical_action_received": true,
+      "terminal_pid": 251383,
+      "terminal_exit_code": 0,
+      "daemon_survived_repl_exit": true,
+      "ipc_after_repl_exit": {
+        "PING": "OK",
+        "STATUS": "OK"
+      },
+      "unit_after": {
+        "LoadState": "loaded",
+        "ActiveState": "inactive",
+        "UnitFileState": "disabled",
+        "MainPID": "0",
+        "Result": "success",
+        "NRestarts": "0",
+        "ControlGroup": ""
+      },
+      "elapsed_seconds": 36.82375604200206,
+      "doctor": "READY",
+      "runtime_nonlog_preserved": true,
+      "real_history_all_metadata_and_content_preserved": true,
+      "watchdog": {
+        "triggered": false
+      },
+      "supervisor": {
+        "path": "/tmp/siegfried-f55-kde-repl-supervised.py",
+        "sha256": "26c2978eb27565b989ee194655389cdf0400b78b12cafecac9b50d07f9440a6a",
+        "watchdog_deadline_seconds": 105,
+        "ui_deadline_seconds": 95,
+        "stop_timeout_seconds": 8
+      },
+      "autostart_hidden_preserved": true,
+      "snapshots_sha_preserved": true,
+      "human_confirmation": "PASS",
+      "no_automatic_action_invocation": true,
+      "human_confirmation_details": {
+        "single_notification": true,
+        "correct_greeting": true,
+        "open_session_button_functional": true,
+        "konsole_opened_real_repl": true,
+        "commands_ayuda_status_salir_functional": true,
+        "daemon_remained_active": true,
+        "runtime_ready_data_preserved": true
+      }
+    }
+  ],
+  "controlled_persistent_activation_actions": [
+    {
+      "status": "PASS_PENDING_LOGIN_TRIAL",
+      "verified_at_utc": "2026-10-09T23:26:00Z",
+      "preflight": {
+        "systemd": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "FragmentPath": "/home/okami/.config/systemd/user/siegfried.service",
+          "DropInPaths": "",
+          "UnitFileState": "disabled",
+          "MainPID": "0"
+        },
+        "xdg_desktop": {
+          "stat": {
+            "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+            "size": 321,
+            "mode": "0o600",
+            "uid": 1000,
+            "gid": 1000,
+            "inode": 1582265,
+            "mtime": 1791586323.4662423
+          },
+          "sha256": "985a5a4d5d5334b36ced08dff2446b39c56de8a16689f6cc6af4bf7045da2da6",
+          "content": "[Desktop Entry]\nType=Application\nVersion=1.0\nName=Siegfried\nComment=Briefing determinista de inicio\nIcon=dialog-information\nExec=\"/usr/bin/python3\" \"/home/okami/.local/share/siegfried-boot/scripts/boot_hook.py\"\nTryExec=/usr/bin/python3\nOnlyShowIn=KDE;\nTerminal=false\nStartupNotify=false\nHidden=true\nX-Siegfried-Gate=F5.3\n"
+        },
+        "unit_file": {
+          "stat": {
+            "path": "/home/okami/.config/systemd/user/siegfried.service",
+            "size": 713,
+            "mode": "0o600",
+            "uid": 1000,
+            "gid": 1000,
+            "inode": 1572047,
+            "mtime": 1791574492.5842261
+          },
+          "sha256": "8bd2908b95074de28c931af6fe4066623d00870cc6da0ac10a85a7d6e090bab7"
+        },
+        "history": {
+          "stat": {
+            "path": "/home/okami/.siegfried/data/.history",
+            "size": 6056,
+            "mode": "0o600",
+            "uid": 1000,
+            "gid": 1000,
+            "inode": 1575285,
+            "mtime": 1791578291.3208997
+          },
+          "sha256": "e88445ad86f3692be8b6f7545ac828de3d6a0349a5fa1fd4f823f151b4e5ead6"
+        },
+        "socket": {
+          "exists": false,
+          "path": "/run/user/1000/siegfried/siegfried.sock"
+        },
+        "processes": [],
+        "doctor": {
+          "exit_code": 0,
+          "stdout": "[Siegfried] Diagnóstico del runtime\n\nConfiguración: OK\nPermisos: OK\nVault: OK\nRutas: OK\n\nEstado: READY\n"
+        }
+      },
+      "recovery_preparation": {
+        "procedure_script": "/tmp/siegfried-f55-recovery-procedure.py",
+        "dry_run_verified": true,
+        "steps": [
+          "systemctl --user disable siegfried.service",
+          "manage_autostart(Path.home(), operation=\"disable\", dry_run=False, repository=Path.home() / \".local/share/siegfried-boot\")",
+          "systemctl --user stop siegfried.service"
+        ],
+        "invariants": "Snapshots, wrappers and runtime data untouched; no foreign services modified"
+      },
+      "systemd_activation": {
+        "commands": [
+          "systemctl --user enable siegfried.service",
+          "systemctl --user start siegfried.service"
+        ],
+        "symlink": "/home/okami/.config/systemd/user/default.target.wants/siegfried.service -> /home/okami/.config/systemd/user/siegfried.service",
+        "unit_state": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "253749",
+          "Result": "success",
+          "NRestarts": "0"
+        },
+        "socket": {
+          "path": "/run/user/1000/siegfried.sock",
+          "size": 0,
+          "mode": "0o600",
+          "uid": 1000,
+          "gid": 1000,
+          "inode": 1294,
+          "mtime": 1791588264.8496754
+        },
+        "ping": "[OK] {'pong': True, 'state': 'IDLE'}",
+        "status": "[OK] {'state': 'IDLE', 'continuous_sitting_seconds': 0.0, 'timer_active': False, 'remaining_seconds': 0.0, 'total_duration_seconds': 0.0, 'task_name': '', 'audio_playing': False, 'focus_active_app': None, 'focus_active_category': None}"
+      },
+      "autostart_activation": {
+        "api_call": "manage_autostart(Path.home(), operation=\"enable\", dry_run=False, repository=Path.home() / \".local/share/siegfried-boot\")",
+        "destination": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+        "sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+        "stat": {
+          "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+          "size": 322,
+          "mode": "0o600",
+          "uid": 1000,
+          "gid": 1000,
+          "inode": 1583681,
+          "mtime": 1791588323.0690744
+        },
+        "desktop_file_validate": true,
+        "hidden_value": false,
+        "hook_executed_immediately": false,
+        "konsole_opened": false,
+        "notification_sent": false
+      },
+      "postchecks": {
+        "systemd_properties": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "UnitFileState": "enabled",
+          "MainPID": "253749",
+          "Result": "success",
+          "NRestarts": "0"
+        },
+        "xdg_autostart": {
+          "enabled": true,
+          "valid": true,
+          "sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+          "stat": {
+            "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+            "size": 322,
+            "mode": "0o600",
+            "uid": 1000,
+            "gid": 1000,
+            "inode": 1583681,
+            "mtime": 1791588323.0690744
+          }
+        },
+        "runtime_doctor": {
+          "exit_code": 0,
+          "stdout": "[Siegfried] Diagnóstico del runtime\n\nConfiguración: OK\nPermisos: OK\nVault: OK\nRutas: OK\n\nEstado: READY\n"
+        },
+        "ping_status": {
+          "ping": "[OK] {'pong': True, 'state': 'IDLE'}",
+          "status": "[OK] {'state': 'IDLE', 'continuous_sitting_seconds': 0.0, 'timer_active': False, 'remaining_seconds': 0.0, 'total_duration_seconds': 0.0, 'task_name': '', 'audio_playing': False, 'focus_active_app': None, 'focus_active_category': None}"
+        },
+        "socket": {
+          "path": "/run/user/1000/siegfried.sock",
+          "size": 0,
+          "mode": "0o600",
+          "uid": 1000,
+          "gid": 1000,
+          "inode": 1294,
+          "mtime": 1791588264.8496754
+        },
+        "history_preserved": true,
+        "history_hash": "e88445ad86f3692be8b6f7545ac828de3d6a0349a5fa1fd4f823f151b4e5ead6",
+        "vault_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "secrets_hash": "51b55a7ed8890bd0d69329fb127bd0310cd75c74f63f7a9a73ec65eb802ee51c",
+        "profile_hash": "04c5313ea39569916fa9c38901ae26b253b0a794a1bef5c3649c5153820b14bc",
+        "agenda_hash": "0001e93248c67687cff06b26f1823d91d94ffa2a975dae999dbe0f0586f12e54",
+        "daemon_snapshot_integrity": true,
+        "boot_snapshot_integrity": true,
+        "processes": [
+          "253749 /usr/bin/python3 -B /home/okami/.local/share/siegfried-daemon/bin/siegfried-daemon"
+        ],
+        "unit_files": "UNIT FILE         STATE   PRESET\nsiegfried.service enabled enabled\n\n1 unit files listed.",
+        "konsole_opened": false,
+        "briefing_lock_created": false
+      }
+    }
+  ],
+  "real_login_gate_preparation": {
+    "prepared_at_utc": "2026-10-10T00:28:13.372679+00:00",
+    "validator": "tools/verify_login_f55.py",
+    "validator_sha256": "2b00928e290c5ddb519a129b0c7bc9ee498c9c7cadf20c9af96a556e4aa6da38",
+    "reference_path": "/tmp/siegfried-f55-login-reference-final.json",
+    "reference_mode": "0600",
+    "reference_scope": "All runtime regular files and directory identity/security; logs allow append. Private hashes not copied into gate artifacts.",
+    "pre_logout_result": {
+      "phase": "pre_logout",
+      "checks": {
+        "snapshots": {
+          "status": "PASS",
+          "daemon": {
+            "files": 61,
+            "discrepancies": 0
+          },
+          "boot": {
+            "files": 57,
+            "discrepancies": 0
+          }
+        },
+        "service": {
+          "status": "PASS",
+          "private_snapshot_exec": true,
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "DropInPaths": "",
+          "UnitFileState": "enabled",
+          "InvocationID": "16ba85571af341818c337fa7766db99d",
+          "MainPID": "253749",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainStartTimestamp": "Fri 2026-10-09 18:24:24 -05",
+          "ExecMainStartTimestampMonotonic": "46834228117",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/siegfried.service"
+        },
+        "single_instance": {
+          "status": "PASS",
+          "daemon_pids": [
+            253749
+          ],
+          "cgroup_pids": [
+            253749
+          ]
+        },
+        "ipc_socket": {
+          "status": "PASS",
+          "socket_secure": true,
+          "mode": "0600",
+          "PING": "PASS",
+          "STATUS": "PASS"
+        },
+        "autostart": {
+          "status": "PASS",
+          "hidden": "false",
+          "private_snapshot_exec": true
+        },
+        "runtime": {
+          "status": "PASS",
+          "runtime": "READY"
+        },
+        "new_graphical_login": {
+          "status": "PENDING_LOGIN",
+          "session_changed": false,
+          "type": "wayland"
+        },
+        "briefing": {
+          "status": "PENDING_LOGIN",
+          "sent_current_session": false
+        },
+        "service_journal": {
+          "status": "PASS",
+          "current_invocation_entries": 2,
+          "priority_0_to_3": 0,
+          "priority_4": 0,
+          "messages_disclosed": false
+        },
+        "resources_stability": {
+          "status": "PASS",
+          "seconds": 5.002904278997448,
+          "samples": 6,
+          "cpu_core_percent": 0.0,
+          "cpu_tick_seconds": 0.01,
+          "rss_min_bytes": 29851648,
+          "rss_max_bytes": 29851648,
+          "rss_limit_bytes": 30000000,
+          "rss_deviation": false,
+          "cpu_target_percent": 0.2,
+          "cpu_deviation": false,
+          "sustained_certification": false
+        },
+        "private_integrity": {
+          "status": "PASS",
+          "changed_file_count": 0,
+          "history_unchanged": true,
+          "log_content": "expected append; identity and security checked",
+          "atime": "excluded across login; validator reads O_NOATIME"
+        }
+      },
+      "history_incident": "UNRESOLVED; preserve current state",
+      "human_observations": "PENDING",
+      "login_to_visible_ms": null,
+      "service_start_relative_to_session_ms": 46815801.405,
+      "timing_scope": "logind session creation to daemon start; not KDE readiness or visible notification",
+      "technical_result": "PASS",
+      "gate_verdict": "BLOCKED; real login and human observations required",
+      "preserved_since_first_reference": true,
+      "history_matches_activation_reference": true
+    },
+    "installer_fixture": {
+      "disable_actual_hidden_true": "PASS",
+      "foreign_runtime_snapshot_preservation": "PASS",
+      "failed_publication_rollback_preservation": "PASS",
+      "programs_started": false,
+      "scope": "Temporary HOME; production recovery NOT executed"
+    },
+    "validator_safety_tests": {
+      "tests": 5,
+      "result": "PASS",
+      "scope": "O_NOATIME preservation; leaf/parent symlink and size rejection; same-size history change/new file detection; log append versus security changes"
+    },
+    "recovery_review": {
+      "path": "/tmp/siegfried-f55-recovery-procedure.py",
+      "executed": false,
+      "actions": [
+        "disable own service",
+        "set own XDG entry Hidden=true",
+        "stop own service"
+      ],
+      "limitations": [
+        "Dry-run content describes enabled install and does not simulate disable mutation; actual disable verified in fixture.",
+        "Printed Verified statements are assertions, not postchecks; recovery requires independent ownership/integrity and postchecks.",
+        "Do not use general uninstall for activation rollback."
+      ]
+    },
+    "history_policy_conflict": {
+      "status": "RESOLVED_STRICT_PRESERVATION",
+      "cause": "Real REPL adds ayuda/status/salir to readline history and saves on exit. Strict preservation cannot be promised for that human test.",
+      "production_source": "src/siegfried/cli/repl.py:56,160,172,193,259",
+      "validator_changes_runtime": false,
+      "decision": "No persistent launcher during login; prior isolated authentic REPL approval retained."
+    },
+    "post_login_command": "/usr/bin/python3 -B tools/verify_login_f55.py --post-login --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20",
+    "gate_verdict": "BLOCKED",
+    "pending": [
+      "Real new KDE login",
+      "Current-session SENT and physical single-notification observation",
+      "Correct greeting and presence of Abrir sesión button",
+      "Post-login integrity, resources and service journal",
+      "Same-login notification-to-REPL action not repeated; prior isolated PASS retained independently"
+    ],
+    "historical_history_incident": "UNRESOLVED; preserve current state",
+    "known_resource_deviation": "Previous systemd RSS 30011392 bytes exceeded 30000000-byte target by 11392; retained. Current bounded measurement does not supersede prior deviation.",
+    "login_to_visible_ms": null,
+    "git_status_actual": " M docs/gates/GATE_F5_5_EVIDENCE.json\n M docs/gates/GATE_F5_5_RECOVERY.json\n M docs/gates/GATE_F5_5_REPORT.md\n M tests/integration/test_operational_pilot_f54.py\n M tools/install_boot_briefing.py\n?? tests/integration/test_autostart_disabled_f55.py\n?? tools/verify_login_f55.py\n",
+    "git_head": "8cba97bdfaf759eb1d6bee156b6cbf3af4622e00",
+    "new_production_changes": false,
+    "logout_or_reboot_executed": false,
+    "packages_installed": false,
+    "commits_performed": false,
+    "initial_20_second_resource_window": {
+      "seconds": 20.009301327001594,
+      "samples": 21,
+      "cpu_core_percent": 0.19990702996721788,
+      "cpu_tick_seconds": 0.01,
+      "rss_min_bytes": 29851648,
+      "rss_max_bytes": 29851648,
+      "sustained_certification": false
+    }
+  },
+  "strict_history_login_decision": {
+    "recorded_at_utc": "2026-10-10T00:30:43.445942+00:00",
+    "decision": "STRICT_REAL_HISTORY_PRESERVATION",
+    "history_operations_authorized": false,
+    "existing_reference_preserved": true,
+    "reference_path": "/tmp/siegfried-f55-login-reference-final.json",
+    "precheck": {
+      "phase": "pre_logout",
+      "checks": {
+        "snapshots": {
+          "status": "PASS",
+          "daemon": {
+            "files": 61,
+            "discrepancies": 0
+          },
+          "boot": {
+            "files": 57,
+            "discrepancies": 0
+          }
+        },
+        "service": {
+          "status": "PASS",
+          "private_snapshot_exec": true,
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "DropInPaths": "",
+          "UnitFileState": "enabled",
+          "InvocationID": "16ba85571af341818c337fa7766db99d",
+          "MainPID": "253749",
+          "Result": "success",
+          "NRestarts": "0",
+          "ExecMainStartTimestamp": "Fri 2026-10-09 18:24:24 -05",
+          "ExecMainStartTimestampMonotonic": "46834228117",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/siegfried.service"
+        },
+        "single_instance": {
+          "status": "PASS",
+          "daemon_pids": [
+            253749
+          ],
+          "cgroup_pids": [
+            253749
+          ]
+        },
+        "ipc_socket": {
+          "status": "PASS",
+          "socket_secure": true,
+          "mode": "0600",
+          "PING": "PASS",
+          "STATUS": "PASS"
+        },
+        "autostart": {
+          "status": "PASS",
+          "hidden": "false",
+          "private_snapshot_exec": true
+        },
+        "runtime": {
+          "status": "PASS",
+          "runtime": "READY"
+        },
+        "new_graphical_login": {
+          "status": "PENDING_LOGIN",
+          "session_changed": false,
+          "type": "wayland"
+        },
+        "briefing": {
+          "status": "PENDING_LOGIN",
+          "sent_current_session": false
+        },
+        "service_journal": {
+          "status": "PASS",
+          "current_invocation_entries": 2,
+          "priority_0_to_3": 0,
+          "priority_4": 0,
+          "messages_disclosed": false
+        },
+        "resources_stability": {
+          "status": "PASS",
+          "seconds": 5.00217754500045,
+          "samples": 6,
+          "cpu_core_percent": 0.1999129361170866,
+          "cpu_tick_seconds": 0.01,
+          "rss_min_bytes": 29851648,
+          "rss_max_bytes": 29851648,
+          "rss_limit_bytes": 30000000,
+          "rss_deviation": false,
+          "cpu_target_percent": 0.2,
+          "cpu_deviation": false,
+          "sustained_certification": false
+        },
+        "private_integrity": {
+          "status": "PASS",
+          "changed_file_count": 0,
+          "history_unchanged": true,
+          "log_content": "expected append; identity and security checked",
+          "atime": "excluded across login; validator reads O_NOATIME"
+        }
+      },
+      "history_incident": "UNRESOLVED; preserve current state",
+      "human_observations": "PENDING",
+      "login_to_visible_ms": null,
+      "service_start_relative_to_session_ms": 46815801.405,
+      "timing_scope": "logind session creation to daemon start; not KDE readiness or visible notification",
+      "technical_result": "PASS",
+      "gate_verdict": "BLOCKED; real login and human observations required"
+    },
+    "notification_to_repl": {
+      "previous_isolated_trial": "PASS_TECHNICAL_AND_HUMAN",
+      "evidence": "GATE_F5_5_REPORT.md sections 38 and 39",
+      "during_real_login": "NOT_TO_BE_REVALIDATED",
+      "persistent_launcher_click_authorized": false,
+      "isolation_guaranteed_for_persistent_launcher": false,
+      "same_login_end_to_end": "PENDING; do not substitute prior trial for this observation",
+      "future_action_if_required": "Prepare a separate isolated test after login; never change real history or REPL logic."
+    },
+    "human_login_observations": [
+      "One notification",
+      "Correct greeting",
+      "Presence of Abrir sesión button; do not click"
+    ],
+    "after_return": [
+      "Run read-only validator using existing reference",
+      "Compare runtime and real history against pre-logout reference",
+      "Ask for physical notification observations and deviations",
+      "Evaluate independent categories and update all three gate artifacts"
+    ],
+    "post_login_command": "/usr/bin/python3 -B /media/okami/Mio/Siegfried/tools/verify_login_f55.py --post-login --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20",
+    "validator_available_for_next_login": true,
+    "reference_recreation_authorized": false,
+    "production_changes": false,
+    "logout_reboot_recovery_commits_packages": false,
+    "gate_verdict": "BLOCKED_PENDING_REAL_LOGIN"
+  },
+  "real_login_postcheck": {
+    "attempted_at_utc": "2026-10-10T00:47:01.985399+00:00",
+    "validator_command": "/usr/bin/python3 -B tools/verify_login_f55.py --post-login --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20",
+    "validator_exit_code": 2,
+    "validator_result": {
+      "technical_result": "BLOCKED",
+      "reason": "FileNotFoundError",
+      "private_content_disclosed": false
+    },
+    "reference_path": "/tmp/siegfried-f55-login-reference-final.json",
+    "reference_available_after_login": false,
+    "reference_recreated": false,
+    "human_boot_briefing": {
+      "verdict": "PASS",
+      "source": "User confirmation after manual KDE logout/login",
+      "automatic": true,
+      "notification_count": 1,
+      "title": "Siegfried — Inicio",
+      "greeting": "Buenas noches, Señor. Siegfried está preparado",
+      "user_reported_screenshot_time": "19:42",
+      "greeting_time_consistency": "PASS per user observation",
+      "open_session_clicked": false,
+      "history_preservation_intent": "Strict; no REPL launched"
+    },
+    "post_login_checks": {
+      "systemd_active_enabled": "NOT_VERIFIED",
+      "single_instance": "NOT_VERIFIED",
+      "ping_status": "NOT_VERIFIED",
+      "socket_permissions": "NOT_VERIFIED",
+      "runtime_ready": "NOT_VERIFIED",
+      "autostart_enabled": "NOT_VERIFIED",
+      "snapshot_integrity": "NOT_VERIFIED",
+      "runtime_private_data_integrity": "NOT_VERIFIED",
+      "history_vault_secrets_config": "NOT_VERIFIED",
+      "cpu_rss": "NOT_VERIFIED",
+      "service_journal": "NOT_VERIFIED"
+    },
+    "approved_evidence": "Pre-logout validator passed service, single process, IPC, socket, READY, Autostart, snapshots and private-data comparison; it is not post-login evidence.",
+    "repl_chain": "Previously approved and passed in isolated trial; not exercised during this login to protect real history.",
+    "visible_timing_slo": "NOT_CERTIFIED; 19:42 screenshot clock alone gives no reliable login-to-visible duration.",
+    "known_deviations": [
+      "Prior RSS measurement 30,011,392 bytes exceeded 30,000,000-byte target by 11,392 bytes.",
+      "CPU threshold certification remains limited by 10 ms clock resolution and bounded windows."
+    ],
+    "historical_history_incident": "UNRESOLVED; current history was not read or changed in this post-login attempt.",
+    "gate_verdict": "BLOCKED",
+    "block_reason": "The required pre-logout integrity reference is missing. Recreating it now would erase the comparison baseline and cannot establish preservation across login.",
+    "production_changes": false,
+    "runtime_changes": false,
+    "repl_or_notification_executed": false,
+    "recovery_or_commit": false
+  },
+  "evidence_recovery_audit": {
+    "audited_at_utc": "2026-10-10T00:56:25.081402+00:00",
+    "authorized_search_scope": [
+      "docs/gates/GATE_F5_5_EVIDENCE.json",
+      "docs/gates/GATE_F5_5_RECOVERY.json",
+      "docs/gates/GATE_F5_5_REPORT.md",
+      "registered /tmp preparation/reference paths"
+    ],
+    "ephemeral_reference_search": {
+      "final_reference_exists": false,
+      "first_reference_exists": false,
+      "precheck_result_file_exists": false,
+      "registered_preflight_files_exist": false,
+      "full_inventory_in_gate_artifacts": false,
+      "prelogout_recorded_comparison": {
+        "status": "PASS",
+        "changed_file_count": 0,
+        "history_unchanged": true,
+        "limitation": "Only aggregate result persists; per-file fingerprints/metadata were not embedded, so cannot independently repeat the complete comparison."
+      }
+    },
+    "baseline_classification": "PRE_LOGIN_BASELINE_UNAVAILABLE",
+    "recovered_authentic_history_reference": {
+      "source": "GATE_F5_5_EVIDENCE.json controlled_persistent_activation_actions[0].preflight.history",
+      "chronology": "Recorded before the manual login; earlier activation checkpoint",
+      "content_match": true,
+      "recorded_metadata_compared": {
+        "uid": true,
+        "gid": true,
+        "mode": true,
+        "inode": true,
+        "size": true,
+        "mtime": true
+      },
+      "unrecorded_fields": [
+        "ctime",
+        "device",
+        "nlink",
+        "atime"
+      ],
+      "fingerprint_or_content_disclosed": false,
+      "meaning": "Authentic evidence that current .history matches that earlier checkpoint; not a complete per-file baseline for the whole runtime."
+    },
+    "postlogin_operational_current": {
+      "validator": "tools/verify_login_f55.py --post-login --seconds 20 (no reference; did not write runtime)",
+      "service": {
+        "status": "PASS",
+        "active": "active",
+        "enabled": "enabled",
+        "pid": 2704,
+        "restarts": 0,
+        "private_snapshot_exec": true
+      },
+      "single_instance": {
+        "status": "PASS",
+        "daemon_pids": [
+          2704
+        ],
+        "cgroup_pids": [
+          2704
+        ]
+      },
+      "ipc": {
+        "ping": "PASS",
+        "status": "PASS"
+      },
+      "socket": {
+        "status": "PASS",
+        "mode": "0600",
+        "uid": 1000
+      },
+      "runtime_ready": "PASS",
+      "xdg_autostart": {
+        "status": "PASS",
+        "Hidden": "false",
+        "exec_private_snapshot": true
+      },
+      "session_boot": {
+        "new_graphical_login": "PASS_BY_SAME_BOOT_MONOTONIC_TIMESTAMPS",
+        "service_start_after_session_ms": 237.715,
+        "scope": "logind session creation to daemon start"
+      },
+      "briefing_marker": {
+        "sent_current_session": true,
+        "proves_visible_or_once": false
+      },
+      "journald_current_invocation": {
+        "entries": 2,
+        "priority_0_to_3": 0,
+        "priority_4": 0,
+        "message_contents_disclosed": false
+      },
+      "journald_current_boot_own_unit": {
+        "entries": 2,
+        "priority_counts": {
+          "0": 0,
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 2,
+          "7": 0
+        },
+        "message_contents_disclosed": false
+      },
+      "resources": {
+        "seconds": 20.008912066999983,
+        "samples": 21,
+        "cpu_one_core_percent": 0.19991091902478114,
+        "cpu_tick_resolution_seconds": 0.01,
+        "rss_min_bytes": 28688384,
+        "rss_max_bytes": 28688384,
+        "rss_target_bytes": 30000000,
+        "rss_within_target": true,
+        "sustained_certification": false
+      },
+      "daemon_snapshot": {
+        "status": "PASS",
+        "audited_sources": 61,
+        "discrepancies": 0
+      },
+      "boot_snapshot": {
+        "validator_status": "FAIL",
+        "discrepancies": 39,
+        "expected_sources": 57,
+        "source_hash_mismatches": 0,
+        "extra_generated_bytecode_files": 33,
+        "extra_cache_directories": 6,
+        "cache_directory_mode": "0775",
+        "interpretation": "Unlisted __pycache__ bytecode appeared after the prior clean snapshot check; exact snapshot inventory/modes no longer match, while all 57 audited source files match. No files were deleted or repaired."
+      },
+      "human_boot_briefing": {
+        "status": "PASS",
+        "source": "User confirmation",
+        "automatic": true,
+        "count": 1,
+        "title": "Siegfried — Inicio",
+        "greeting": "Buenas noches, Señor. Siegfried está preparado",
+        "screenshot_clock": "19:42",
+        "greeting_consistent_per_user": true,
+        "button_clicked": false
+      },
+      "visible_latency_slo_under_2s": "NOT_CERTIFIED",
+      "human_evidence": "Screenshot clock does not establish login-to-visible latency."
+    },
+    "integrity": {
+      "overall": "PARTIAL; complete pre-login baseline unavailable",
+      "history": "PASS against authentic older activation-manifest content and every comparable stored metadata field",
+      "vault_secrets_configuration_other_private_files": "NOT_VERIFIABLE_ACROSS_LOGIN; no authentic per-file pre-login inventory persisted",
+      "read_side_effects": "History comparison used O_NOATIME; no runtime files written."
+    },
+    "persistent_reference": {
+      "status": "CREATED_FOR_ANY_FUTURE_LOGIN_TEST",
+      "path": "/home/okami/.local/share/siegfried-gate-f55/next-login-reference.json",
+      "directory_mode": "0700",
+      "file_mode": "0600",
+      "contains": "private file names, metadata and hashes only; no file contents or secrets",
+      "provenance": "Captured after current login; cannot be relabelled as prior baseline."
+    },
+    "repeat_login_assessment": {
+      "needed_to_confirm_boot_functionality": false,
+      "needed_if_full_runtime_preservation_across_a_further_login_must_be_certified": true,
+      "decision": "Do not repeat solely to establish automatic boot/briefing, already confirmed. If a later full preservation trial is required, use the newly persisted reference and user-performed login; this will cover only that future interval."
+    },
+    "known_resource_deviation": "Prior RSS 30011392 bytes exceeded 30000000-byte target by 11392; remains disclosed.",
+    "history_incident": "UNRESOLVED; original pre-incident history remains unrecoverable; present file matches later authentic activation checkpoint.",
+    "gate_verdict": "BLOCKED",
+    "reason": "Automatic startup and human briefing pass, but complete post-login private-data integrity lacks its prior full inventory and Boot snapshot has generated unlisted cache files/mode deviations.",
+    "no_repl_or_new_notifications": true,
+    "no_production_or_runtime_mutation": true,
+    "no_recovery_or_commit": true,
+    "current_validator_sha256": "727322cd9170f79e662915f114d74d10641b9ac5ef1885f3faedeeceafbd25fc"
+  },
+  "boot_cache_remediation_proposal": {
+    "prepared_at_utc": "2026-10-10T01:19:09.578046+00:00",
+    "status": "PREPARED_NOT_APPLIED_AWAITING_SPECIFIC_AUTHORIZATION",
+    "cause_root": {
+      "autostart_python_flags": "No -B; bytecode suppression absent from current user-manager environment",
+      "workers": "-S suppresses site only; worker environment explicitly discards PYTHONDONTWRITEBYTECODE; Python flags are not inherited",
+      "repl_launcher": "Independent Python invocation without -B"
+    },
+    "causation_scope": "Execution route recreation proved by isolated fixture. Exact historical hook environment/PID not retained. Every real cache matches its audited source compile/header.",
+    "inventory": {
+      "path": "docs/gates/f55_cache_remediation/cache-inventory.json",
+      "sha256": "4c6284ec33895139acaaf02fdd6d22da457ec695acaf68018a292ce50d1ab2fa",
+      "original_sources_matching": 57,
+      "marker_matching": true,
+      "extra_cache_files": [
+        "src/siegfried/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/alerts.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/config.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/events.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/inference.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/ipc.cpython-314.pyc",
+        "src/siegfried/contracts/__pycache__/states.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/briefing.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/clock.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/errors.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/rest.cpython-314.pyc",
+        "src/siegfried/core/__pycache__/state_machine.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/audio.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/boot_briefing.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/briefing_files.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/briefing_kde.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/kwin.cpython-314.pyc",
+        "src/siegfried/integrations/__pycache__/notifications.cpython-314.pyc",
+        "src/siegfried/ipc/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/ipc/__pycache__/client.cpython-314.pyc",
+        "src/siegfried/ipc/__pycache__/protocol.cpython-314.pyc",
+        "src/siegfried/ipc/__pycache__/server.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/__init__.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/aggregator.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/atomic_json.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/initialization.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/paths.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/secrets.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/validation.cpython-314.pyc",
+        "src/siegfried/storage/__pycache__/vault.cpython-314.pyc"
+      ],
+      "extra_cache_directories": [
+        "src/siegfried/__pycache__",
+        "src/siegfried/contracts/__pycache__",
+        "src/siegfried/core/__pycache__",
+        "src/siegfried/integrations/__pycache__",
+        "src/siegfried/ipc/__pycache__",
+        "src/siegfried/storage/__pycache__"
+      ],
+      "unknown_files": [],
+      "symlinks": 0,
+      "unexpected_hardlinks": 0,
+      "foreign_owners": 0,
+      "source_permission_deviations": 0,
+      "cache_file_mode": "0600",
+      "cache_directory_mode": "0775",
+      "private_ancestor_mode": "0700",
+      "python_attribution": "All 33 magic/header/source stamp and recompiled marshal bodies match, without execution"
+    },
+    "prevention": {
+      "patch": "docs/gates/f55_cache_remediation/prevent-bytecode.patch",
+      "repository_candidate_files": [
+        "tools/install_boot_briefing.py",
+        "src/siegfried/integrations/boot_briefing.py",
+        "src/siegfried/integrations/briefing_kde.py"
+      ],
+      "real_boot_candidate_files": [
+        "src/siegfried/integrations/boot_briefing.py",
+        "src/siegfried/integrations/briefing_kde.py"
+      ],
+      "real_xdg_candidate": {
+        "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+        "metadata": {
+          "st_dev": 48,
+          "st_ino": 1583681,
+          "st_uid": 1000,
+          "st_gid": 1000,
+          "st_mode": 33152,
+          "st_nlink": 1,
+          "st_size": 322,
+          "st_mtime_ns": 1791588323069074343,
+          "st_ctime_ns": 1791588323077074398,
+          "sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d"
+        },
+        "expected_old_sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+        "proposed_sha256": "981f7cf65e8a486b2e658bb5da7dce1d8d56f3013798dd7735d667ccbbb62d9e",
+        "candidate_exec": "\"/usr/bin/python3\" \"-B\" \"/home/okami/.local/share/siegfried-boot/scripts/boot_hook.py\""
+      },
+      "flags": "-B independently for desktop Python, worker Python (retain -S), REPL launcher Python",
+      "limits": "Flags prevent official entrypoint/worker/launcher bytecode; no filesystem read-only enforcement for arbitrary manual Python commands. -B does not isolate REPL history, and no click/REPL is authorized."
+    },
+    "cleanup": {
+      "helper": "tools/check_boot_cache_f55.py",
+      "default": "Read-only; real dry-run PASS, applied=false",
+      "exact_targets": "33 files and 6 directories listed in manifest; not any glob or recursive deletion",
+      "guards": [
+        "Root dev/inode/uid/gid/mode and full allowlist",
+        "Source content original or explicitly proposed hash, private source modes/groups",
+        "Cache full hash and dev/inode/uid/gid/mode/nlink/size/mtime/ctime",
+        "No symlink traversal, special files, foreign mounts or unknown entries",
+        "No running boot_hook; process visibility must be complete",
+        "Private exclusive backup before deletion and complete second validation",
+        "Per-file checks immediately before unlink; directory identity/type/ownership and empty rmdir",
+        "Postcleanup only known source files/directories remain"
+      ],
+      "real_backup_if_authorized": "/home/okami/.local/share/siegfried-gate-f55/cache-backup-f55.json; 0600 within 0700 parent",
+      "applied_real": false,
+      "recovery": "Guarded restore of only two modified modules/XDG from new verified private backups; bytecode backup before unlink. Stop on partial cleanup, changed destination or new entry; do not broad-delete or promise original inode/ctime restoration.",
+      "concurrency_limit": "No multi-file transaction or lock recognized by hook; repeated process checks plus no login/hook invocation during application. Same-UID malicious writer exclusion is not guaranteed."
+    },
+    "tests": {
+      "status": "PASS",
+      "results": {
+        "unpatched_top_level_recreates_caches": true,
+        "parent_B_does_not_protect_unpatched_worker": true,
+        "patched_top_level_and_actual_probe_worker_no_cache": true,
+        "temporary_home_installer_kde_desktop_and_workers": true,
+        "launcher_B_verified_without_executing_repl": true,
+        "exact_33_file_6_directory_fixture_cleanup_backup_sources_external_preserved": true,
+        "reject_changed_cache": true,
+        "reject_symlink": true,
+        "reject_hardlink": true,
+        "reject_unknown_file": true,
+        "reject_replaced_directory": true,
+        "reject_active_hook": true
+      },
+      "scope": "Temporary HOME/packages only; no REPL/notifications or production mutation"
+    },
+    "current_state": {
+      "service": {
+        "ActiveState": "active",
+        "UnitFileState": "enabled",
+        "MainPID": "2704",
+        "NRestarts": "0"
+      },
+      "autostart_hidden": false,
+      "hook_running": false,
+      "private_runtime_matches_existing_recent_reference": true,
+      "private_runtime_changed_files": 0,
+      "history_preserved": true
+    },
+    "source_production_modified": true,
+    "installed_launchers_modified": true,
+    "snapshots_modified": true,
+    "full_regression_repeated": true,
+    "full_regression_required_if_source_patch_authorized": false,
+    "artifact_hashes": {
+      "docs/gates/f55_cache_remediation/PROPOSAL.md": "6dc6017439db036ed63fc1eb72fb01aeb1d37fa3cbce959f1c57f3f28d30b466",
+      "docs/gates/f55_cache_remediation/cache-inventory.json": "4c6284ec33895139acaaf02fdd6d22da457ec695acaf68018a292ce50d1ab2fa",
+      "docs/gates/f55_cache_remediation/fixture-results.json": "0e12f4dca1f993689a6ea41344b0d001c81b007332168510be1939c73842b440",
+      "docs/gates/f55_cache_remediation/original.desktop": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+      "docs/gates/f55_cache_remediation/prevent-bytecode.patch": "382524fe33830ef6888a5f6c1afd3663c40f4be2e868c3914c8eaf04183e0094",
+      "docs/gates/f55_cache_remediation/proposal.json": "1d27eef79437c81927ae6e8a8ddc9d0bad64ba2c1fb9aec74f8859923c51c43b",
+      "docs/gates/f55_cache_remediation/proposed.desktop": "981f7cf65e8a486b2e658bb5da7dce1d8d56f3013798dd7735d667ccbbb62d9e",
+      "docs/gates/f55_cache_remediation/verify_proposal.py": "dfca48aab4d13e6af865c67254665823d7e3292f09b3a801c51ab198b045ec07",
+      "tools/check_boot_cache_f55.py": "c838dd9d305e1ecb56534ef9c3c797cb3aba0b5b9876ba4f8027114b92b07c75"
+    },
+    "approvals_needed": [],
+    "retained": {
+      "human_login_briefing": "PASS",
+      "technical_daemon": "PASS",
+      "real_history_current": "PRESERVED",
+      "history_incident": "UNRESOLVED",
+      "first_login_global_runtime_baseline": "PRE_LOGIN_BASELINE_UNAVAILABLE",
+      "historical_rss_deviation_bytes": 11392,
+      "historical_rss_peak_bytes": 30011392,
+      "login_to_visible_under_two_seconds": "NOT_CERTIFIED"
+    },
+    "gate_verdict": "PASS_WITH_DEVIATIONS; authorized remediation and current operational checks pass; historical baseline/RSS/history incident/SLO limitations remain.",
+    "repl_new_notification_logout_restart_disable_commit_push": false,
+    "authorized_attempt": {
+      "assertion_correction": {
+        "path": "tests/integration/test_boot_briefing_f53.py",
+        "test": "TestDKDE.test_launcher_fixed_argv",
+        "old_contract_suffix": [
+          "sys.executable",
+          "bin/siegfried"
+        ],
+        "new_assertion": "Exact argv: [launcher.konsole, --separate, -e, sys.executable, -B, repository/bin/siegfried]; shell remains forbidden.",
+        "scope": "Only the single assertion changed; test retained executable path, full argument order and no-shell coverage."
+      },
+      "regression": {
+        "command": "timeout -s INT -k 5s 180s /usr/bin/python3 -B tools/run_isolated_tests.py",
+        "status": "PASS",
+        "tests_run": 689,
+        "failed": 0,
+        "duration_seconds": 41.931,
+        "targeted_and_related": [
+          {
+            "command": "isolated unittest discovery, test_boot_briefing_f53.py -k test_launcher_fixed_argv",
+            "status": "PASS",
+            "tests": 1
+          },
+          {
+            "command": "isolated unittest discovery, test_boot_briefing_f53.py",
+            "status": "PASS",
+            "tests": 90
+          },
+          {
+            "command": "isolated unittest discovery, test_autostart_disabled_f55.py",
+            "status": "PASS",
+            "tests": 11
+          },
+          {
+            "command": "isolated unittest discovery, test_private_deployment_f55.py",
+            "status": "PASS",
+            "tests": 11
+          }
+        ]
+      },
+      "benchmarks": {
+        "general": {
+          "status": "PASS",
+          "command": "/usr/bin/python3 -B tools/run_isolated_tests.py tools/benchmark.py",
+          "router_p95_ms": 0.0015,
+          "vault_append_p95_ms": 2.4068,
+          "cli_cold_start_p95_ms": 29.55,
+          "orchestrator_p95_ms": 0.0047,
+          "aggregator_heuristic_p95_ms": 1.9572,
+          "aggregator_exhaustive_p95_ms": 8.0968
+        },
+        "boot_briefing": {
+          "status": "PASS",
+          "command": "/usr/bin/python3 -B tools/run_isolated_tests.py tools/benchmark_boot_briefing.py",
+          "composition_p95_ms": 0.000333,
+          "hook_dry_run_p95_ms": 115.520753,
+          "notification_visible_ms": null
+        }
+      },
+      "diff_check": "PASS",
+      "predeployment": {
+        "proposal_fixture_checks": "PASS (12)",
+        "original_sources": "PASS (57 plus marker)",
+        "cache_inventory": "PASS (33 exact .pyc, six exact __pycache__ directories)",
+        "service": "user unit active/enabled, PID 2704 unchanged, NRestarts 0",
+        "PING_STATUS": "PASS",
+        "boot_hook_running": false,
+        "xdg_original_identity": "PASS; owned installed entry, Hidden=false",
+        "persistent_reference": "PASS; private file 0600 in directory 0700"
+      },
+      "deployment": {
+        "status": "APPLIED_ONCE",
+        "files": [
+          {
+            "path": "~/.local/share/siegfried-boot/src/siegfried/integrations/boot_briefing.py",
+            "before_sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+            "after_sha256": "bafa71ddc991aba2207495f4a0ea779d43921abc18077eb27e1474d84ee81ff4"
+          },
+          {
+            "path": "~/.local/share/siegfried-boot/src/siegfried/integrations/briefing_kde.py",
+            "before_sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+            "after_sha256": "10d6926711bcf58cfcc5a1d2d493b29044d90df2978bb4be1bf344aaa86478a6"
+          },
+          {
+            "path": "~/.config/autostart/org.siegfried.BootBriefing.desktop",
+            "before_sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+            "after_sha256": "981f7cf65e8a486b2e658bb5da7dce1d8d56f3013798dd7735d667ccbbb62d9e",
+            "Hidden": "false"
+          }
+        ],
+        "publication": "Atomic per file; candidate hashes, owner and modes checked immediately after publication.",
+        "backup": {
+          "directory": "~/.local/share/siegfried-gate-f55 (0700)",
+          "components": {
+            "path": "predeployment-modules-f55.json",
+            "files": 3,
+            "mode": "0600",
+            "sha256": "4cec13bc0ff55c76fb23e6a396496d501926979a5eef8a931ed71c42dc4b6935",
+            "recoverability": "verified"
+          },
+          "prepublication_bytecode": {
+            "path": "predeployment-caches-f55.json",
+            "files": 33,
+            "mode": "0600",
+            "sha256": "a8f31158961e23ac72675c36b70faed5705081527284c1f7b3f2491aa9f5d6fa",
+            "recoverability": "verified"
+          },
+          "cleanup_bytecode": {
+            "path": "cache-backup-f55.json",
+            "files": 33,
+            "mode": "0600",
+            "sha256": "5794913cf8b39db170f149514e07a63410c05f741c90a02bb73f89ec498f6810",
+            "recoverability": "verified"
+          }
+        },
+        "cache_cleanup": {
+          "helper": "tools/check_boot_cache_f55.py --apply",
+          "status": "PASS",
+          "removed_files": [
+            "src/siegfried/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/alerts.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/config.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/events.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/inference.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/ipc.cpython-314.pyc",
+            "src/siegfried/contracts/__pycache__/states.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/briefing.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/clock.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/errors.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/rest.cpython-314.pyc",
+            "src/siegfried/core/__pycache__/state_machine.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/audio.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/boot_briefing.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/briefing_files.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/briefing_kde.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/kwin.cpython-314.pyc",
+            "src/siegfried/integrations/__pycache__/notifications.cpython-314.pyc",
+            "src/siegfried/ipc/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/ipc/__pycache__/client.cpython-314.pyc",
+            "src/siegfried/ipc/__pycache__/protocol.cpython-314.pyc",
+            "src/siegfried/ipc/__pycache__/server.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/__init__.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/aggregator.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/atomic_json.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/initialization.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/paths.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/secrets.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/validation.cpython-314.pyc",
+            "src/siegfried/storage/__pycache__/vault.cpython-314.pyc"
+          ],
+          "removed_directories": [
+            "src/siegfried/__pycache__",
+            "src/siegfried/contracts/__pycache__",
+            "src/siegfried/core/__pycache__",
+            "src/siegfried/integrations/__pycache__",
+            "src/siegfried/ipc/__pycache__",
+            "src/siegfried/storage/__pycache__"
+          ],
+          "recursive_delete": false
+        }
+      },
+      "postchecks": {
+        "boot_snapshot": "PASS; exact 58 files (57 source files plus marker), 13 source directories; no .pyc or __pycache__; authorized module hashes are new candidates",
+        "daemon_snapshot": "PASS; zero discrepancies",
+        "xdg": "PASS; desktop-file-validate, Hidden=false, Exec invokes /usr/bin/python3 -B with private hook",
+        "python_routes": "PASS; -B at XDG, worker (-B -S), and REPL launcher",
+        "service": "PASS; user unit active/enabled, original PID 2704, NRestarts 0; no restart",
+        "ipc": "PASS; private socket 0600, PING/STATUS PASS",
+        "runtime": "PASS; READY",
+        "private_integrity": "PASS against persistent reference; zero changed files; history unchanged; Vault/secrets/config within compared scope unchanged",
+        "journal": "PASS; current invocation zero priority 0-3 errors, no message content disclosed",
+        "resources_5s": {
+          "CPU_core_percent": 0.2,
+          "CPU_deviation": false,
+          "RSS_min_bytes": 29945856,
+          "RSS_max_bytes": 29945856,
+          "RSS_deviation": false
+        },
+        "no_hook_repl_or_new_notification": true
+      },
+      "historical_deviations": {
+        "pre_login_global_reference": "PRE_LOGIN_BASELINE_UNAVAILABLE",
+        "history_incident": "UNRESOLVED",
+        "historical_rss_bytes": 30011392,
+        "historical_rss_limit_bytes": 30000000,
+        "historical_rss_excess_bytes": 11392,
+        "prior_short_cpu_sample_percent": 0.4,
+        "prior_short_cpu_target_percent": 0.2,
+        "login_to_visible_under_two_seconds": "NOT_CERTIFIED"
+      },
+      "host_deployment": true,
+      "private_backups_created": true,
+      "cache_files_removed": 33,
+      "cache_directories_removed": 6,
+      "service_or_autostart_disabled_or_restarted": false,
+      "runtime_or_private_data_modified": false,
+      "recovery": "Not executed. If required, restore only targets still matching this operation’s candidate hashes, from verified private component backup; stop on any unexpected identity/content.",
+      "gate_verdict": "PASS_WITH_DEVIATIONS; authorized remediation and current operational checks pass; historical baseline/RSS/history incident/SLO limitations remain."
+    }
   }
 }

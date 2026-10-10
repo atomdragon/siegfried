@@ -20,7 +20,7 @@ def bounded_worker(repository, arguments, timeout):
     """Hard process deadline also bounds blocking libc DNS; no lingering workers."""
     child = None
     try:
-        child = subprocess.Popen([sys.executable, '-S', str(Path(repository) / 'scripts/boot_hook.py'), *arguments],
+        child = subprocess.Popen([sys.executable, '-B', '-S', str(Path(repository) / 'scripts/boot_hook.py'), *arguments],
             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
             env={'PATH':'/usr/bin:/bin', 'LANG':'C.UTF-8'}, close_fds=True)
         output, _ = child.communicate(timeout=timeout)

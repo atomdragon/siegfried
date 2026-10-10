@@ -29,7 +29,8 @@ class TestOperationalPilotF54(unittest.TestCase):
         self.tmp.cleanup()
 
     def publication_failure(self):
-        with patch.object(installer.os, 'replace', side_effect=OSError('fixture')):
+        # First publication is now no-replace; retain the same failure scenario.
+        with patch.object(installer.os, 'link', side_effect=OSError('fixture')):
             with self.assertRaises(OSError):
                 installer.manage_autostart(self.home, dry_run=False)
         self.assertTrue(self.package.exists())

@@ -204,7 +204,7 @@ class TestDKDE(Fixture):
         launcher=REPLLauncher(REPO)
         with patch.object(launcher,'available',return_value=True),patch('subprocess.Popen') as child:
             self.assertTrue(launcher('safe-token'))
-        self.assertEqual(child.call_args.args[0][-2:],[sys.executable,str(REPO/'bin/siegfried')]);self.assertNotIn('shell',child.call_args.kwargs)
+        self.assertEqual(child.call_args.args[0],[launcher.konsole,'--separate','-e',sys.executable,'-B',str(REPO/'bin/siegfried')]);self.assertNotIn('shell',child.call_args.kwargs)
     def test_untrusted_launcher_refused(self):
         launcher=REPLLauncher(REPO)
         with patch.object(launcher,'available',return_value=False),patch('subprocess.Popen') as child:

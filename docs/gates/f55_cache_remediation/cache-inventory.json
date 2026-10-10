@@ -1,0 +1,937 @@
+{
+  "schema": "F5.5-exact-boot-cache-cleanup-v1",
+  "inventoried_at_utc": "2026-10-10T01:13:32.730038+00:00",
+  "root": "/home/okami/.local/share/siegfried-boot",
+  "root_identity": [
+    48,
+    1568582,
+    1000,
+    1000,
+    448
+  ],
+  "allowed_source_hashes": {
+    "scripts/boot_hook.py": [
+      "3fbf5616f83192de38eb7229d40c8848ec11b28144c4c7daabfb3d18d29ec736"
+    ],
+    "bin/siegfried": [
+      "e1fd543128317712fa9cbb8c44ec210436b94a4b9d7fce39e933e56174b03bbc"
+    ],
+    "src/siegfried/__init__.py": [
+      "542682b36b010ac923bc481356cc100e17fe123447f339e262047cc6e340946c"
+    ],
+    "src/siegfried/cli/__init__.py": [
+      "e2541bf0d09e2c5138f9fc2c8554c9d59cd92a4f0fba59ba99ffcc4529dbdc12"
+    ],
+    "src/siegfried/cli/app.py": [
+      "f459e240655b2c7713eaf062536a2c5d1cc54c6cc03d97ac811ba97c9dbbd96a"
+    ],
+    "src/siegfried/cli/repl.py": [
+      "ac18b560d5e54f3099ebb42b400fb3602423f38e9664e4bc62492baccb03d40b"
+    ],
+    "src/siegfried/cli/router.py": [
+      "1e77b16b8b4e4a683f6296a408647ebd91629f0e9d8b55142945f5ffc1fdcb3d"
+    ],
+    "src/siegfried/contracts/__init__.py": [
+      "ce1e0966ef66db5feaa48ef0425ee10f664ae34f3b23c514ba6f4b0fb0a9dfae"
+    ],
+    "src/siegfried/contracts/alerts.py": [
+      "72b564e42403cb60122b14ac4dd67a36e93463ced84d904d6263373b1548dab6"
+    ],
+    "src/siegfried/contracts/config.py": [
+      "6d169ba5a862c06b4265f60b70c2a8f5d459a9c90b8acf9faa2b1aace07a2752"
+    ],
+    "src/siegfried/contracts/events.py": [
+      "0a1c13c6d21e72dce114df745dbdcb6b863edd2c0d7a07145c8e3de618a561fa"
+    ],
+    "src/siegfried/contracts/inference.py": [
+      "b9d90c8f35dde4937d56c6ac53149af6b658504f89a1656aaaa79f6dd063c249"
+    ],
+    "src/siegfried/contracts/ipc.py": [
+      "624cba90e541358fa46d223224fb5d2be938e2be841f269b9051672c04bcd16a"
+    ],
+    "src/siegfried/contracts/states.py": [
+      "06018e39028463b7afd9a9c2e8728cfa999a29d583a298be18f6425e0d92ae98"
+    ],
+    "src/siegfried/core/__init__.py": [
+      "15cab3c77e0a765d1cb499acb4b93bb9b17598e0efe7efd059c0d03397b2797a"
+    ],
+    "src/siegfried/core/briefing.py": [
+      "d6f0c607245b25b3a59a4586ae6f759494bc667b635e3ae1d7e7471a9f088b47"
+    ],
+    "src/siegfried/core/clock.py": [
+      "6d7eb83145d5140f8c42157f55cfaab3691c352f36829b77102ad02493869f3f"
+    ],
+    "src/siegfried/core/errors.py": [
+      "72c6238bf43911bbc22c9b4d7baf57ed952fdeca37cd11f351de578f39b55581"
+    ],
+    "src/siegfried/core/rest.py": [
+      "537d20b1ffd7f0599822e4726c342d1bbe66eb84af9f743c29f4e644158b1dd6"
+    ],
+    "src/siegfried/core/state_machine.py": [
+      "8ad7a19f8f79f3b4dbdc1cd9184095f0b4d823702e526a5e1381970414bc025a"
+    ],
+    "src/siegfried/daemon/__init__.py": [
+      "d8724fa8a5d1af6024d825baee2c45f2320540bd1e6797f4d24ebc4dab62906f"
+    ],
+    "src/siegfried/daemon/__main__.py": [
+      "d0384ffcb933217eb0a65de9b7fb3463375d9bfd00e8b558157103daf8d6a7b9"
+    ],
+    "src/siegfried/daemon/alerts.py": [
+      "1996ca589893ef60c19f014107060d5f74fe5161a4cc96cc85db6fabc1c9e827"
+    ],
+    "src/siegfried/daemon/app.py": [
+      "affa969c9d88b4838ed3b4e25cd01270ca86f3a348c5ef61614085daaa81921e"
+    ],
+    "src/siegfried/daemon/focus.py": [
+      "7f3865993c5b61b1b0ee1e9f13e96c21ed67c7561379fcc0bdc93698cfad98af"
+    ],
+    "src/siegfried/daemon/session.py": [
+      "84439e0ac9ee7552031b77cb4ca3d6918f3dd448a8ef3c2e466c3b82bc395485"
+    ],
+    "src/siegfried/daemon/timers.py": [
+      "bb474e04f2dc72c24e1340c8656847387fc501f04286a4b750b8017d50ec5fad"
+    ],
+    "src/siegfried/inference/__init__.py": [
+      "04b6a19baa8f4fd55509d2807f0c5e459859a025c4bf0e354a2215fb8b343a07"
+    ],
+    "src/siegfried/inference/cloud.py": [
+      "1bb56503b7038295bd6d626260412cbc4934ef1315710f2299683e7889c4897e"
+    ],
+    "src/siegfried/inference/llama_manager.py": [
+      "1399ade1999c7fe2c87a82793a8c0977a6b757d5511a94982601ccab51f1041a"
+    ],
+    "src/siegfried/inference/local.py": [
+      "d12746b7d33c83d0b03c2bac9fc90496b52a779d9ce51de8a0f3f317bf076183"
+    ],
+    "src/siegfried/inference/orchestrator.py": [
+      "1826f7932fa53e6390a3a21e828551c99a196abdfbe243f4f510e8a2dc49064d"
+    ],
+    "src/siegfried/inference/resources.py": [
+      "7820396e0d8ae672153de93a751fcb1ff4d1eaabe6ee89eab816afc8076bb7a8"
+    ],
+    "src/siegfried/integrations/__init__.py": [
+      "39ee1d1643583097cd54a6be24d645245093fc3172b8575d64981f840b23e26d"
+    ],
+    "src/siegfried/integrations/audio.py": [
+      "f00edf5596da3f138d70cdd79314e962e64fbfe7653c2af7859346cbf6e1416a"
+    ],
+    "src/siegfried/integrations/boot_briefing.py": [
+      "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+      "bafa71ddc991aba2207495f4a0ea779d43921abc18077eb27e1474d84ee81ff4"
+    ],
+    "src/siegfried/integrations/briefing_files.py": [
+      "7915705ff51fc9fe1a723c90c919e560a1807df929d6bfbaf37723d091a67579"
+    ],
+    "src/siegfried/integrations/briefing_kde.py": [
+      "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+      "10d6926711bcf58cfcc5a1d2d493b29044d90df2978bb4be1bf344aaa86478a6"
+    ],
+    "src/siegfried/integrations/kwin.py": [
+      "be1782cf7fe797dfd618b017ee5a2bad590a7fbad6e7d3c212b51fda3e3fdf08"
+    ],
+    "src/siegfried/integrations/notifications.py": [
+      "7cbaf69b2b45dadb65e5a7e6e40b34b13192241207266829ece194f35718d02c"
+    ],
+    "src/siegfried/integrations/session.py": [
+      "f78b73b9112bf15a8dfb687378956c8203d97ff04620acd587a9f724d4ff3d62"
+    ],
+    "src/siegfried/integrations/weather.py": [
+      "bac744faf66f607ac7cf1e66b22f863366a878e266074f8965a82231750d3f3d"
+    ],
+    "src/siegfried/ipc/__init__.py": [
+      "35451e31c5504bd956047c03430395b73dbe2e160f13cc894a42d83906b4a137"
+    ],
+    "src/siegfried/ipc/client.py": [
+      "59d17fe70a04cb66241704ef97b3b2df2e10e8d014da3acd9cab6ca899203817"
+    ],
+    "src/siegfried/ipc/protocol.py": [
+      "b3e8c9b6f1b5555e66f6d350001c14f3b97dd204b74b479037ccf4a6c9223d36"
+    ],
+    "src/siegfried/ipc/server.py": [
+      "c98a7968ec9b0aff171a231993cfe34da8d1a5ef100b9ebe3758a57691014286"
+    ],
+    "src/siegfried/observability/__init__.py": [
+      "1f4229f97890b211ecf38e88cbefff939fcdd287cfcc8b82620f7706934eb09e"
+    ],
+    "src/siegfried/observability/benchmarks.py": [
+      "e4d5102db1a5b2546f051e992d40203b97103c807aa439f4a4f917e883188cbb"
+    ],
+    "src/siegfried/observability/logging.py": [
+      "9afc1e14ad70497cca9460c8693be4c66332bb961f5beaba53158ba7306867e8"
+    ],
+    "src/siegfried/storage/__init__.py": [
+      "8c7c1c1518aeb6c71db4fabfc205ecbfe43996de8ebd0c59d960132733dbc55a"
+    ],
+    "src/siegfried/storage/aggregator.py": [
+      "304f32b78721583cb0004a90d36e9f9b4c66ea7f03b6df9db236ac518e4533cb"
+    ],
+    "src/siegfried/storage/atomic_json.py": [
+      "30472d2e49cea23566a02dde537ab565435b1e4563212b9c6745ba32feb6f9fe"
+    ],
+    "src/siegfried/storage/initialization.py": [
+      "e4c5c34d9afb156b18ca460275684ead8616e06987d5578476869c16702c8407"
+    ],
+    "src/siegfried/storage/paths.py": [
+      "1a01632efb60c2b3af60018d8701efb93c9891b863cef068e2662d06531332c1"
+    ],
+    "src/siegfried/storage/secrets.py": [
+      "165d4f6e350783d3ac68fae4c771e6dceb0822bff09c1ddce0ca86448e093dd9"
+    ],
+    "src/siegfried/storage/validation.py": [
+      "ba8c82bdf5889585a6ff68a2137eaf3527b02867199776ace2444e188da924e4"
+    ],
+    "src/siegfried/storage/vault.py": [
+      "3c6e3a0acde8a194457ea87a41c80d257c572dee8b2bbe037fbffe84b41379e0"
+    ],
+    ".siegfried-owned": [
+      "dbd579431b3e8ca3530ab355d8f3cd92423a68f0879e6b936659bd2cb84e7558"
+    ]
+  },
+  "source_directories": {
+    "scripts": {
+      "st_dev": 48,
+      "st_ino": 1568583,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 24,
+      "st_mtime_ns": 1791570122800001032,
+      "st_ctime_ns": 1791570122800001032
+    },
+    "src/siegfried/integrations": {
+      "st_dev": 48,
+      "st_ino": 1568625,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 242,
+      "st_mtime_ns": 1791592954938584057,
+      "st_ctime_ns": 1791592954938584057
+    },
+    "src/siegfried/cli": {
+      "st_dev": 48,
+      "st_ino": 1568590,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 66,
+      "st_mtime_ns": 1791570122824001200,
+      "st_ctime_ns": 1791570122824001200
+    },
+    "src/siegfried/contracts": {
+      "st_dev": 48,
+      "st_ino": 1568595,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 152,
+      "st_mtime_ns": 1791592954876392309,
+      "st_ctime_ns": 1791592954876392309
+    },
+    "src/siegfried/storage": {
+      "st_dev": 48,
+      "st_ino": 1568644,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 210,
+      "st_mtime_ns": 1791592954900583956,
+      "st_ctime_ns": 1791592954900583956
+    },
+    "src/siegfried/inference": {
+      "st_dev": 48,
+      "st_ino": 1568618,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 140,
+      "st_mtime_ns": 1791570122933001962,
+      "st_ctime_ns": 1791570122933001962
+    },
+    "src/siegfried": {
+      "st_dev": 48,
+      "st_ino": 1568588,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 176,
+      "st_mtime_ns": 1791592954867583869,
+      "st_ctime_ns": 1791592954867583869
+    },
+    "src/siegfried/observability": {
+      "st_dev": 48,
+      "st_ino": 1568640,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 68,
+      "st_mtime_ns": 1791570123000002431,
+      "st_ctime_ns": 1791570123000002431
+    },
+    "src": {
+      "st_dev": 48,
+      "st_ino": 1568587,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 18,
+      "st_mtime_ns": 1791570122808001088,
+      "st_ctime_ns": 1791570122808001088
+    },
+    "src/siegfried/daemon": {
+      "st_dev": 48,
+      "st_ino": 1568610,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 128,
+      "st_mtime_ns": 1791570122907001781,
+      "st_ctime_ns": 1791570122907001781
+    },
+    "src/siegfried/ipc": {
+      "st_dev": 48,
+      "st_ino": 1568635,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 102,
+      "st_mtime_ns": 1791592955029584299,
+      "st_ctime_ns": 1791592955029584299
+    },
+    "src/siegfried/core": {
+      "st_dev": 48,
+      "st_ino": 1568603,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 146,
+      "st_mtime_ns": 1791592954868784886,
+      "st_ctime_ns": 1791592954868784886
+    },
+    "bin": {
+      "st_dev": 48,
+      "st_ino": 1568585,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16832,
+      "st_nlink": 1,
+      "st_size": 18,
+      "st_mtime_ns": 1791570122804001060,
+      "st_ctime_ns": 1791570122804001060
+    }
+  },
+  "cache_files": {
+    "src/siegfried/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587029,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 349,
+      "st_mtime_ns": 1791592954868784886,
+      "st_ctime_ns": 1791592954868784886,
+      "sha256": "40bd8f1d0f7a89fd8ed9ebfa30420695baac7e8d7c5b373ec3bde2a231fc82c9"
+    },
+    "src/siegfried/contracts/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587036,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 1437,
+      "st_mtime_ns": 1791592954876846536,
+      "st_ctime_ns": 1791592954876846536,
+      "sha256": "8104d3966b46d13be5625030c0d28706cff5d9f44623c98b8223e2840d3e1c62"
+    },
+    "src/siegfried/contracts/__pycache__/alerts.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587042,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 3519,
+      "st_mtime_ns": 1791592954896303726,
+      "st_ctime_ns": 1791592954896303726,
+      "sha256": "35e832d2fc24bd583607f9e05a9fe4768bee39d3bc7f1cfcad5fb1728d052def"
+    },
+    "src/siegfried/contracts/__pycache__/config.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587040,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 7276,
+      "st_mtime_ns": 1791592954883832421,
+      "st_ctime_ns": 1791592954883832421,
+      "sha256": "636c352a804d6070297bbf9bcab2617fbdbefd6f8d62dd7599b7f4b9b2a28811"
+    },
+    "src/siegfried/contracts/__pycache__/events.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587038,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 5264,
+      "st_mtime_ns": 1791592954878437811,
+      "st_ctime_ns": 1791592954878437811,
+      "sha256": "baf29a935af1e1d7a68b25bb94ebcbac5b3d018a6a0ca166cd01af0513bebdf1"
+    },
+    "src/siegfried/contracts/__pycache__/inference.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587041,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 14120,
+      "st_mtime_ns": 1791592954885785281,
+      "st_ctime_ns": 1791592954885785281,
+      "sha256": "20cd14bda6ef939a2ce40aa2c6169bb9bf93a9b0ea7e51b8fa78025259327a94"
+    },
+    "src/siegfried/contracts/__pycache__/ipc.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587039,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 10086,
+      "st_mtime_ns": 1791592954881782896,
+      "st_ctime_ns": 1791592954881782896,
+      "sha256": "a6df254cb7eb1aa4534883d65c2dbd378de1bd94e176e0111f5d14aaa0607b8d"
+    },
+    "src/siegfried/contracts/__pycache__/states.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587037,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 1301,
+      "st_mtime_ns": 1791592954877218938,
+      "st_ctime_ns": 1791592954877218938,
+      "sha256": "574e7d8a8931c2891c272d833d3fe3738cb1c2216ad18612f68c7f6f43cc7443"
+    },
+    "src/siegfried/core/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587031,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 699,
+      "st_mtime_ns": 1791592954869413696,
+      "st_ctime_ns": 1791592954869413696,
+      "sha256": "82facf6145e0b9fd68bcbb5da6b039daae2e9e59ec3cb4700c8ba4d8efab9ca0"
+    },
+    "src/siegfried/core/__pycache__/briefing.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587059,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 6016,
+      "st_mtime_ns": 1791592954948732609,
+      "st_ctime_ns": 1791592954948732609,
+      "sha256": "742c6f6b8717098ba7c1751151a8e8c206d62dfeeaa7a28152e38f86ec296d42"
+    },
+    "src/siegfried/core/__pycache__/clock.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587033,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 2402,
+      "st_mtime_ns": 1791592954871952892,
+      "st_ctime_ns": 1791592954871952892,
+      "sha256": "ca7b0715f82d561e9519a62e2a22a5961c0bc4ed5ed11195b35242ebc129482e"
+    },
+    "src/siegfried/core/__pycache__/errors.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587032,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 11378,
+      "st_mtime_ns": 1791592954871015934,
+      "st_ctime_ns": 1791592954871015934,
+      "sha256": "b3558ca11ebb288fb563dbc770a96282ac34ca5f2c5c1575e506dfe25fd35f7d"
+    },
+    "src/siegfried/core/__pycache__/rest.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587043,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 8145,
+      "st_mtime_ns": 1791592954898499074,
+      "st_ctime_ns": 1791592954898499074,
+      "sha256": "2155858a42c770f4a1de92331f8bbe7ec2d28c09cb3944fa010e1f7bb73a732e"
+    },
+    "src/siegfried/core/__pycache__/state_machine.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587034,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 6384,
+      "st_mtime_ns": 1791592954876392309,
+      "st_ctime_ns": 1791592954876392309,
+      "sha256": "8271feeec5883c61c4e85db6922f29450f8ecd7314f235219570b395052b97ad"
+    },
+    "src/siegfried/integrations/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587054,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 719,
+      "st_mtime_ns": 1791592954939533395,
+      "st_ctime_ns": 1791592954939533395,
+      "sha256": "f68d1e38fbecc5c46ba8eaa3d0fdac6263d5eff1c087a246a548384ed01341c0"
+    },
+    "src/siegfried/integrations/__pycache__/audio.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587056,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 12518,
+      "st_mtime_ns": 1791592954943321343,
+      "st_ctime_ns": 1791592954943321343,
+      "sha256": "5f38abf5b48cc5b3dfe7c21dd924266201917133999ff07175769d42df3347c6"
+    },
+    "src/siegfried/integrations/__pycache__/boot_briefing.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587058,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 9165,
+      "st_mtime_ns": 1791592954945202704,
+      "st_ctime_ns": 1791592954945202704,
+      "sha256": "8a70e87a778606d64a6dee81c71b5a339988623aad4c26621fc7f62ae649748e"
+    },
+    "src/siegfried/integrations/__pycache__/briefing_files.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587060,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 9531,
+      "st_mtime_ns": 1791592954950475486,
+      "st_ctime_ns": 1791592954950475486,
+      "sha256": "de89d6f2e4acbeae9cbe46cb1d2ae55151e1ec2d4a49a250fea64c08bff18b9b"
+    },
+    "src/siegfried/integrations/__pycache__/briefing_kde.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587061,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 21569,
+      "st_mtime_ns": 1791592954952752826,
+      "st_ctime_ns": 1791592954952752826,
+      "sha256": "020a8bec3b8f10f2c5516cf923fd1fdbdb0256e2c84218b9e803dfb15b43ecab"
+    },
+    "src/siegfried/integrations/__pycache__/kwin.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587057,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 3056,
+      "st_mtime_ns": 1791592954943811815,
+      "st_ctime_ns": 1791592954943811815,
+      "sha256": "100c3aa75557218d553bab3702e8052b19b0c87da5f09ac18d6ecd0eeabee710"
+    },
+    "src/siegfried/integrations/__pycache__/notifications.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587055,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 8215,
+      "st_mtime_ns": 1791592954940490218,
+      "st_ctime_ns": 1791592954940490218,
+      "sha256": "3d0d972d62f90a2b7a99f382ec667a4ce292d7592270d18bb40035187fed46a0"
+    },
+    "src/siegfried/ipc/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587063,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 530,
+      "st_mtime_ns": 1791592955030877035,
+      "st_ctime_ns": 1791592955030877035,
+      "sha256": "b27cece516f899b36c9c131b430ecb77f80c89d96e07d3942392d64abd656dc6"
+    },
+    "src/siegfried/ipc/__pycache__/client.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587065,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 4385,
+      "st_mtime_ns": 1791592955031994719,
+      "st_ctime_ns": 1791592955031994719,
+      "sha256": "34a3579bc00aaadba73c3b048cb923297b35118afa7fb6f27649b234fa3a5727"
+    },
+    "src/siegfried/ipc/__pycache__/protocol.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587064,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 2727,
+      "st_mtime_ns": 1791592955031298049,
+      "st_ctime_ns": 1791592955031298049,
+      "sha256": "eb9a951120dd67972379cd5429e72235aa80ab44deafdd2599d25dbfefe18442"
+    },
+    "src/siegfried/ipc/__pycache__/server.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587066,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 27677,
+      "st_mtime_ns": 1791592955034681924,
+      "st_ctime_ns": 1791592955034681924,
+      "sha256": "553f4c6e84f1f7ed9d8e67b19df969f10bf44fa605dc9a6e546eb939eae09ddc"
+    },
+    "src/siegfried/storage/__pycache__/__init__.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587045,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 1174,
+      "st_mtime_ns": 1791592954901446527,
+      "st_ctime_ns": 1791592954901446527,
+      "sha256": "68126c6e7514af8720c431a715706d0c1dfe8f1c4e8f606af081d5db735af8a8"
+    },
+    "src/siegfried/storage/__pycache__/aggregator.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587052,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 17179,
+      "st_mtime_ns": 1791592954917040632,
+      "st_ctime_ns": 1791592954917040632,
+      "sha256": "2ce42034d484bcee9a2432950b5edce2c93e2e9ace312fbb5478410d092c069d"
+    },
+    "src/siegfried/storage/__pycache__/atomic_json.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587047,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 8995,
+      "st_mtime_ns": 1791592954904616014,
+      "st_ctime_ns": 1791592954904616014,
+      "sha256": "bd7856a71b9baf9bebf0f9431bdbc97c25d04245d7dbe668d871f91042c3d123"
+    },
+    "src/siegfried/storage/__pycache__/initialization.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587049,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 21458,
+      "st_mtime_ns": 1791592954910647851,
+      "st_ctime_ns": 1791592954910647851,
+      "sha256": "c3ed6bfde35a7e2771a7a24697416f9c32903895ba9e4969b9525a843af78eea"
+    },
+    "src/siegfried/storage/__pycache__/paths.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587046,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 9606,
+      "st_mtime_ns": 1791592954902958525,
+      "st_ctime_ns": 1791592954902958525,
+      "sha256": "b7a772bac58af34b5dc810a1e49ef2c7757153ee06304fbb58bfdf6de5853794"
+    },
+    "src/siegfried/storage/__pycache__/secrets.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587051,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 6658,
+      "st_mtime_ns": 1791592954915363896,
+      "st_ctime_ns": 1791592954915363896,
+      "sha256": "c49c87fa720d5db35f759c175bf90902764965f8bac4a8863691885a010e7062"
+    },
+    "src/siegfried/storage/__pycache__/validation.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587050,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 22209,
+      "st_mtime_ns": 1791592954913342149,
+      "st_ctime_ns": 1791592954913342149,
+      "sha256": "857374c109d08ef44e3f8c1ec11dc2856f19ae31fa981e15c1be7da5d8111aa2"
+    },
+    "src/siegfried/storage/__pycache__/vault.cpython-314.pyc": {
+      "st_dev": 48,
+      "st_ino": 1587048,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 17694,
+      "st_mtime_ns": 1791592954907563240,
+      "st_ctime_ns": 1791592954907563240,
+      "sha256": "6830ae2e58ee1731bc32916901e1bfcfc54ae7a73f265357973af256b30f27be"
+    }
+  },
+  "cache_directories": {
+    "src/siegfried/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587028,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 48,
+      "st_mtime_ns": 1791592954868784886,
+      "st_ctime_ns": 1791592954868784886
+    },
+    "src/siegfried/contracts/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587035,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 312,
+      "st_mtime_ns": 1791592954896303726,
+      "st_ctime_ns": 1791592954896303726
+    },
+    "src/siegfried/core/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587030,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 280,
+      "st_mtime_ns": 1791592954948732609,
+      "st_ctime_ns": 1791592954948732609
+    },
+    "src/siegfried/integrations/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587053,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 362,
+      "st_mtime_ns": 1791592954952752826,
+      "st_ctime_ns": 1791592954952752826
+    },
+    "src/siegfried/ipc/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587062,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 184,
+      "st_mtime_ns": 1791592955034681924,
+      "st_ctime_ns": 1791592955034681924
+    },
+    "src/siegfried/storage/__pycache__": {
+      "st_dev": 48,
+      "st_ino": 1587044,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 16893,
+      "st_nlink": 1,
+      "st_size": 396,
+      "st_mtime_ns": 1791592954917040632,
+      "st_ctime_ns": 1791592954917040632
+    }
+  },
+  "attribution_proof": {
+    "src/siegfried/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/alerts.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/alerts.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/config.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/config.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/events.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/events.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/inference.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/inference.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/ipc.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/ipc.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/contracts/__pycache__/states.cpython-314.pyc": {
+      "source": "src/siegfried/contracts/states.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/core/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/briefing.cpython-314.pyc": {
+      "source": "src/siegfried/core/briefing.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/clock.cpython-314.pyc": {
+      "source": "src/siegfried/core/clock.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/errors.cpython-314.pyc": {
+      "source": "src/siegfried/core/errors.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/rest.cpython-314.pyc": {
+      "source": "src/siegfried/core/rest.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/core/__pycache__/state_machine.cpython-314.pyc": {
+      "source": "src/siegfried/core/state_machine.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/audio.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/audio.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/boot_briefing.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/boot_briefing.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/briefing_files.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/briefing_files.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/briefing_kde.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/briefing_kde.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/kwin.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/kwin.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/integrations/__pycache__/notifications.cpython-314.pyc": {
+      "source": "src/siegfried/integrations/notifications.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/ipc/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/ipc/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/ipc/__pycache__/client.cpython-314.pyc": {
+      "source": "src/siegfried/ipc/client.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/ipc/__pycache__/protocol.cpython-314.pyc": {
+      "source": "src/siegfried/ipc/protocol.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/ipc/__pycache__/server.cpython-314.pyc": {
+      "source": "src/siegfried/ipc/server.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/__init__.cpython-314.pyc": {
+      "source": "src/siegfried/storage/__init__.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/aggregator.cpython-314.pyc": {
+      "source": "src/siegfried/storage/aggregator.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/atomic_json.cpython-314.pyc": {
+      "source": "src/siegfried/storage/atomic_json.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/initialization.cpython-314.pyc": {
+      "source": "src/siegfried/storage/initialization.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/paths.cpython-314.pyc": {
+      "source": "src/siegfried/storage/paths.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/secrets.cpython-314.pyc": {
+      "source": "src/siegfried/storage/secrets.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/validation.cpython-314.pyc": {
+      "source": "src/siegfried/storage/validation.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    },
+    "src/siegfried/storage/__pycache__/vault.cpython-314.pyc": {
+      "source": "src/siegfried/storage/vault.py",
+      "magic_header_source_stamp_and_compiled_body_match": true
+    }
+  },
+  "unknown_files": [],
+  "allowed_source_delta": "Only two explicitly proposed module replacements; both original and candidate hashes are permitted to enable prevention before cleanup."
+}

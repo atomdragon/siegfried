@@ -30,7 +30,7 @@ def desktop_content(repository=REPO_ROOT, *, enabled=True, weather=False, show_t
     hook = Path(repository) / 'scripts' / 'boot_hook.py'
     if not trusted_executable(sys.executable) or (not planned and not trusted_executable(hook)):
         raise ValueError('unsafe_boot_executable')
-    argv = [sys.executable, str(hook)]
+    argv = [sys.executable, '-B', str(hook)]
     if weather:
         argv.append('--weather')
     if show_task:
@@ -188,12 +188,14 @@ def remove_package(home, repository, *, daemon=False, check_only=False):
 
 
 def manage_autostart(home, *, operation='install', dry_run=True, repository=REPO_ROOT,
-                     weather=False, show_task=False):
+                     weather=False, show_task=False, enabled=True):
     if operation not in ('install', 'enable', 'disable', 'uninstall'):
         raise ValueError('invalid_operation')
+    if type(enabled) is not bool or (not enabled and operation != 'install'):
+        raise ValueError('invalid_initial_autostart_state')
     home = _validate_home(home)
     package = home / '.local/share/siegfried-boot'
-    content = desktop_content(package, weather=weather, show_task=show_task, planned=True)
+    content = desktop_content(package, enabled=enabled, weather=weather, show_task=show_task, planned=True)
     destination = home / '.config' / 'autostart' / ENTRY
     if dry_run:
         prepare_package(home, repository, True)
@@ -261,7 +263,13 @@ def manage_autostart(home, *, operation='install', dry_run=True, repository=REPO
                 os.fsync(fd)
             finally:
                 os.close(fd)
-            os.replace(temp, ENTRY, src_dir_fd=directory, dst_dir_fd=directory)
+            if existing is None:
+                # First publication must not replace a concurrent foreign entry.
+                os.link(temp, ENTRY, src_dir_fd=directory, dst_dir_fd=directory,
+                        follow_symlinks=False)
+                os.unlink(temp, dir_fd=directory)
+            else:
+                os.replace(temp, ENTRY, src_dir_fd=directory, dst_dir_fd=directory)
             os.fsync(directory)
         finally:
             try:
@@ -283,10 +291,12 @@ def main():
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--weather', action='store_true')
     parser.add_argument('--show-task', action='store_true')
+    parser.add_argument('--disabled', action='store_true',
+                        help='Instalar directamente con Hidden=true; sólo operación install')
     args = parser.parse_args()
     try:
         result = manage_autostart(args.home, operation=args.operation, dry_run=not args.apply or args.dry_run,
-                                 weather=args.weather, show_task=args.show_task)
+                                 weather=args.weather, show_task=args.show_task, enabled=not args.disabled)
         if result.get('dry_run'):
             print(result['content'], end='')
             print('DRY-RUN: no se modificó Autostart.')

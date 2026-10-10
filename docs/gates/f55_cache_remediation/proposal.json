@@ -1,0 +1,48 @@
+{
+  "root_cause": {
+    "autostart_python_flags": "No -B; bytecode suppression absent from current user-manager environment",
+    "workers": "-S suppresses site only; worker environment explicitly discards PYTHONDONTWRITEBYTECODE; Python flags are not inherited",
+    "repl_launcher": "Independent Python invocation without -B"
+  },
+  "installed_desktop": {
+    "path": "/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop",
+    "metadata": {
+      "st_dev": 48,
+      "st_ino": 1583681,
+      "st_uid": 1000,
+      "st_gid": 1000,
+      "st_mode": 33152,
+      "st_nlink": 1,
+      "st_size": 322,
+      "st_mtime_ns": 1791588323069074343,
+      "st_ctime_ns": 1791588323077074398,
+      "sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d"
+    },
+    "expected_old_sha256": "13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d",
+    "proposed_sha256": "981f7cf65e8a486b2e658bb5da7dce1d8d56f3013798dd7735d667ccbbb62d9e",
+    "candidate_exec": "\"/usr/bin/python3\" \"-B\" \"/home/okami/.local/share/siegfried-boot/scripts/boot_hook.py\""
+  },
+  "proposal_sources": {
+    "tools/install_boot_briefing.py": {
+      "before_sha256": "8b72cb4efcb2446551c588c967bbf45247850a8a581b0f5a81989d7a6757ae4a",
+      "after_sha256": "5d6f3c740ab61944e72cef1a31fca3ff37824e48e4e7b67d95e3d5a5a00e4f3e"
+    },
+    "src/siegfried/integrations/boot_briefing.py": {
+      "before_sha256": "2ff6c8fbadaef0859efad6cb8db88b7b31f0da8dc3a30a80cde8ba42f81556e8",
+      "after_sha256": "bafa71ddc991aba2207495f4a0ea779d43921abc18077eb27e1474d84ee81ff4"
+    },
+    "src/siegfried/integrations/briefing_kde.py": {
+      "before_sha256": "29151f269e83b521a3d10b8df5d9612f996897ffdeb66d1000055829316fb0b5",
+      "after_sha256": "10d6926711bcf58cfcc5a1d2d493b29044d90df2978bb4be1bf344aaa86478a6"
+    }
+  },
+  "inventory_sha256": "4c6284ec33895139acaaf02fdd6d22da457ec695acaf68018a292ce50d1ab2fa",
+  "patch_sha256": "382524fe33830ef6888a5f6c1afd3663c40f4be2e868c3914c8eaf04183e0094",
+  "source_match_count": 57,
+  "cache_file_count": 33,
+  "cache_directory_count": 6,
+  "unknown_file_count": 0,
+  "source_permissions": "Correct",
+  "cache_permissions": "33 files 0600; six directories 0775; same UID/GID as snapshot",
+  "hook_active": false
+}

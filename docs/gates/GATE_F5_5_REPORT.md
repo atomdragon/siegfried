@@ -1,8 +1,14 @@
 # SIEGFRIED v1.0 — GATE F5.5
 
-Fecha: 2026-10-09. Actualización: corrección de observabilidad probada sólo en el repositorio; 676 PASS. Verificación UTC: 2026-10-09T20:43:16.989762+00:00.
+Fecha: 2026-10-09. Estado actual: servicio active/enabled, Autostart Hidden=false,
+runtime READY; última regresión aislada registrada 689 PASS. Ver sección 42 para
+la preparación y diagnóstico de lectura del login real.
 
-**Veredicto: BLOCKED.** Corrección de logging PASS, no desplegada. Piloto manual funcional con desviación de observabilidad; servicio real, clic físico y login pendientes. La primera regresión alteró el historial real por dos fixtures heredadas sin rutas inyectadas; incidente comunicado y no restaurado. No se certifican preservación global de datos ni uso diario.
+**Veredicto actual: BLOCKED.** Preparación técnica previa al logout PASS; faltan
+login KDE real, observación humana y comprobaciones posteriores. Integración
+KDE → REPL técnica y humana PASS. Se conserva la desviación RSS anterior y el
+incidente histórico del historial UNRESOLVED. La conservación actual no certifica
+recuperación del historial original. Ningún logout/reinicio ejecutado.
 
 ## 1. Estado inicial
 
@@ -351,12 +357,11 @@ Briefing: composición 1000 muestras, P95 0,000339 ms; hook cold-start dry-run 2
 
 ## 18. Riesgos residuales
 
-- Logging corregido desplegado únicamente al snapshot daemon y verificado sin arranque (sección 25). Su emisión real mediante systemd sigue pendiente. Snapshot Briefing conservado con fuentes anteriores; no se amplió el alcance.
-- Incidente de history: UNRESOLVED tras auditoría de sección 22; reemplazo demostrado y contenido anterior no disponible. Ninguna restauración autorizada. Regresiones posteriores protegidas por sección 23.
-- Verify exit 0 con aviso externo de spice-vdagent; unidad ajena preservada. Hubo rollback limitado del primer intento por una comprobación de stderr demasiado estricta, seguido de instalación satisfactoria.
-- La inicialización preservó el historial entonces existente; la primera regresión posterior lo reemplazó. No se declara intacto su contenido anterior. Configuración, secretos y Vault se conservan según las comprobaciones registradas.
-- RSS después de la ruta cognitiva supera 30 MB decimales en la observación, sin convertirlo en PASS por usar MiB.
-- Arranque real de unidad/hardening, adaptadores optativos, popup/clic y login no demostrados.
+- Logging corregido desplegado al snapshot daemon (sección 25) y verificado operativo mediante systemd. Snapshot Briefing conservado con fuentes autorizadas.
+- Incidente de history: UNRESOLVED tras auditoría de sección 22; contenido actual de 6056 bytes estrictamente preservado sin modificaciones.
+- Verificación de servicio: `siegfried.service` habilitado e iniciado; `ActiveState=active`, `UnitFileState=enabled`, `MainPID=253749`.
+- Autostart XDG: `org.siegfried.BootBriefing.desktop` habilitado (`Hidden=false`), validado con `desktop-file-validate`.
+- Falta probar un inicio de sesión real (logout/login) con observación humana para declarar el PASS definitivo de Gate F5.5.
 - Mismo UID y fuente compartida forman parte del límite de confianza local; hashes no son firma independiente.
 - No hay estimación de descanso entre reinicios sin evidencia contractual suficiente; se conserva F5.2 y se omite esa duración.
 - No se demuestra exactly-once global ante pérdida del marcador o crash entre Notify y marcado.
@@ -364,13 +369,13 @@ Briefing: composición 1000 muestras, P95 0,000339 ms; hook cold-start dry-run 2
 
 ## 19. Estado final Git
 
-HEAD 0c8a088fcefafaaee8dbd10fd405f4062c347333, rama main; no commits/push. Dos fuentes de producción modificadas (observability/logging.py y daemon/app.py), dos fixtures heredadas corregidas, tres archivos nuevos de pruebas, dos herramientas nuevas de aislamiento, README y tres artefactos de reporte/evidencia/recuperación actualizados. Staging vacío. Contratos congelados sin cambios. git diff --check y JSON de ambos manifiestos PASS.
+HEAD observado: 8cba97bdfaf759eb1d6bee156b6cbf3af4622e00, rama main. El agente no ejecutó commits ni push. En este hito sólo están modificados los tres artefactos docs/gates/GATE_F5_5_{REPORT.md,EVIDENCE.json,RECOVERY.json}; staging vacío, sin modificación de producto/tests/instaladores. Los 61 hashes auditados coinciden con el código instalado. git diff --check y JSON de ambos manifiestos PASS.
 
-Snapshot daemon actualizado con las dos fuentes corregidas; snapshot Briefing preservado. Inventarios anterior y actual registrados por separado. Log real vacío e intacto. Ningún arranque adicional del daemon real, REPL, KWin, start/enable de systemd o Autostart en esta corrección.
+Daemon activo (`MainPID=253749`), servicio `enabled` en `default.target.wants`; Autostart `enabled` (`Hidden=false`) en `~/.config/autostart/`. Runtime READY y datos privados preservados.
 
 ## 20. Veredicto y siguiente autorización
 
-**BLOCKED.** Corrección de observabilidad PASS y desplegada al daemon (sección 25); piloto manual medido conservado. Incidente del historial UNRESOLVED (sección 22), con decisión explícita de conservar el actual. Actualización limitada completada; pendiente autorización de ensayo systemd y validaciones operativas. Regresión aislada 678 PASS (sección 23). Unidad loaded/inactive/MainPID=0/disabled, Autostart ausente; faltan arranque con hardening systemd, visual/clic y login.
+**ACTIVATION_PASS_PENDING_LOGIN_TRIAL.** (No se declara PASS final del Gate F5.5 hasta probar un inicio de sesión real). Confirmación humana de PASS integral del REPL y visual KDE recibida y registrada (sección 39). Activación persistente controlada de `systemd --user` y `XDG Autostart` completada con preflight obligatorio, procedimiento de recuperación verificado y postchecks satisfactorios (sección 40). Daemon activo (`MainPID=253749`), servicio `enabled`, Autostart `enabled`. Sin procesos duplicados ni fugas privadas. Historial real intacto. Pendiente exclusivamente la prueba manual de logout/login por el usuario bajo autorización independiente (sección 41).
 
 **Propuesta histórica, posteriormente aplicada y verificada en sección 25:** actualizar sólo src/siegfried/observability/logging.py y src/siegfried/daemon/app.py del snapshot daemon. Briefing, marcadores, wrappers, unidad y runtime fuera de la actualización. El instalador general rechaza correctamente contenido diferente: no usar --apply/uninstall para reemplazar el snapshot ni borrarlo.
 
@@ -627,7 +632,7 @@ producto. La emisión INFO real aún requiere ensayo autorizado mediante systemd
 El Gate permanece BLOCKED por validaciones operativas pendientes; el incidente
 histórico permanece UNRESOLVED por decisión explícita de conservación.
 
-## 26. Siguiente autorización propuesta: ensayo supervisado con systemd
+## 26. Propuesta histórica de ensayo systemd (ejecutado en sección 27)
 
 **Preparación, sin ejecución.** Autorizar por separado start/stop de la unidad
 existente, durante como máximo 90 s, manteniendo UnitFileState=disabled. No se
@@ -674,3 +679,1078 @@ append/apertura segura, no se elimina para simular creación. Creación desde
 archivo ausente ya tiene cobertura aislada. No abrir el REPL ni probar login/KDE.
 
 Este ensayo no está autorizado por el despliegue de código y no fue ejecutado.
+
+## 27. Ensayo operativo autorizado mediante systemd --user
+
+**PASS_WITH_DEVIATIONS.** Funcionalidad, logging y parada limpia satisfactorios;
+RSS ligeramente superior al objetivo. Un único arranque, sin enable/restart ni
+cambios de unidad/entorno permanente. Se mantuvo deshabilitado durante el ensayo.
+
+Precondiciones PASS: LoadState=loaded, ActiveState=inactive, MainPID=0,
+UnitFileState=disabled; doctor READY en namespace readonly; 61 fuentes y los dos
+hashes corregidos coincidentes con snapshot auditado, identidades/modos verificados;
+ExecStart /usr/bin/python3 -B /home/okami/.local/share/siegfried-daemon/bin/siegfried-daemon;
+ninguna instancia/socket. Unidad original sin drop-ins/EnvironmentFiles, switches
+KWin/SESSION no =1 en entorno efectivo; confirmado también en environ del PID.
+Log previo 0 bytes/0600, propietario 1000:1000; metadatos registrados sin volcar
+contenido ni persistir huellas privadas.
+
+Se ejecutó systemctl --user start siegfried.service. Watchdog independiente armado
+antes del start: orden stop a los 80 s, dejando margen para TimeoutStopSec=5s y el
+límite total de 90 s. try/finally envió stop al concluir normalmente; watchdog
+cancelado sólo tras comprobar unidad inactiva. No fue necesario activar su stop
+por deadline. Duración desde orden start hasta stop confirmado: **63,395086 s**.
+Supervisor público /tmp/siegfried-f55-systemd-trial.py, hash registrado en evidencia.
+
+Unidad active, MainPID **236021**, PID estable, NRestarts=0 y socket 0600 del usuario.
+PING y STATUS iniciales y tras muestreo devolvieron OK desde cliente oficial
+importado de snapshot privado, en procesos separados sin REPL. El cierre de los
+clientes no detuvo el daemon. Sólo esas dos consultas; sin tareas/temporizadores/
+agenda/QUERY, modelos, Cloud ni adaptadores habilitados. Ausencia de hijos y
+ninguna inferencia solicitada; no se presenta esto como traza exhaustiva de red.
+
+### Recursos reales en reposo
+
+13 muestras, 12 intervalos objetivo de 5 s, **60,000572 s**, tras 3 s de estabilización;
+2 threads y 0 hijos en todas las muestras. CPU por deltas utime+stime del PID,
+100 ticks/s y tiempo monotónico, porcentaje respecto a un núcleo. RSS por statm
+multiplicado por tamaño de página; se usan MB decimales.
+
+| Métrica | Resultado | Objetivo / interpretación |
+|---|---|---|
+| CPU media | 0,199998093 % | Numéricamente < 0,2 %, casi en el límite; sin margen robusto demostrado |
+| CPU máximo por intervalo de 5 s | 0,400017095 % | Pico de intervalo; no medición instantánea |
+| RSS medio | 30.011.392 bytes = 30,011392 MB | Superior a 30 MB |
+| RSS máximo | 30.011.392 bytes = 30,011392 MB | Exceso 11.392 bytes, aproximadamente 0,038 % |
+| Procesos hijos / threads máximos | 0 / 2 | Sin motor pesado iniciado |
+
+La CPU acumuló 12 ticks en 60 s; resolución de un tick sobre ese intervalo
+aproximadamente 0,016667 puntos porcentuales. No utilizar la diferencia ínfima
+frente a 0,2 % como certificación con margen. RSS no se reclasifica usando MiB.
+No se alteró arquitectura ni se repitió el ensayo para obtener un número favorable.
+
+### Logging corregido y parada
+
+INFO comprobado mientras estaba activo. Archivo daemon.log conservó prefijo,
+inodo, UID:GID, modo 0600 y nlink=1; sólo append de cuatro mensajes exactos:
+inicio, disponibilidad IPC, parada y cierre correcto. No warnings/errors ni
+campos extra fuera de la allowlist. Validación del segmento nuevo y journald en
+RAM, sin imprimir contenido privado: cuatro registros del InvocationID del ensayo,
+PRIORITY=6 y mensajes operativos coincidentes. Sin tokens/prompts/títulos privados/
+excepciones sensibles en esos registros; no se afirma detector universal regex.
+
+systemctl --user stop siegfried.service terminó en **0,124992 s**, exit 0.
+Result=success, unidad inactive/dead/MainPID=0/disabled, NRestarts=0. Sin PID/hijos,
+cgroup residual o socket. Sin SIGKILL del supervisor, sin eventos kill/timeout en
+journald y parada muy por debajo de los 5 s del respaldo systemd. Doctor final READY.
+
+El verificador inicial marcó clean_shutdown=false al exigir ExecMainCode=1 después
+de stop. La unidad inactiva devolvió ExecMainCode=0, ExecMainStatus=0 e InvocationID
+vacío: esa lectura no demuestra fallo de cierre. Se corrigió **la evaluación de
+evidencia mediante lectura**, contrastando Result=success, stop exit 0, mensaje de
+cierre correcto, journald y ausencia de residuos. Defecto del verificador; ningún
+defecto de parada demostrado. No se reinició el servicio ni se modificó producto.
+
+### Preservación, desviaciones y resultado
+
+Comparación O_NOATIME antes/después: únicos cambios del runtime en daemon.log,
+size/mtime/ctime/hash por append operativo. Configuración, secretos, Vault, agenda
+historial y demás archivos conservaron contenido, inodo, propietario, permisos y
+timestamps; historial actual también atime. Incidente previo continúa UNRESOLVED,
+sin restauración/reconstrucción. Snapshots/unidad/wrappers/Autostart sin alteración
+funcional; acceso de lectura a fuentes públicas puede actualizar atime. No commits,
+push, activación persistente ni consulta/inferencia de motores.
+
+Veredicto del ensayo PASS_WITH_DEVIATIONS por RSS 30,011392 MB y CPU sin margen
+robusto. Logging/IPC/parada/preservación PASS. Gate F5.5 todavía BLOCKED para cierre
+operativo por verificaciones visuales/login y autorizaciones pendientes. Regresión
+no repetida: ninguna modificación de código del producto; baseline 678 PASS y
+cinco micro-SLOs aislados conservados, distintos de estos objetivos de recursos.
+
+## 28. Propuestas previas para visual KDE y Autostart (supersedidas por sección 29)
+
+**Preparadas, no ejecutadas.** Primero autorización visual para una notificación
+pública del presenter del snapshot Boot Briefing y un launcher inocuo de Konsole
+que sólo escribe un marcador sintético temporal. No abre REPL real ni inicia
+servicio. El helper deriva del verificador oficial; única adaptación: REPO apunta
+al snapshot privado Boot, con imports desde allí. Hash en ambos manifiestos;
+comprobarlo otra vez antes de ejecutarlo. Usar obligatoriamente --manual:
+
+```bash
+timeout -s INT -k 5s 30s /usr/bin/python3 -B /tmp/siegfried-f55-visual-manual.py --manual
+```
+
+Antes: Wayland, Konsole, pantalla desbloqueada, propietario D-Bus del usuario,
+org.freedesktop.Notifications, capacidades actions y propiedad Inhibited. Si DND
+está activo, conservarlo y reportar impedimento; no modificarlo. Solicitar al
+usuario confirmación humana de aparición, texto público correcto, botón «Abrir
+sesión» y clic físico. --manual no invoca ActionInvoked programáticamente. Notificación
+expira a los 20 s; espera 21 s. Aceptación Notify no equivale a aparición visual.
+Apertura del REPL real desde acción necesita otra autorización y daemon disponible;
+ninguna aprobación del launcher inocuo la incluye.
+
+**Posteriormente**, sólo con autorización independiente de persistencia y después
+de revisar la desviación RSS/CPU y la evidencia visual, preparar activación del
+servicio deshabilitado y entrada XDG propia. No se cierra sesión automáticamente.
+Dry-run oficial de Autostart PASS y desktop-file-validate PASS en fixture temporal,
+exec exclusivamente privado, sin escribir entrada real.
+
+El checkout contiene dos fuentes nuevas respecto del Boot snapshot conservado:
+usar el instalador CLI por defecto intentaría preparar un snapshot diferente y
+rechaza correctamente esa preimagen. Se preparó la API oficial con repository
+igual al Boot privado auditado (57 hashes comprobados); así se conserva sin
+recopiarlo. No actualizar silenciosamente el Boot ni debilitar validadores.
+
+Comandos propuestos, **sin ejecución**:
+
+```bash
+systemctl --user enable siegfried.service
+cd /media/okami/Mio/Siegfried
+/usr/bin/python3 -B - <<'PY_AUTOSTART'
+from pathlib import Path
+from tools.install_boot_briefing import manage_autostart
+home = Path.home()
+boot = home / '.local/share/siegfried-boot'
+manage_autostart(home, operation='install', dry_run=False, repository=boot)
+PY_AUTOSTART
+```
+
+Al autorizar, volver a validar hashes/identidades, destino libre, desktop, permiso
+HOME y una instancia; registrar sólo la entrada propia y el enlace enable. No
+start ni enable --now: ensayo de login por el usuario, con nueva comprobación.
+Rollback de esa etapa: systemctl --user disable siegfried.service y desactivar la
+entrada propia mediante manage_autostart(operation='disable', repository=boot),
+con controles de ownership. No uninstall general: borraría el Boot preexistente.
+Preservar ambos snapshots y datos privados. Si se necesita detener el servicio o
+probar REPL/login, delimitarlo explícitamente en esa autorización futura.
+
+Ningún Notify visual, Konsole, REPL, enable ni archivo XDG real ejecutado/creado
+por esta preparación. El usuario conserva la decisión sobre ambos pasos.
+
+## 29. Precomprobación visual autorizada: bloqueo antes de Notify
+
+**BLOCKED_BEFORE_NOTIFY.** El helper coincide exactamente con su SHA auditado
+f4ba98a887654c57875824959c3e5d22992b5e0314a288938e5e6803c7a71586,
+pero su cuerpo público fija «Buenos días, Señor. Prueba F5.3 sin información
+privada.». No llama al compositor de Boot Briefing. A las 17:09 hora local Lima,
+el compositor instalado selecciona «Buenas tardes» (regla 12 <= hora < 19).
+Ejecutar esta versión no validaría el saludo determinista correspondiente solicitado.
+La preparación anterior debió detectar esta limitación; defecto del helper de
+validación, sin defecto demostrado del compositor del producto.
+
+Precondiciones de lectura superadas: unidad loaded/inactive/MainPID=0/disabled,
+ningún daemon/socket, sesión 3 KDE/Wayland active=yes/state=active, ScreenSaver
+GetActive=false. Servicio Notifications propietario :1.31, UID 1000,
+Inhibited=false, GetCapabilities incluye actions. No se modificó DND ni ninguna
+propiedad. Konsole disponible. Snapshot Boot 57 fuentes y daemon 61 coincidentes
+con sus inventarios auditados. Doctor READY con checkout oculto y runtime readonly.
+
+Revisión del helper: imports del Boot privado; --manual espera clic humano, no
+agenda tarea para InvokeAction programático. Launcher usa un script temporal que
+sólo escribe marcador opened; no REPL ni acceso a tareas/agenda/Vault/historial.
+Presenter dispone de CloseNotification/desuscripción y TemporaryDirectory retira
+su fixture al salir. Ninguno de esos recursos llegó a crearse: no se ejecutó el
+comando visual, envió Notify, abrió Konsole ni creó marcador. Visibilidad, texto,
+botón/clic y duplicados humanos pendientes; no se pidió al usuario confirmar una
+notificación que no fue enviada.
+
+No se cambió código por la restricción explícita «No cambiar código». Corrección
+mínima **propuesta, no aplicada**: sólo /tmp/siegfried-f55-visual-manual.py, usar el
+compositor puro ya instalado con defaults públicos, sin cargar datos del runtime:
+
+```python
+from datetime import datetime
+from siegfried.core.briefing import BriefingContext, compose_briefing
+# Antes del único presenter.send:
+public_text = compose_briefing(BriefingContext(now=datetime.now()))
+assert presenter.send(public_text, public_text, expiry_ms=20000 if manual else 3000)
+```
+
+Composición sin tarea, descanso, clima o datos personales; selecciona el saludo
+según hora local y mantiene el daemon no confirmado. No modifica repositorio,
+snapshots ni runtime. Preimagen y SHA del candidato calculado únicamente en RAM
+registrados en proposed_helper_correction de ambos manifiestos. No se escribió
+una nueva versión. Necesita autorización explícita para adaptar el helper,
+verificar su nuevo SHA y ejecutar el mismo ensayo manual de máximo 30 s.
+
+Comparación O_NOATIME antes/después de las comprobaciones: runtime, ambos snapshots
+y Autostart conservaron contenidos y metadatos de archivos. Entrada propia ausente;
+historial actual preservado, incidente anterior UNRESOLVED. Ningún proceso de prueba
+porque no se lanzó. Sin commits/push ni cambios de producto. git diff --check PASS.
+
+### Alcance futuro de Autostart actualizado
+
+La instrucción más reciente pide entrada XDG **inicialmente deshabilitada**,
+únicamente después de PASS visual. Queda supersedida la propuesta anterior de
+systemctl enable + instalación habilitada de sección 28. No habilitar servicio,
+no iniciar sesión real ni activar briefing en esa próxima autorización.
+
+El instalador existente manage_autostart(operation='install') publica Hidden=false;
+no cumple por sí solo el estado inicial pedido. Tampoco publicar enabled y después
+disable: existiría una fase habilitada. La preparación posterior debe garantizar
+publicación inicial atómica de la plantilla oficial desktop_content(boot,
+enabled=False), con propietario/modo 0600, hash/identidad y rollback de sólo la
+entrada creada; validar en HOME temporal antes de solicitar autorización concreta.
+No se implementó ni instaló esa adaptación ahora, ni se amplió el alcance del
+ensayo visual. Preservar Boot privado y no usar uninstall general sobre él.
+
+## 30. Helper corregido y única ejecución visual manual autorizada
+
+**PENDING_HUMAN_CONFIRMATION_NO_ACTION_MARKER.** No se declara PASS visual.
+El usuario autorizó expresamente adaptar sólo el helper temporal y una ejecución.
+Preimagen SHA verificada contra ambos manifiestos. Se inspeccionaron firma y retorno
+reales desde snapshot Boot: BriefingContext(now, available=False, title='Señor',
+critical_task=None, expose_task=False, unlocked=False, rest=None, weather=None)
+construye un contexto; compose_briefing(context: BriefingContext) -> str. Retorno
+str confirmado en ejecución pura, no asumido. Horarios sintéticos 08:00/15:00/22:00
+produjeron Buenos días/Buenas tardes/Buenas noches, sin enviar notificaciones.
+
+Único cambio del helper: imports datetime/compositor oficial y sustitución del
+cuerpo fijo por compose_briefing(BriefingContext(now=datetime.now())) inmediatamente
+antes de presenter.send. Sin lectura de agenda/historial/Vault/secretos por esa
+composición, sin clima, descanso o tareas. Ningún otro comportamiento modificado.
+SHA nuevo **61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6**,
+coincidente con candidato previamente calculado; registrado/verificado antes de
+la ejecución. Fuentes del repositorio y snapshots sin modificaciones.
+
+Aviso explícito en commentary y terminal de estar frente a pantalla durante 20 s;
+solicitud humana asíncrona de visibilidad, saludo/texto, botón, clic físico/apertura
+y duplicados antes de enviar. Comando autorizado ejecutado **una sola vez**:
+
+```bash
+timeout -s INT -k 5s 30s /usr/bin/python3 -B /tmp/siegfried-f55-visual-manual.py --manual
+```
+
+Inicio 2026-10-09T22:15:33.420512 UTC / 17:15:33.420524 hora Lima. Saludo del contexto
+público: Buenas tardes, Señor. Daemon no confirmado. Notificación ID 214, acciones
+soportadas, Inhibited=false; aceptación Notify a los 50,012 ms. Ese tiempo sólo
+mide aceptación API, **no aparición visual**. Una llamada inicial Notify, sin
+clima/reenvío solicitado; ausencia de duplicados en pantalla necesita confirmación
+humana. No ActionInvoked programático: --manual conserva el camino de clic físico.
+
+Duración del proceso **19,965349 s**, exit 0, stderr vacío. Resultado del helper:
+native_notify=PASS, native_action=PENDING_HUMAN_ACTION,
+konsole_test_executable=PENDING_HUMAN_ACTION, action_count=0, automatic_launch=false.
+No se recibió acción ni se creó marcador; no consta apertura de Konsole por esta
+prueba. La expiración/cierre terminó el ensayo, dentro del máximo de 30 s. No
+se repitió ni se reemplazó la evidencia ausente por un clic simulado.
+
+Verificaciones posteriores: unidad loaded/inactive/MainPID=0/disabled, ningún
+daemon/socket ni proceso residual asociado al helper/launcher; ninguna fixture
+siegfried-f53-* nueva restante. Doctor READY en namespace readonly. Runtime conservó
+metadatos de archivos, incluido historial actual; no se leyó/fingerprintó contenido
+privado desde supervisor para esta comparación. No se afirma nueva comparación
+criptográfica privada. Ambos snapshots conservaron SHA y todos los metadatos;
+Autostart preservado/ausente. No datos modificados, daemon/REPL iniciados, DND
+cambiado, Cloud, enable, commits/push. Incidente histórico UNRESOLVED conservado.
+
+Confirmación humana pendiente: visibilidad, texto/saludo, botón, clic, Konsole y
+duplicados. Una respuesta posterior puede aclarar el resultado observado, pero
+no sustituye el marcador técnico inexistente. No certificar la acción hasta
+resolver esa discrepancia si el usuario informa que sí hizo clic. Cualquier
+nuevo ensayo requerirá autorización: se agotó la única ejecución de esta ronda.
+
+La propuesta de entrada XDG inicialmente Hidden=true sigue condicionada a completar
+la validación visual. No instalar/habilitar nada ahora; tampoco ejecutar la
+propuesta anterior que publicaba Hidden=false o habilitaba el servicio.
+
+## 31. Repetición visual única autorizada (PASS humano en sección 32)
+
+**TECHNICAL_PASS_PENDING_HUMAN_CONFIRMATION.** El usuario informó estar frente a
+pantalla y autorizó una sola repetición. Helper sin cambios de código, SHA
+61df96aa4056b239ba18306e73302529c49edc71661aea2e1c4c86eacf6725c6
+coincidente con manifiestos. KDE/Wayland activo y desbloqueado, Inhibited=false,
+unidad loaded/inactive/MainPID=0/disabled antes del ensayo. Sin instancia/socket.
+Se conservó la evidencia pública anterior en
+/tmp/siegfried-f55-visual-execution-result-round1.json; no se repitió automáticamente
+ni se confundieron las dos autorizaciones. Se reutilizó el supervisor sin editarlo.
+
+Comando ejecutado una vez en esta ronda: timeout -s INT -k 5s 30s /usr/bin/python3 -B
+/tmp/siegfried-f55-visual-manual.py --manual. Inicio UTC
+2026-10-09T22:27:56.705994 / Lima 17:27:56.706008. Cuerpo del compositor público con
+saludo Buenas tardes, sin tareas/clima/descanso. ID de notificación 215, actions=true,
+Inhibited=false. Aceptación API 46,346 ms; duración total **4,816471 s**, exit 0,
+stderr vacío. Ninguno de esos tiempos demuestra latencia de aparición visual.
+
+Resultado técnico: native_notify=PASS, native_action=PASS,
+konsole_test_executable=PASS, **action_count=1**, automatic_launch=false. El callback
+KDE inició el launcher inocuo y el helper comprobó exit 0 más marcador opened
+antes de retirar su fixture. No se invocó ActionInvoked programáticamente. La señal
+y el marcador corroboran la acción técnica, pero la certificación del clic físico,
+visibilidad/saludo/texto/botón/apertura y duplicados requiere respuesta humana.
+Se solicitó esa confirmación al acabar; permanece pendiente.
+
+Después: 0 procesos asociados al helper/launcher y 0 nuevas fixtures restantes,
+unidad inactive/disabled/MainPID=0, ningún daemon/socket, doctor READY readonly.
+Runtime conservó metadatos sin lectura de contenido privado por supervisor;
+ambos snapshots conservaron SHA y metadatos. Autostart ausente, historial actual
+sin modificaciones, incidente anterior UNRESOLVED. Sin código/servicios/REPL
+real/DND/Cloud habilitados, commits o push. git diff --check PASS.
+
+No se declara PASS visual hasta la confirmación humana. No habrá tercer ensayo sin
+nueva autorización. La preparación de instalación inicial Hidden=true conserva
+su condición de validación visual; ninguna autorización de persistencia implícita.
+
+## 32. Confirmación humana: validación visual KDE PASS
+
+**PASS de presentación y acción con launcher inocuo.** El usuario confirma la
+prueba satisfactoria: una sola notificación visible, botón «Abrir sesión» funcional,
+clic físico y apertura de Konsole. El cierre casi inmediato era esperado por el
+marcador sintético. Se combina con ID 215/action_count=1/marcador comprobado de
+sección 31. No se simula el clic ni se atribuye precisión subsegundo a la observación.
+No se confirmó una latencia visual medida; visible_ms permanece desconocido.
+
+Esto certifica presenter/acción KDE con contenido público y launcher inocuo,
+**no el REPL real**, autoinicio, briefing por login ni rendimiento desde login.
+La primera ronda sin clic de sección 30 permanece registrada; no se transforma
+retrospectivamente en PASS. Incidente del historial sigue UNRESOLVED, actual
+conservado por instrucción explícita. Autostart ausente y servicio disabled.
+
+## 33. Preparación del ensayo REPL real: pendiente de autorización
+
+**PREPARED_DRY_RUN_PASS.** Snapshot daemon: 61 hashes coincidentes con el inventario
+actual; runtime doctor READY ejecutado readonly; unidad loaded/inactive/MainPID=0/
+disabled; ausencia de daemon/socket. Wrapper ~/.siegfried/bin/siegfried resuelve
+únicamente a ~/.local/share/siegfried-daemon/bin/siegfried. No código del checkout
+compartido utilizado como entrypoint persistente. PING/STATUS vivos todavía no
+se ejecutan: requieren el arranque específicamente pendiente de autorización.
+
+Hallazgo relevante: el REPL añade comandos deterministas a readline y al salir
+llama _save_history → write_history_file + chmod. Ejecutarlo sin aislamiento
+modificaría el historial real, contrario al alcance. No se cambió el producto,
+readline ni las configuraciones para evitarlo. Se prepara una vista de archivos
+para el proceso REPL: root readonly, /media oculto, /tmp temporal y tmpfs vacío
+sobre ~/.siegfried/data. El historial se crea únicamente dentro de ese tmpfs y
+se descarta al salir; el original y Vault quedan ocultos. El daemon temporal
+seguiría usando su runtime real, con append INFO operativo en daemon.log.
+
+Prueba aislada de preparación PASS: socket echo sintético en fixture de
+/run/user/1000 (ningún daemon real), cliente desde namespace conectado al socket
+del host; historial/Vault originales ocultos, historial sintético escribible en
+tmpfs y checkout inexistente. Fixture cerrada/eliminada. Wrapper privado --help
+PASS en ese namespace; doctor sobre runtime original readonly READY. No se
+inició el REPL real ni se abrió Konsole para esta prueba de preparación.
+
+Supervisor revisable: /tmp/siegfried-f55-repl-supervised.py, SHA registrado en
+real_repl_pilot_preparation de ambos manifiestos. Sin argumentos sólo dry-run;
+--run inicia el ensayo exclusivamente después de autorización. Dry-run real PASS.
+Secuencia preparada: watchdog independiente en sesión separada antes del start,
+stop a los 80 s dejando margen para máximo 90 s; try/finally adicional. Unidad
+identificada por hash/ExecStart, sin drop-ins o switches de adaptadores habilitados.
+Sólo start/stop, sin enable/restart/reload o cambio de variables del manager.
+
+Tras autorizar: PING/STATUS desde cliente oficial privado antes del REPL;
+Konsole --separate con proceso foreground real ~/.siegfried/bin/siegfried dentro
+del namespace. Se limpia PYTHONPATH/PYTHONHOME/PYTHONSTARTUP/PYTHONINSPECT y se
+inhibe user-site/bytecode en el entorno del cliente, sin afectar manager.
+Confirmación humana del prompt [Siegfried] > estable y terminal interactiva.
+Usuario prueba sólo ayuda, status y salir; no tareas ni consultas de inferencia.
+No se captura ni guarda transcripción con posibles payloads personales.
+
+Al salir: Konsole exit 0, unidad con mismo MainPID active, nuevos PING/STATUS OK;
+sólo entonces stop propio. Si el usuario no termina antes de 70 s, el supervisor
+cierra únicamente el grupo Konsole creado e identificado y detiene unidad propia.
+Watchdog asegura orden stop independiente si el supervisor falla. Comprobar
+cgroup/PID/socket ausentes, doctor READY, unidad inactive/disabled y comparación
+O_NOATIME de datos/configuración/Vault/historial; sólo append operacional del log
+permitido. Historial real conservará contenido/inodo/propietario/modo/timestamps.
+
+Comando concreto pendiente de autorización específica para iniciar servicio,
+append operativo al log, abrir/cerrar Konsole real y consultar IPC:
+
+```bash
+/usr/bin/python3 -B /tmp/siegfried-f55-repl-supervised.py --run
+```
+
+No ejecutado. No nuevos features, commits/push, cambios del repositorio/snapshots,
+servicios iniciados, datos modificados ni Autostart. La confirmación humana del
+REPL y su independencia del daemon permanecen pendientes; Gate no cerrado.
+Sólo tras PASS se preparará publicación de entrada XDG inicialmente Hidden=true,
+sin instalación habilitada transitoria ni systemctl enable.
+
+## 34. Ensayo REPL real autorizado: técnico PASS, humano pendiente
+
+**TECHNICAL_PASS_PENDING_HUMAN_CONFIRMATION.** El usuario autorizó arranque
+systemd/REPL por máximo 90 s, append operativo y comandos ayuda/status/salir.
+Supervisor SHA-256 0a5daca81cbb0bb1f133b7d32370d8aa011188837e88e985a075aea1776445e6
+coincidente antes/después; contenido revisado sin modificación. Dry-run previo:
+doctor READY, 61 fuentes SHA coincidentes, unidad loaded/inactive/MainPID=0/disabled,
+ausencia de daemon/socket y switches KWin/SESSION no habilitados. Router privado
+verificado: ayuda respuesta directa, status IPC STATUS; salir termina antes del
+router. Ninguno de esos comandos activa QUERY, Cloud o local.
+
+Avisos explícitos en commentary y terminal antes de abrir Konsole, con unos 70 s
+para interacción y máximo total 90 s. Comando autorizado ejecutado una sola vez:
+
+```bash
+/usr/bin/python3 -B /tmp/siegfried-f55-repl-supervised.py --run
+```
+
+Inicio UTC 2026-10-09T22:40:24.002208. Watchdog independiente/sesión separada armado
+antes de start, stop a los 80 s, más try/finally. No hubo trigger del watchdog.
+Unidad real active/MainPID **245353**, NRestarts=0, disabled; PING y STATUS OK desde
+cliente oficial privado antes de abrir Konsole. Konsole --separate PID **245358**,
+foreground real wrapper ~/.siegfried/bin/siegfried → snapshot privado, checkout
+oculto y archivos readonly; data en tmpfs vacío para historial efímero.
+No lectura/copia/restauración del historial real por el REPL ni Vault visible
+al cliente; no edición del producto ni de sus rutas por defecto.
+
+Konsole permanecía viva tras 1 s; se informó al usuario del prompt esperado y los
+tres comandos. Eso es evidencia de proceso interactivo vivo, no confirmación de
+texto visual. Sin transcripción privada, no se atribuyen comandos tecleados sin
+respuesta humana. Observación auxiliar inicialmente vio launcher bwrap y no un
+argv con el entrypoint del paquete (por eso el primer flag fue false); éste usa
+el wrapper privado permitido. No hay evidencia de ejecución desde checkout.
+
+La terminal terminó con **exit 0**. Después de cerrar cliente, daemon todavía
+active con el mismo MainPID; PING/STATUS posteriores OK. Sólo entonces systemctl
+stop propio: final inactive/MainPID=0/disabled, Result=success, NRestarts=0.
+Duración total start→stop/confirmación: **34,772388 s**. La salida no demuestra por
+sí sola qué gesto/comando humano cerró el cliente: confirmar específicamente salir.
+
+Sin PID Konsole/daemon ni procesos con wrappers/entrypoint real residuales,
+cgroup vacío y socket retirado. Doctor final READY. Comparación O_NOATIME del
+runtime: configuración/secretos/Vault/historial y demás archivos distintos de log
+conservaron contenido y todos los metadatos; historial real incluido atime/inodo/
+modo/owner. Único cambio permitido append al log, propietario/modo/inodo conservados.
+Huellas privadas mantenidas sólo en RAM, no persistidas ni impresas. Historial
+efímero descartado con namespace. Incidente histórico anterior sigue UNRESOLVED.
+No tareas/temporizadores/agenda editados, inferencia solicitada, enables, Autostart,
+commits/push ni nueva funcionalidad. Supervisor conserva su SHA original.
+
+La confirmación humana del prompt estable, ayuda, status y salir permanece
+pendiente; no se declara todavía PASS del REPL. Se solicitó al usuario durante
+el ensayo. Ausencia de interacción no se trataría como defecto del producto;
+en esta ejecución no venció el plazo. No reintento automático autorizado.
+Tras confirmación satisfactoria, preparar únicamente entrada XDG inicialmente
+Hidden=true y validación, sin fase enabled transitoria ni inicio de sesión real.
+
+## 35. Confirmación humana del REPL real: PASS
+
+El usuario confirma prompt [Siegfried] > visible, ayuda/status correctos y salida
+con salir. Se combina con exit 0 de Konsole, daemon con mismo PID y PING/STATUS
+posteriores OK, parada en 34,772388 s y preservación completa del runtime de sección
+34. **PASS del REPL auténtico**, separado del launcher inocuo del PASS visual.
+No se repite el ensayo. Incidente histórico UNRESOLVED, historial actual preservado.
+
+## 36. XDG Autostart inicialmente deshabilitado: PASS
+
+Instalación realizada el 2026-10-09 a las 22:52 UTC, sin ejecutar hook, Konsole,
+daemon ni activar servicios. Precondiciones y cierre: doctor READY; unidad loaded,
+inactive, MainPID=0, disabled; sin daemon ni socket. Ambos snapshots íntegros,
+propietarios/modos/ACL seguros y ausencia previa de entradas propias/en conflicto.
+
+El instalador oficial admite ahora `--disabled` exclusivamente para install y
+`manage_autostart(..., enabled=False)`. El valor predeterminado habilitado se
+conserva. Primera publicación atómica sin sobrescritura: enlace del temporal
+completo y sincronizado, ya con Hidden=true y modo 0600; retirada del temporal y
+fsync del directorio. Un destino ajeno aparecido concurrentemente se rechaza.
+No se modifica código de producto ni contratos congelados.
+
+Dry-run CLI `python3 -B tools/install_boot_briefing.py --disabled --dry-run` PASS.
+Para preservar el snapshot Boot existente (incluidas sus fuentes históricas),
+la publicación real utiliza la API oficial con repository apuntando a ese mismo
+snapshot, tras comparar sus 57 fuentes contra el manifiesto. No copia ni actualiza
+fuentes. Operación ejecutada:
+
+```python
+from pathlib import Path
+from tools.install_boot_briefing import manage_autostart
+manage_autostart(Path.home(), operation="install", dry_run=False,
+                 repository=Path.home()/".local/share/siegfried-boot", enabled=False)
+```
+
+Archivo único creado: `/home/okami/.config/autostart/org.siegfried.BootBriefing.desktop`.
+UID/GID 1000:1000, modo 0600, inodo 1582265, 321 bytes, un enlace, ACL POSIX básica.
+SHA-256: `985a5a4d5d5334b36ced08dff2446b39c56de8a16689f6cc6af4bf7045da2da6`.
+Type=Application, Hidden=true desde primera publicación, Terminal=false,
+OnlyShowIn=KDE; Exec entrecomillado hacia `/usr/bin/python3` y
+`/home/okami/.local/share/siegfried-boot/scripts/boot_hook.py`.
+Sin referencias ejecutables al checkout compartido ni contenido privado.
+`desktop-file-validate` PASS. Segunda operación idéntica: unchanged, mismo
+contenido y todos los metadatos; no entradas duplicadas ni recursos temporales.
+
+Once pruebas nuevas cubren publicación inicialmente deshabilitada, CLI dry-run y
+apply temporal, permisos, idempotencia, instalaciones habilitadas existentes,
+rechazo de ajenos/symlinks, carrera de publicación, fallo parcial, rollback sólo
+propio y operaciones incompatibles. Sin ejecución del hook y con runtime temporal
+preservado. Primera regresión detectó tres fallos de una fixture F5.4 que simulaba
+fallo de os.replace: la publicación inicial usa ahora os.link. Se ajustó únicamente
+el punto de inyección de esa fixture, conservando sus comprobaciones.
+Resultado final: **111 pruebas específicas PASS; 689 pruebas PASS en 38,675 s**,
+frente a 678 anteriores. Suite ejecutada exclusivamente con run_isolated_tests.py:
+HOME/XDG temporales y Landlock ABI 8, acceso al runtime real denegado.
+Cinco SLOs PASS (P95 router 0,0016 ms; Vault 2,5322 ms; CLI 29,95 ms;
+orquestador 0,0048 ms; agregador heurístico 1,9743 ms).
+Boot composición P95 0,000342 ms; hook dry-run P95 115,705 ms.
+Estos tiempos no certifican latencia visible desde login ni consumo sostenido.
+
+Comparaciones O_NOATIME antes/después: runtime completo y ambos snapshots sin
+cambios de contenido ni metadatos; historial, Vault, configuración y secretos
+preservados. Huellas privadas sólo en RAM. Incidente histórico sigue UNRESOLVED.
+No restauración, nuevos permisos, enable, inferencia, commits ni push.
+El supervisor temporal tuvo un error de importación antes de cualquier operación;
+se corrigió su sys.path y la única publicación autorizada terminó correctamente.
+
+Rollback preparado, no ejecutado: `/tmp/siegfried-f55-remove-own-autostart.py`.
+Dry-run por defecto; --apply requiere instrucción de retirada. Comprueba archivo
+regular sin symlink, propietario/grupo, inodo/dispositivo, SHA, modo y enlace único
+contra el manifiesto, antes de unlink mediante descriptor del directorio seguro.
+Retira exclusivamente este desktop intacto; conserva runtime, snapshots y unidad.
+No usar uninstall general: afectaría el snapshot Boot preexistente.
+
+## 37. Estado final y siguiente autorización independiente
+
+**PASS de instalación XDG deshabilitada**. PASS humano visual y REPL real ya
+registrados. Gate operativo completo pendiente de activación/login real y acción
+notificación→REPL real; no se declara PASS global. Persisten el incidente histórico
+UNRESOLVED y la desviación RSS del ensayo anterior.
+
+Propuestas separadas, ninguna ejecutada:
+
+1. Ensayo supervisado acotado: daemon temporal por systemd, watchdog previo,
+   PING/STATUS y clic físico que abra REPL privado con historial temporal aislado;
+   parada garantizada, servicio sigue disabled. Requiere autorización específica.
+2. Tras aprobar ese ensayo, autorización para `systemctl --user enable siegfried.service`
+   (sin --now) y API oficial `manage_autostart(Path.home(), operation="enable",
+   dry_run=False, repository=Path.home()/".local/share/siegfried-boot")`.
+   Verificar identidad previa y conservar respaldo del desktop Hidden=true para
+   rollback; no arrancar componentes durante esa preparación.
+3. Cierre e inicio de sesión manual por el usuario. Validar instancia única,
+   briefing único, clic/REPL, privacidad, CPU/RSS y timestamps desde sesión gráfica
+   efectiva hasta hook/Notify/aceptación KDE. Visibilidad humana registrada como
+   observación humana; objetivo <2 s desde login pendiente, sin precisión inventada.
+
+Estado Git: HEAD 8cba97bdfaf759eb1d6bee156b6cbf3af4622e00, rama main;
+modificados los tres documentos F5.5, instalador y fixture F5.4; nuevo archivo de
+once tests. Sin cambios en fuentes del daemon ni snapshots, sin commit/push.
+
+## 38. Integración KDE → REPL real: evidencia técnica satisfactoria
+
+Ensayo único autorizado, 2026-10-09 23:06:39 UTC, duración 36,823756 s (<120 s).
+Preflight READY, snapshots SHA conforme manifiestos, unidad loaded/inactive/disabled,
+MainPID=0, sin daemon/socket; integridad del desktop Hidden=true. KDE Wayland,
+adaptador oficial confirma acciones e Inhibited=false sin modificar DND.
+Supervisor temporal nuevo basado en los dos helpers auditados; código del producto
+exclusivamente desde snapshots privados. Watchdog separado preparado antes de start,
+parada a 105 s con timeout 8 s, finally y plazo de interacción 95 s.
+
+Una llamada Notify pública mediante KDEBriefingPresenter privado; compositor oficial
+BriefingContext(now=datetime.now()), hora local efectiva 18: saludo de tarde.
+Sin lectura de agenda/Vault/historial/secretos para componer. Notification ID 216.
+Recepción de ActionInvoked validada por adaptador; sin invocación programática.
+Clic abre Konsole separado con wrapper privado ~/.siegfried/bin/siegfried vía bwrap:
+checkout /media oculto, raíz readonly, data real oculta por tmpfs temporal y Python
+-I -B -S. Historial real inaccesible en ese entorno. No modificación del producto.
+
+Daemon PID 251324; PING/STATUS OK antes y después; socket 0600. Konsole PID 251383
+terminó exit 0, daemon permaneció active con mismo PID tras cierre. Stop propio
+finaliza unidad inactive/MainPID=0/disabled, Result=success, NRestarts=0; cgroup
+vacío, sin daemon ni socket residual. Watchdog cancelado tras parada confirmada.
+Doctor final READY. Comparación O_NOATIME: runtime no-log incluido historial,
+Vault, secretos y configuración sin cambios de contenido ni metadatos; log operativo
+conserva modo/owner/inodo. Huellas privadas sólo en RAM. Autostart y snapshots
+conservan SHA auditados. Historial histórico UNRESOLVED, sin intento de restauración.
+
+Resultado: **TECHNICAL_PASS_PENDING_HUMAN_CONFIRMATION**. Notify aceptado no
+certifica visibilidad, prompt ni texto tecleado. Se solicita confirmar notificación
+única/saludo, clic físico, prompt, ayuda/status/salir. No se transcribe entrada
+privada ni se declara todavía PASS integral. Sin inferencia solicitada, tareas,
+agenda o temporizadores editados, integración KWin/session, enables ni commits.
+No cambios de código; baseline 689 pruebas/cinco SLOs conservado, sin repetir suite.
+Propuestas de habilitación y login manual de sección 37 pendientes, sin ejecutar.
+
+## 39. Confirmación humana: PASS integral de integración
+
+El usuario confirma formalmente el PASS humano de la integración completa ensayada en la sección 38:
+
+- Una sola notificación visible en KDE Plasma.
+- Saludo correcto según la franja horaria.
+- Botón «Abrir sesión» funcional.
+- Konsole abrió el REPL real auténtico.
+- Comandos `ayuda`, `status` y `salir` funcionaron correctamente.
+- El daemon permaneció operativo tras el cierre del REPL.
+- Runtime READY y datos privados preservados íntegramente.
+
+Última regresión registrada: 689 PASS y cinco SLOs PASS.
+El incidente histórico de `.history` permanece UNRESOLVED por decisión explícita de conservación; archivo actual conservado sin modificar.
+
+## 40. Activación persistente controlada: systemd --user y XDG Autostart
+
+Autorización exclusiva ejecutada para activar los componentes propios de Siegfried sin cerrar sesión ni reiniciar el equipo.
+
+### 40.1 Preflight obligatorio (PASS)
+- Runtime: `Estado: READY` verificado mediante `~/.siegfried/bin/siegfried doctor` (exit code 0).
+- Snapshots privados:
+  - `~/.local/share/siegfried-daemon`: 61 archivos auditados coincidentes con SHA-256 (0 discrepancias).
+  - `~/.local/share/siegfried-boot`: 57 archivos auditados coincidentes con SHA-256 (0 discrepancias).
+- Unidad `siegfried.service`: cargada (`LoadState=loaded`), inactiva (`ActiveState=inactive`), deshabilitada (`UnitFileState=disabled`), `MainPID=0`, `DropInPaths=` (sin drop-ins desconocidos ni servicios equivalentes).
+- Sin procesos ni sockets previos de Siegfried (`pgrep` limpio, socket inexistente).
+- Archivo XDG propio: `~/.config/autostart/org.siegfried.BootBriefing.desktop` presente, modo 0600, UID:GID 1000:1000, 1 hard link, `Hidden=true`, validado con `desktop-file-validate`.
+- Sin enlaces simbólicos inesperados en runtime, snapshots ni configuración (0 symlinks).
+- Sin activaciones duplicadas, drop-ins desconocidos ni servicios equivalentes.
+- Adaptadores KWin (`isScriptLoaded("siegfried_focus_watcher")=0`) y Session deshabilitados (`SIEGFRIED_ENABLE_SESSION` y `SIEGFRIED_ENABLE_KWIN` ausentes).
+- Ausencia de modelos GGUF o llamadas Cloud automáticas en el arranque.
+- Flujo del Boot Briefing y launcher auditados: launcher invoca el REPL real desde el snapshot privado (`~/.local/share/siegfried-boot/bin/siegfried`) vía Konsole; Briefing es puramente determinista sin inferencia ni comandos destructivos.
+
+### 40.2 Procedimiento de recuperación preparado y verificado
+Se registró el estado previo completo en `/tmp/siegfried-f55-preflight-state.json`.
+Se preparó y verificó en dry-run el script `/tmp/siegfried-f55-recovery-procedure.py`:
+1. Deshabilita únicamente `siegfried.service`: `systemctl --user disable siegfried.service`.
+2. Devuelve la entrada XDG a `Hidden=true` mediante API oficial: `manage_autostart(Path.home(), operation="disable", dry_run=False, repository=Path.home()/".local/share/siegfried-boot")`.
+3. Detiene únicamente el daemon propio: `systemctl --user stop siegfried.service`.
+4. Preserva snapshots, wrappers y datos del runtime sin eliminaciones.
+5. No modifica servicios ni configuraciones ajenas.
+
+### 40.3 Activación de systemd --user (PASS)
+Ejecución de los comandos oficiales:
+```bash
+systemctl --user enable siegfried.service
+systemctl --user start siegfried.service
+```
+Resultados y verificaciones:
+- Enlace creado: `~/.config/systemd/user/default.target.wants/siegfried.service` → `~/.config/systemd/user/siegfried.service`.
+- `LoadState=loaded`.
+- `ActiveState=active` (running).
+- `SubState=running`.
+- `UnitFileState=enabled`.
+- `MainPID=253749`.
+- `Result=success`, `NRestarts=0`.
+- IPC verificado:
+  - `ping` → `[OK] {'pong': True, 'state': 'IDLE'}`.
+  - `status` → `[OK] {'state': 'IDLE', ...}`.
+- Socket privado: `/run/user/1000/siegfried.sock`, modo `0600`, UID:GID 1000:1000.
+- Ausencia de procesos de inferencia no autorizados; proceso único en CGroup.
+- Logging operativo: `~/.siegfried/logs/daemon.log` en modo 0600, append de dos líneas INFO operativas sin exposición de contenido privado o tokens.
+
+### 40.4 Activación de XDG Autostart (PASS)
+Ejecución mediante la operación oficial de `tools/install_boot_briefing.py`:
+```python
+from pathlib import Path
+from tools.install_boot_briefing import manage_autostart
+manage_autostart(Path.home(), operation="enable", dry_run=False,
+                 repository=Path.home()/".local/share/siegfried-boot")
+```
+Resultados y verificaciones:
+- Modificación atómica exclusiva de `~/.config/autostart/org.siegfried.BootBriefing.desktop`.
+- `Hidden=false` establecido.
+- Modo 0600, UID:GID 1000:1000, inodo 1583681, tamaño 322 bytes.
+- SHA-256: `13a581d8ac2094a37b86f63322e9f1a1b3ee1e6cab4eaf8c8b5cbf65c438360d`.
+- Validación sintáctica: `desktop-file-validate` PASS (código de salida 0).
+- Confirmado: no se ejecutó inmediatamente el hook (`boot_hook` no ejecutado).
+- Confirmado: no se generó notificación duplicada en esta sesión (`/run/user/1000/siegfried_briefing.lock` inexistente).
+- Confirmado: no se abrió Konsole inesperadamente.
+
+### 40.5 Postchecks globales (PASS)
+- Daemon activo y habilitado (`UnitFileState=enabled`, `ActiveState=active`, `MainPID=253749`).
+- XDG Autostart habilitado (`Hidden=false`, `desktop-file-validate` PASS).
+- Runtime READY (`siegfried doctor` exit 0).
+- PING y STATUS correctos vía socket Unix privado 0600.
+- Historial real `.history`: contenido, tamaño (6056 B), inodo (1575285) y hash SHA-256 (`e88445ad86f3692be8b6f7545ac828de3d6a0349a5fa1fd4f823f151b4e5ead6`) rigurosamente intactos.
+- Configuración (`core_profile.json`, `active_agenda.json`), secretos (`secrets.env`) y Vault (`siegfried_vault.jsonl`) preservados.
+- Snapshots íntegros: 61/61 daemon y 57/57 boot verificados sin modificaciones.
+- Ausencia de procesos o servicios duplicados.
+- Ausencia de apertura inesperada de Konsole o notificaciones durante la activación.
+
+## 41. Estado final y guía para la prueba manual de inicio de sesión
+
+**PASS_PENDING_LOGIN_TRIAL.** La activación persistente de Siegfried quedó completada y verificada de manera controlada.
+El servicio `siegfried.service` se encuentra activo y habilitado en `systemd --user`, y el Boot Briefing está habilitado en XDG Autostart de KDE.
+
+Conforme a las directrices contractuales:
+- **No se declara PASS final del Gate F5.5 hasta probar un inicio de sesión real (logout/login).**
+- **No se autorizó cerrar sesión ni reiniciar automáticamente el equipo.**
+- El sistema no fue modificado más allá de los componentes propios de Siegfried.
+- No se realizaron commits ni push a git.
+
+### Guía histórica de logout/login (sustituida por la decisión de sección 43; no ejecutar el clic):
+Cuando el usuario decida realizar la prueba de cierre e inicio de sesión en KDE Plasma:
+1. Cerrar la sesión gráfica actual de KDE Plasma y volver a iniciar sesión con la misma cuenta (`okami`).
+2. Observar la aparición de una sola notificación en pantalla del Boot Briefing (tiempo esperado <2 s desde inicio de sesión).
+3. Verificar el saludo apropiado según la hora local («Buenos días», «Buenas tardes» o «Buenas noches»).
+4. Pulsar el botón «Abrir sesión» de la notificación.
+5. Confirmar que se abre una ventana de Konsole con el REPL auténtico de Siegfried.
+6. Probar en el REPL los comandos básicos: `ayuda`, `status` y `salir`.
+7. Verificar tras salir del REPL que el servicio daemon permanece operativo mediante:
+   ```bash
+   systemctl --user status siegfried.service
+   ```
+8. Verificar que no existen procesos huérfanos o duplicados.
+
+## 42. Gate final: preparación del login real y corrección de auditoría
+
+La autorización actual cubre preparación, comprobaciones de lectura y herramienta
+de diagnóstico. No cubre logout/reinicio, cambios nuevos de producción, paquetes,
+commits, ni activación de LLM, Cloud, KWin o Session. Recuperación sólo revisada.
+
+### 42.1 Evidencia previa al logout
+
+`tools/verify_login_f55.py` consulta el servicio y proceso efectivo privado,
+cgroup/duplicados, IPC PING/STATUS sin publicar payloads privados, socket 0600,
+XDG habilitado con Exec privado y desktop-file-validate, runtime mediante validador
+oficial del snapshot con lecturas O_NOATIME, ambos snapshots (61/57 hashes,
+marcadores, allowlist, propietario/modos y enlaces), marcador SENT de sesión,
+journald de la invocación propia sin publicar mensajes, CPU/RSS y estabilidad.
+No arranca servicios, ejecuta hook, notifica, abre Konsole ni modifica runtime.
+
+Precheck: servicio active/enabled, PID 253749, NRestarts=0, una sola instancia y
+cgroup con un único PID, PING/STATUS PASS, socket 0600, Autostart Hidden=false,
+Exec privado, doctor READY; snapshots 61/61 y 57/57 sin discrepancias. Journald
+propio: dos entradas, ningún error priority 0–3 ni warning priority 4.
+Ventana inicial de 20,009 s: 21 muestras, CPU 0,199907 % de un núcleo y RSS
+constante 29.851.648 bytes. CPU con resolución 10 ms, sin margen suficiente para
+certificar consumo sostenido <0,2 %. El ensayo anterior de systemd con RSS
+30.011.392 bytes y exceso 11.392 bytes frente a 30 MB sigue vigente como desviación.
+Las ventanas posteriores de comprobación están separadas en la evidencia JSON.
+
+Referencia privada registrada antes del logout:
+`/tmp/siegfried-f55-login-reference-final.json`, modo 0600, fuera del runtime.
+No se copian sus fingerprints privados a los artefactos. Compara contenido,
+UID/GID/modos/inodo/dispositivo/nlink/tamaño/mtime/ctime de archivos privados,
+inventario y seguridad/identidad de directorios. Logs pueden crecer; se conserva
+su identidad y seguridad. Atime no se exige igual tras login/REPL, que realizan
+lecturas; las lecturas del diagnóstico usan O_NOATIME sin fallback permisivo.
+Integridad actual PASS: cero cambios; historial coincide con la referencia de
+activación y con la primera referencia de esta preparación. UNRESOLVED permanece.
+Si falta la referencia después del login, declarar BLOCKED; nunca recrearla para
+obtener artificialmente PASS. No reiniciar: /tmp no garantiza persistencia al reboot.
+
+No hay SENT previo de esta sesión: esperado porque habilitar Autostart no ejecuta
+el hook. Después del login se exige sesión gráfica nueva y se compara el marcador
+con la clave efectiva de esa sesión. SENT acredita envío aceptado, no visibilidad,
+notificación única ni clic físico. La ausencia del marcador será evidencia faltante
+que deberá contrastarse con el usuario y los registros disponibles.
+Tiempo disponible: diferencia entre creación de sesión logind y arranque del daemon,
+con referencias monotónicas del mismo boot. No equivale a escritorio listo ni a
+login → notificación visible. `login_to_visible_ms=null`; no inventar esa métrica.
+Si el servicio sobrevivió al logout, documentar persistencia sin fingir nuevo arranque.
+
+### 42.2 Recuperación y disable/rollback
+
+Leído `/tmp/siegfried-f55-recovery-procedure.py`; no ejecutado. Deshabilita sólo
+siegfried.service, modifica sólo el desktop propio a Hidden=true y detiene sólo
+ese servicio; conserva runtime, snapshots y wrappers. Sus mensajes “Verified” no
+son verificaciones automáticas. Dry-run genera contenido de instalación habilitada
+y no prueba la mutación disable. No usar uninstall general para rollback de activación.
+
+Ensayo real en HOME temporal mediante API oficial: disable escribió Hidden=true;
+snapshot, historial sintético y archivo foreign.desktop conservaron contenido,
+inodo/modo/mtime; ningún proceso iniciado. Fallo inyectado en publicación de enable:
+entrada disabled previa y archivos ajenos preservados, temporales retirados.
+Este ensayo no ejecuta rollback real ni promete atomicidad entre todas sus etapas.
+
+Cinco pruebas del diagnóstico PASS: atime y metadatos conservados; rechazo de
+symlink en hoja/ancestro y de tamaño excesivo; detección de cambio del historial
+con igual tamaño y de archivo nuevo; append permitido de log pero cambio de
+seguridad detectado. No se repitió la regresión completa: 689 PASS corresponde
+a la última regresión aislada anterior, no a un resultado nuevo.
+
+### 42.3 Corrección del inventario Git
+
+La afirmación histórica de sección 18 sobre “sólo tres artefactos” corresponde a
+ese hito y no describe el árbol actual. Estado real actual:
+
+- Modificados: docs/gates/GATE_F5_5_REPORT.md, GATE_F5_5_EVIDENCE.json y GATE_F5_5_RECOVERY.json.
+- Modificados preexistentes: tools/install_boot_briefing.py y tests/integration/test_operational_pilot_f54.py.
+- Nuevo preexistente: tests/integration/test_autostart_disabled_f55.py.
+- Nuevo en esta preparación: tools/verify_login_f55.py.
+
+El instalador contiene enabled/--disabled y publicación inicial sin reemplazo;
+la fixture F5.4 adapta el fallo de publicación a os.link. Ambos cambios estaban
+presentes al comenzar este trabajo y no se atribuyen a esta preparación. Ningún
+cambio nuevo en src, bin, scripts, unidad instalada o snapshots. Sin commits.
+La captura completa de git status --short queda en ambos manifiestos.
+
+### 42.4 Conflicto de preservación y prueba del REPL
+
+La auditoría del REPL instalado muestra readline.add_history para ayuda/status/salir
+y _save_history al salir, con escritura y chmod del historial real. Por tanto,
+la prueba humana solicitada puede cambiar contenido y metadatos aunque el daemon
+y el diagnóstico preserven datos. La prueba anterior evitó esto mediante historial
+aislado; el launcher normal de Autostart usa el runtime real.
+
+El usuario resolvió la elección: preservación estricta del historial real.
+No se autoriza añadir, truncar, reemplazar ni reconstruir `.history` y no se cambia
+el REPL. Cadena notificación→REPL auténtico y comandos aprobados técnicamente y
+por el usuario en el ensayo anterior con historial temporal (secciones 38–39).
+Esa evidencia se conserva; no se registra como repetida durante el nuevo login.
+El launcher persistente no garantiza aislamiento: no pulsar Abrir sesión durante
+esta prueba. Ver decisión vigente y alcance pendiente en sección 43.
+
+### 42.5 Procedimiento posterior preparado
+
+Logout/login exclusivamente manual desde KDE Plasma. El usuario observará
+notificación única, saludo correcto y presencia del botón Abrir sesión, sin
+pulsarlo ni abrir el REPL mediante el launcher persistente. Al regresar, ejecutar:
+
+```bash
+/usr/bin/python3 -B tools/verify_login_f55.py --post-login --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20
+```
+
+Solicitar observaciones físicas del usuario; evaluar independientemente inicio
+automático daemon, briefing, interacción REPL, integridad, recursos/estabilidad
+y tiempos fiables. Actualizar los tres artefactos; emitir PASS sólo con criterios
+obligatorios completos, PASS_WITH_DEVIATIONS con funcionalidad correcta y
+excepciones documentadas, BLOCKED ante evidencia indispensable ausente, FAIL ante
+fallo real. Histórico de RSS y del historial siempre visible. Hasta entonces,
+Gate BLOCKED; preparación técnica lista, ningún cierre de sesión ejecutado.
+
+## 43. Decisión final: historial estricto y login manual preparado
+
+Decisión explícita del usuario: preservar estrictamente el historial real.
+Referencia privada existente conservada, sin recreación ni reemplazo; modo 0600,
+propietario correcto y registro de `.history` presentes. El verificador está en
+el repositorio persistente y usa stdlib más el snapshot privado existente; no
+depende de helpers temporales para ejecutar el diagnóstico. La referencia de
+/tmp se conserva para logout/login sin reboot; si falta al volver, BLOCKED,
+sin inventar ni crear un nuevo baseline. Comando con ruta absoluta:
+
+```bash
+/usr/bin/python3 -B /media/okami/Mio/Siegfried/tools/verify_login_f55.py --post-login --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20
+```
+
+Nueva ejecución de lectura con la referencia existente: PASS técnico previo.
+Servicio active/enabled, PID 253749, NRestarts=0, proceso/cgroup único, PING/STATUS
+PASS y socket seguro 0600; Autostart Hidden=false/Exec privado; runtime READY;
+snapshots íntegros (61/57). Historial y demás archivos privados iguales a la
+referencia (cero cambios). Journald de la invocación propia sin errores/warnings.
+Ventana de comprobación 5,002 s: seis muestras, CPU media 0,199913 % de un núcleo,
+RSS constante 29.851.648 bytes; no certificación sostenida. Desviación histórica
+RSS y UNRESOLVED de historial siguen visibles, sin recuperación ejecutada.
+
+No se modifican servicio, Autostart, REPL, lógica de historial, snapshots ni
+producción. Sin instalación, commits, recuperación, logout ni reinicio.
+
+Observación humana autorizada para el login: una sola notificación, saludo
+correcto y presencia de Abrir sesión. No pulsar el botón ni abrir el launcher
+persistente mientras su aislamiento no esté garantizado. Aprobación previa de
+notificación→REPL real y ayuda/status/salir permanece PASS en el ensayo aislado;
+la apertura dentro del nuevo login queda NOT_REVALIDATED. El procedimiento
+anterior que pedía clic/REPL en el login queda sustituido por esta decisión.
+
+La cadena completa durante ese mismo login era parte de la guía anterior:
+queda pendiente si se exige ese alcance completo para el cierre, sin atribuirle
+PASS por el ensayo previo. Posteriormente se preparará una prueba aislada si
+resulta indispensable; no se ejecuta ni cambia producción en esta preparación.
+La evaluación final debe distinguir este alcance omitido de un fallo funcional,
+y justificar si implica BLOCKED o una desviación documentada. No se declara
+PASS global antes de la evidencia de login y las observaciones humanas.
+
+Al regreso se ejecutará el diagnóstico de lectura, se comparará el runtime con
+la referencia anterior y se solicitará confirmación humana de notificación,
+saludo/botón y cualquier desviación. Actualizar los tres artefactos evaluando
+por separado daemon automático, briefing automático, REPL previamente aprobado,
+integridad estricta, recursos/estabilidad y tiempos sólo con evidencia fiable.
+
+**PREPARADO PARA LOGIN MANUAL.** Gate pendiente de comprobación posterior;
+ningún cierre de sesión ejecutado por Codex.
+
+## 44. Login real: confirmación humana y bloqueo de integridad
+
+El usuario confirma PASS humano del Boot Briefing tras logout/login manual en KDE:
+una notificación automática, apareció una vez, título «Siegfried — Inicio» y texto
+«Buenas noches, Señor. Siegfried está preparado». Captura reportada a las 19:42;
+el usuario confirma que el saludo correspondía a la hora. No pulsó «Abrir sesión»
+para preservar estrictamente el historial. La cadena notificación→REPL sigue PASS
+por el ensayo aislado previo; no se volvió a probar en este login.
+
+Se intentó exclusivamente el validador de solo lectura con la referencia previa:
+
+```text
+/usr/bin/python3 -B tools/verify_login_f55.py --post-login \
+  --reference /tmp/siegfried-f55-login-reference-final.json --seconds 20
+Exit 2: {"technical_result":"BLOCKED","reason":"FileNotFoundError"}
+```
+
+La referencia `/tmp/siegfried-f55-login-reference-final.json` no existe tras volver
+del login. No se recreó: una referencia capturada ahora no puede certificar cambios
+ocurridos durante logout/login. El validador terminó antes de evaluar servicio,
+instancias, IPC, permisos del socket, runtime, Autostart, snapshots, archivos
+privados, recursos o journald. Esas verificaciones posteriores figuran como
+NOT_VERIFIED, no como PASS. No se leyeron ni escribieron datos del runtime durante
+este intento. El diagnóstico previo al logout sí pasó, pero no reemplaza evidencia
+post-login.
+
+Veredicto F5.5: **BLOCKED** por pérdida de la referencia indispensable. PASS humano
+del briefing registrado; integridad post-login y estabilidad no certificadas.
+No se certifica el SLO login→visible <2 s: la hora 19:42 en la captura no establece
+el instante de login ni la latencia. La desviación histórica RSS (30.011.392 bytes,
+11.392 por encima del objetivo 30.000.000) permanece; resolución CPU y duración
+acotada tampoco certifican consumo sostenido. El incidente histórico de `.history`
+permanece **UNRESOLVED**. El usuario no abrió REPL durante este login, por lo que
+la decisión de preservar el historial se respetó; esta ejecución no leyó ni alteró
+el historial. No se ejecutaron notificaciones, REPL, recuperación, cambios de
+producción o commits.
+
+## 45. Recuperación de evidencia post-login
+
+Se buscaron las rutas registradas de referencia y preparación. Los dos JSON de
+referencia bajo `/tmp`, el resultado precheck y manifiestos temporales ya no existen.
+Los artefactos guardan el resultado agregado del prelogout (`changed_file_count=0`,
+historial intacto), pero no el inventario privado por archivo. Estado del baseline
+global: **PRE_LOGIN_BASELINE_UNAVAILABLE**. No se reconstruyeron fingerprints desde
+el estado actual.
+
+Sí existe evidencia de historial en `controlled_persistent_activation_actions`:
+el hash y metadata se midieron antes del logout. Una lectura actual O_NOATIME confirma
+que el contenido de `.history` coincide y también los campos históricos disponibles:
+UID, GID, modo, inodo, tamaño y mtime. ctime, dispositivo, nlink y atime no estaban
+en esa referencia. El dato privado no se imprimió ni se incorporó a este reporte.
+Esto certifica `.history` contra aquel checkpoint anterior, no todos los archivos
+privados a través del login. Vault, secretos y configuraciones pasan validación
+actual READY, pero su preservación byte a byte a través de este login no puede
+compararse sin el inventario desaparecido. No se lanzó REPL.
+
+### Diagnóstico operativo actual
+
+El verificador de solo lectura terminó su ventana de 20,009 s. Servicio active y
+enabled, PID 2704, cero reinicios, Exec desde snapshot privado y único proceso en
+el cgroup. PING/STATUS PASS; socket del usuario 0600; runtime READY; Autostart
+Hidden=false y Exec privado. El daemon arrancó 237,715 ms después de la creación
+de la sesión logind en el mismo boot. Esto mide creación de sesión → daemon, no
+login → notificación visible. Marcador SENT coincide con la sesión; la confirmación
+humana independiente acredita una notificación visible. No se certifica SLO visible
+<2 s por falta de un origen temporal fiable para su latencia.
+
+Journald del servicio en el boot actual: dos entradas, ambas prioridad 6 (información),
+cero errores prioridad 0–3 y cero warnings prioridad 4. Se consultó también la
+invocación activa; dos entradas, sin error/warning. Sólo se comunicaron conteos,
+sin mensajes.
+
+CPU media 0,199911 % de un núcleo y RSS constante 28.688.384 bytes en 21 muestras
+durante 20,009 s. RSS cumple el límite de 30.000.000 en esta ventana; resolución
+CPU 10 ms y ventana acotada no certifican consumo sostenido <0,2 %. La medición
+anterior de 30.011.392 bytes excedió el objetivo por 11.392 y permanece como
+desviación histórica.
+
+Snapshots: daemon 61/61 fuentes PASS. Boot: los 57 hashes fuente coinciden, pero
+el inventario estricto informa 39 discrepancias: 33 archivos `.pyc` adicionales
+en seis directorios `__pycache__`, cuyos directorios tienen modo 0775. El precheck
+antes del logout había encontrado el paquete Boot limpio; las caches aparecieron
+tras ejecutar el hook en el login. No se alteraron ni limpiaron. Los directorios
+padre del snapshot mantienen su modo privado; aun así el inventario/modo del paquete
+Boot ya no coincide con el manifiesto, por lo que se registra como desviación de
+integridad del snapshot. No se cambia producción bajo esta autorización.
+
+### Referencia persistente y necesidad de otro login
+
+Como protección para una futura prueba de preservación, se añadió al diagnóstico
+la captura segura `--save-persistent-reference`. Se guardó la referencia actual en
+`~/.local/share/siegfried-gate-f55/next-login-reference.json`, directorio 0700,
+archivo 0600. Contiene nombres privados, metadatos y hashes, nunca contenidos ni
+secretos en claro. Su procedencia está marcada por su fecha actual; no se hace pasar
+por el baseline perdido. Puede usarse con `--reference` en una prueba futura.
+
+No hace falta repetir login para demostrar inicio automático del daemon ni briefing:
+el usuario confirmó el briefing y el journal/monotonicidad confirma el inicio del
+daemon en esta sesión. Una prueba posterior sólo sería necesaria si se exige certificar
+preservación completa de runtime a través de otro logout/login; usaría la referencia
+persistente y acreditaría ese intervalo futuro, no recuperaría el intervalo ya pasado.
+
+### Confirmación humana y veredicto
+
+PASS humano registrado: notificación automática, única, título «Siegfried — Inicio»,
+saludo «Buenas noches, Señor. Siegfried está preparado», consistente con las 19:42
+que muestra la captura según confirma el usuario. No pulsó Abrir sesión para proteger
+el historial. El flujo notificación→REPL se conserva como PASS del ensayo aislado
+anterior, no como validación de este login.
+
+Estado final del Gate: **BLOCKED**. Autoinicio daemon, briefing, IPC, runtime READY,
+fuentes snapshot y `.history` contra el checkpoint disponible pasan. Quedan la
+falta de inventario global prelogin auténtico y los bytecodes/modos adicionales del
+snapshot Boot. Vault, secretos y configuración no se declaran preservados a través
+del login sin comparación histórica. La desviación RSS y el incidente histórico del
+historial permanecen expresamente documentados; el incidente sigue **UNRESOLVED**.
+No hubo REPL, notificación nueva, escritura de runtime, recuperación, logout, reboot,
+instalación, commit ni push.
+
+## 46. Cachés Boot: remediación preparada, no aplicada
+
+Causa demostrada en HOME temporal: desktop sin -B; workers con -S (no desactiva
+bytecode), sin -B y con env explícito que descarta PYTHONDONTWRITEBYTECODE; flags
+del padre no se heredan. Launcher REPL inicia otro Python sin -B. Entorno actual
+del manager/shell sin PYTHONDONTWRITEBYTECODE/PYTHONPATH; daemon protegido por
+PYTHONDONTWRITEBYTECODE=1. Hook actual ausente. No se conserva su entorno/PID de
+escritura histórico: la ruta capaz de recreación queda probada, no cada actor exacto.
+
+Inventario preciso en [cache-inventory.json](f55_cache_remediation/cache-inventory.json):
+57 fuentes y marcador coincidentes, 33 bytecodes 0600 del mismo UID/GID y nlink=1,
+seis directorios __pycache__ 0775; cero archivos desconocidos, symlinks, hardlinks,
+propietarios inesperados o permiso incorrecto en fuentes. Cada pyc coincide con
+magic CPython, timestamp/tamaño de fuente y body recompilado desde la fuente
+original y path efectivo, sin ejecutarlo. Raíz y padres privados 0700 conservados;
+los 0775 internos no permiten acceso desde otras cuentas a través de esos padres,
+pero incumplen el inventario/permisos requeridos. Limpieza sola volvería a crear
+caches en una ejecución futura de la ruta sin protección.
+
+Propuesta mínima [prevent-bytecode.patch](f55_cache_remediation/prevent-bytecode.patch):
+-B en generación del desktop, en argv de workers (conservar -S) y en argv Python
+del launcher REPL. Tres líneas de producción propuestas; ninguna aplicada al
+repositorio productivo. Despliegue Boot propuesto: sólo dos módulos de integraciones
+y el desktop efectivo. No modificar compositor, lógica determinista/inferencia,
+bin/siegfried o snapshot daemon. -B no aísla historial ni autoriza abrir el REPL.
+Desktop original SHA y UID/GID/0600/nlink/contenido exacto verificados contra el
+manifiesto de activación; candidato conserva Hidden=false y resto de campos.
+
+Doce comprobaciones HOME temporal PASS: recreación por parent/worker original,
+prevención por tres intérpretes independientes, instalación/desktop-file-validate
+KDE temporal, launcher interceptado sin Konsole/REPL, limpieza exacta de copia33/6
+con backup y fuentes/archivo ajeno preservados. Rechazos probados: cambio de cache,
+symlink, hardlink, archivo desconocido, directorio reemplazado y hook activo.
+No cambios de producción: no se repitió regresión completa ni login. Si se autoriza
+el patch real, ejecutar regresión completa aislada antes de desplegar.
+
+Procedimiento completo y recuperación en [PROPOSAL.md](f55_cache_remediation/PROPOSAL.md).
+[check_boot_cache_f55.py](../../tools/check_boot_cache_f55.py) tiene dry-run por defecto;
+precheck real PASS/applied=false, mismo inventario 33/6 y mismas identidades/hashes.
+--apply requiere autorización específica y backup exclusivo privado previo. Valida
+árbol entero, origen/candidatos aprobados, root, archivos/tipos/UID/GID/modos,
+inodos/nlink/timestamps/hash, ausencia de symlinks/mounts/entradas desconocidas/hook.
+Revalida tras backup y antes de cada unlink; rmdir sólo sobre seis dirs vacíos.
+No toca fuentes, datos ni archivos externos. No promete atomicidad global ni
+exclusión transaccional frente a escritor malicioso del mismo UID. Pausar ante fallo,
+conservar evidencia y backup; no continuar con borrados generales. Restauraciones
+sólo sobre destinos propios aún idénticos al candidato de esta operación. Caches
+son derivadas; copiarlas desde backup no recupera inodo/ctime originales.
+
+Estado real antes de entrega: active/enabled/PID2704/NRestarts0, Autostart
+Hidden=false. Runtime comparado en lectura O_NOATIME con referencia persistente
+reciente: cero archivos cambiados, incluido historial. Ninguna comparación reciente
+se etiqueta retroactivamente como baseline completo del primer login.
+
+PASS humano de login/Boot y PASS técnico daemon conservados; historial actual
+preservado, incidente histórico UNRESOLVED; PRE_LOGIN_BASELINE_UNAVAILABLE para
+runtime completo en el primer login; exceso RSS histórico 11.392 bytes conservado;
+SLO login→visible <2 s no certificado. Gate BLOCKED, remediación pendiente de
+aprobación específica. Sin limpieza real, cambio instalado, notificación, REPL,
+logout/reboot, restart/disable, commit/push o recuperación ejecutados.
+
+
+## 47. Intento autorizado de prevención de bytecode: bloqueado antes del despliegue
+
+Se repitió el preflight contra la propuesta y el inventario: 57 fuentes originales, 33 `.pyc` y seis directorios mantuvieron hashes/identidades auditados; no hubo symlinks, hardlinks inesperados, rutas desconocidas ni propietarios ajenos. La entrada XDG efectiva coincidió con el archivo propio instalado y `Hidden=false`; la referencia persistente privada estaba accesible. No había Boot Hook en ejecución. Siegfried es una unidad **systemd de usuario** (la consulta inicial al gestor de sistema devolvió `not-found`, que quedó explicado al consultar el gestor correcto): active/enabled, PID 2704, `NRestarts=0`; PING/STATUS PASS. Runtime READY. El snapshot daemon tuvo cero discrepancias; el snapshot Boot conserva las 39 discrepancias inventariadas.
+
+Se aplicó al worktree únicamente el patch de tres líneas autorizado: `-B` en el Exec generado, el worker (conservando `-S`) y el intérprete del launcher REPL. La suite aislada completa ejecutó 689 pruebas y terminó **FAIL: 688 PASS, 1 FAIL**. La única falla es `integration.test_boot_briefing_f53.TestDKDE.test_launcher_fixed_argv`, cuya expectativa comprueba el sufijo antiguo `[sys.executable, bin/siegfried]`; el argv preventivo ahora lleva `-B` entre ambos. No se modificó esa prueba porque queda fuera del patch exacto autorizado. Según la condición del Gate, no se publicó ningún candidato.
+
+Los benchmarks aislados PASS: `tools/benchmark.py` cumplió sus SLO; `tools/benchmark_boot_briefing.py` registró dry-run cold-start P95 115.553 ms. No midió la visibilidad de una notificación KDE (`null`). `git diff --check` PASS. Las 12 pruebas temporales de la propuesta y `desktop-file-validate` PASS.
+
+No se crearon respaldos operativos, no se actualizó el snapshot Boot ni el desktop instalado, no se eliminaron caches, no se ejecutó hook/REPL ni se alteraron servicio, Autostart, runtime, historial, Vault, secretos o configuración. Los tres `-B` permanecen sólo como cambios exactos del worktree para revisión; el snapshot de producción permanece igual. Por el fallo de regresión, el despliegue y la limpieza están **retenidos** hasta que una ejecución posterior autorizada pase la suite completa.
+
+Se mantienen: PASS humano del Boot Briefing tras login y PASS operativo del daemon; `PRE_LOGIN_BASELINE_UNAVAILABLE` para la comparación histórica completa; incidente histórico del historial `UNRESOLVED`; desviación histórica RSS de 11.392 bytes; SLO login→visible <2 s no certificado. Ninguna integridad global retroactiva se infiere.
+
+
+## 48. Aserción corregida y remediación aplicada
+
+La única falla de la ejecución anterior era `TestDKDE.test_launcher_fixed_argv`: comprobaba el sufijo del contrato anterior y asumía que el intérprete aparecía inmediatamente antes del script. Se actualizó exclusivamente esa aserción en `tests/integration/test_boot_briefing_f53.py`. Ahora exige el argv completo y ordenado `[konsole, --separate, -e, sys.executable, -B, repository/bin/siegfried]` y conserva la prohibición de `shell`; no se quitó ni debilitó cobertura.
+
+La prueba focalizada pasó (1/1). Pasaron las suites aisladas relacionadas de Boot/launcher (90), Autostart (11) y despliegue privado (11). La regresión completa aislada pasó **689/689** en 41.931 s. `tools/benchmark.py` pasó todos los SLO medidos: router P95 0.0015 ms, escritura Vault P95 2.4068 ms, CLI cold-start P95 29.55 ms, routing P95 0.0047 ms, agregador heurístico P95 1.9572 ms y exhaustivo P95 8.0968 ms. `tools/benchmark_boot_briefing.py` pasó; dry-run de hook cold-start P95 115.521 ms. No mide entrega ni visibilidad KDE (`notification_visible_ms=null`). `git diff --check` PASS.
+
+Preflight inmediatamente previo al host: inventario íntegro de 57 fuentes más marcador, 33 bytecodes y seis directorios; sin elementos extra, symlinks, hardlinks inesperados ni propietarios ajenos. El servicio **systemd de usuario** siguió active/enabled con PID 2704 y `NRestarts=0`; PING/STATUS PASS. No había Boot Hook activo. El desktop instalado conservaba identidad/hash auditados, `Hidden=false`, y la referencia privada estaba accesible con permisos 0600/0700.
+
+Antes de publicar se guardaron y verificaron en `~/.local/share/siegfried-gate-f55/` (directorio 0700) respaldos recuperables con archivos 0600: dos módulos Boot y desktop (`predeployment-modules-f55.json`, SHA-256 `4cec13bc…b4b6935`); los 33 `.pyc` exactos (`predeployment-caches-f55.json`, `a8f31158…f9a9f5d6fa`). El helper creó y verificó además su respaldo previo a la eliminación (`cache-backup-f55.json`, `5794913c…f498f6810`). Los SHA completos constan en `GATE_F5_5_EVIDENCE.json` y `GATE_F5_5_RECOVERY.json`.
+
+Se publicaron atómicamente sólo `~/.local/share/siegfried-boot/src/siegfried/integrations/boot_briefing.py` (SHA-256 anterior `2ff6c8fb…f81556e8`, nuevo `bafa71dd…ee81ff4`), `briefing_kde.py` (anterior `29151f26…316fb0b5`, nuevo `10d69267…6478a6`) y `~/.config/autostart/org.siegfried.BootBriefing.desktop` (anterior `13a581d8…c438360d`, nuevo `981f7cf6…bbb62d9e`). Hashes completos en los dos JSON. El desktop sigue `Hidden=false`; `Exec` usa `/usr/bin/python3 -B`. Los tres caminos Python quedan protegidos por `-B` (worker conserva `-S`).
+
+Después de publicar, el helper revalidó identidades y retiró exactamente las 33 rutas `.pyc` y los seis directorios enumerados en [cache-inventory.json](f55_cache_remediation/cache-inventory.json); los directorios se quitaron sólo vacíos, sin borrado recursivo. Inventario final exacto: 58 archivos permitidos, 13 directorios de fuentes, cero bytecodes/cache dirs adicionales; los dos módulos usan los nuevos SHA autorizados. `desktop-file-validate` PASS. Snapshot daemon intacto. Servicio continúa con PID 2704, active/enabled y sin reinicio; PING/STATUS, socket 0600 y Runtime READY PASS. La comparación privada persistente informa cero archivos cambiados e historial preservado; Vault, secretos y configuración del alcance comparado pasan. Journal de la invocación actual: cero errores prioridad 0–3, sin revelar mensajes. No se inició hook, REPL ni notificación.
+
+Muestra posterior de 5 s: CPU 0.20 % (sin desviación en esa muestra), RSS 29.945.856 bytes (bajo límite actual de 30.000.000). Se conserva la desviación histórica RSS de 30.011.392 bytes, excedente 11.392, y la muestra anterior de CPU 0.40 % frente al objetivo 0.20 %. Se mantienen `PRE_LOGIN_BASELINE_UNAVAILABLE` para el baseline global histórico, el incidente histórico de `.history` `UNRESOLVED` y el SLO login→visible <2 s no certificado. El PASS humano del login/briefing permanece; no se repitió login. Veredicto F5.5: **PASS_WITH_DEVIATIONS**; las limitaciones históricas no se presentan como resueltas.

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "results": {
+    "unpatched_top_level_recreates_caches": true,
+    "parent_B_does_not_protect_unpatched_worker": true,
+    "patched_top_level_and_actual_probe_worker_no_cache": true,
+    "temporary_home_installer_kde_desktop_and_workers": true,
+    "launcher_B_verified_without_executing_repl": true,
+    "exact_33_file_6_directory_fixture_cleanup_backup_sources_external_preserved": true,
+    "reject_changed_cache": true,
+    "reject_symlink": true,
+    "reject_hardlink": true,
+    "reject_unknown_file": true,
+    "reject_replaced_directory": true,
+    "reject_active_hook": true
+  },
+  "scope": "Temporary HOME/packages only; no REPL/notifications or production mutation"
+}
